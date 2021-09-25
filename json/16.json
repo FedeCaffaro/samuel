@@ -1,0 +1,51 @@
+{
+  "dna": "75683a897941ad3f2cf4049b39e65d1bda9d5ad1",
+  "name": "#16",
+  "description": "Who is $AMOT?",
+  "image": "ipfs://QmXEWyoXwX7Ta3wWfXn9yuc9boKcepBXkmriy9SAi9uQyo/16.png",
+  "edition": 16,
+  "date": 1632174385718,
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "pink"
+    },
+    {
+      "trait_type": "Back accesories",
+      "value": "katanas"
+    },
+    {
+      "trait_type": "Body Monkey",
+      "value": "monkey2"
+    },
+    {
+      "trait_type": "Tattoo",
+      "value": "tattoo_1"
+    },
+    {
+      "trait_type": "Shirt",
+      "value": "tshirt_red"
+    },
+    {
+      "trait_type": "Necklace",
+      "value": "necklace_dogtag"
+    },
+    {
+      "trait_type": "Jacket",
+      "value": "jacket_black"
+    },
+    {
+      "trait_type": "Headwear",
+      "value": "tophat"
+    },
+    {
+      "trait_type": "Body accesories",
+      "value": "holster"
+    },
+    {
+      "trait_type": "Head accesories",
+      "value": "earring"
+    }
+  ],
+  "compiler": "HashLips Art Engine"
+}
