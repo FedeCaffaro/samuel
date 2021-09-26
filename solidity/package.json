@@ -1,0 +1,41 @@
+{
+  "name": "@samot/contract",
+  "version": "1.0.0",
+  "description": "Who Is Samot smart contracts.",
+  "main": "index.js",
+  "scripts": {
+    "start": "ganache-cli -d -p 7545 --gasLimit=10000000",
+    "deploy": "yarn truffle deploy --network rinkeby --reset",
+    "verify": "yarn truffle run verify WhoIsSamot --network rinkeby",
+    "mint": "node scripts/mint.js",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FedeCaffaro/samuel.git"
+  },
+  "author": "zorpheux@zorpheux.com",
+  "license": "ISC",
+  "homepage": "https://github.com/FedeCaffaro/samuel#readme",
+  "dependencies": {
+    "@0x/subproviders": "^6.4.1",
+    "openzeppelin-solidity": "~4.1.0",
+    "dotenv": "^10.0.0",
+    "eth-gas-reporter": "^0.2.17",
+    "eth-sig-util": "^3.0.1",
+    "ethereum-waffle": "^3.0.0",
+    "lodash": "^4.17.21",
+    "truffle": "^5.1.30",
+    "truffle-assertions": "^0.9.2",
+    "truffle-contract-size": "^2.0.1",
+    "truffle-flattener": "^1.4.2",
+    "truffle-hdwallet-provider": "1.0.17",
+    "web3": "^1.0.0-beta.34"
+  },
+  "engines": {
+    "yarn": "~1.22.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "truffle-plugin-verify": "^0.5.8"
+  }
+}

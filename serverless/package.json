@@ -1,0 +1,16 @@
+{
+  "name": "@samot/serverless",
+  "version": "1.0.0",
+  "description": "Samot pre-sale metadata api",
+  "scripts": {
+    "start": "sls offline start --noPrependStageInUrl --stage prod",
+    "deploy": "sls deploy --stage prod"
+  },
+  "devDependencies": {
+    "serverless-offline": "^7.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "truffle-hdwallet-provider": "^1.0.17"
+  }
+}

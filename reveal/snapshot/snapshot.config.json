@@ -1,0 +1,10 @@
+{
+  "provider": "https://mainnet.infura.io/v3/your-infuria-key",
+  "contractAddress": "",
+  "fromBlock": 0,
+  "toBlock": "latest",
+  "format": "json",
+  "blocksPerBatch": 2500,
+  "delay": 0,
+  "checkIfContract": true
+}
