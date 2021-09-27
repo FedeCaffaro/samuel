@@ -1,0 +1,100 @@
+service: samot-api
+frameworkVersion: '2'
+provider:
+  stage: ${opt:stage, 'prod'}
+  name: aws
+  versionFunctions: false
+  region: us-east-1
+  runtime: nodejs12.x
+  environment:
+    ENV: ${opt:stage, 'prod'}
+    IMAGE_TYPE: 'png'
+    CONTRACT_ADDRESS: ""
+    MNEMONIC: ""
+    NETWORK_URL: https://mainnet.infura.io/v3/your-infuria-key
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "*"
+      Resource: "*"
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+
+functions:
+  token:
+    handler: handler.token
+    events:
+      - http:
+          path: token/{tokenId}
+          method: get
+          cors: true
+  contract:
+    handler: handler.contract
+    events:
+      - http:
+          path: contract
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    PrivatAssetBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: samotnft-source-${self:provider.stage}
+        # Set the CORS policy
+        CorsConfiguration:
+          CorsRules:
+            -
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+    PublicAssetBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: samotnft-assets-${self:provider.stage}
+        # Set the CORS policy
+        CorsConfiguration:
+          CorsRules:
+            -
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+    PublicAssetBucketAllowPublicReadPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: 
+          Ref: PublicAssetBucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadForGetBucketObjects
+              Effect: Allow
+              Principal: '*'
+              Action:
+                - 's3:GetObject'
+              Resource: arn:aws:s3:::samotnft-assets-${self:provider.stage}/*
+
+
+
+

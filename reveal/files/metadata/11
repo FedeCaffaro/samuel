@@ -1,0 +1,51 @@
+{
+  "dna": "268632f153032bb5e51eceb5f5c90934d071a7c1",
+  "name": "#11",
+  "description": "Who is $AMOT?",
+  "image": "https://assets.samotnftapi.com/images/11.png",
+  "edition": 11,
+  "date": 1632174382439,
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "bar_bw3"
+    },
+    {
+      "trait_type": "Back accesories",
+      "value": "fairywings"
+    },
+    {
+      "trait_type": "Body Dog",
+      "value": "dog2"
+    },
+    {
+      "trait_type": "Tattoo",
+      "value": "tattoo_1"
+    },
+    {
+      "trait_type": "Shirt",
+      "value": "tshirt_black"
+    },
+    {
+      "trait_type": "Necklace",
+      "value": "necklace_thin"
+    },
+    {
+      "trait_type": "Jacket",
+      "value": "toga_yellow"
+    },
+    {
+      "trait_type": "Headwear",
+      "value": "cap_mario"
+    },
+    {
+      "trait_type": "Body accesories",
+      "value": "parrot"
+    },
+    {
+      "trait_type": "Head accesories",
+      "value": "earring"
+    }
+  ],
+  "compiler": "HashLips Art Engine"
+}

@@ -1,0 +1,21 @@
+FROM golang:1.17.1-stretch
+MAINTAINER Zorpheux <zorpheux@zorpheux.com>
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY reveal-aws.sh .
+COPY start-aws.sh start.sh
+RUN chmod -R 755 /usr/src/app/*.sh
+RUN ln -s /files /usr/src/app/files
+RUN mkdir /usr/src/app/tmp
+
+RUN apt-get update && apt-get install -y \
+    awscli \
+    curl \
+    jq 
+
+# Expose your port
+EXPOSE 8080
+
+VOLUME /files
+CMD [ "/usr/src/app/start.sh" ]
