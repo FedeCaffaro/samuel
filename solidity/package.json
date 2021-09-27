@@ -7,7 +7,7 @@
     "start": "ganache-cli -d -p 7545 --gasLimit=10000000",
     "deploy": "yarn truffle deploy --network rinkeby --reset",
     "verify": "yarn truffle run verify WhoIsSamot --network rinkeby",
-    "mint": "node scripts/mint.js",
+    "mint": "node scripts/mint.js"
   },
   "repository": {
     "type": "git",
