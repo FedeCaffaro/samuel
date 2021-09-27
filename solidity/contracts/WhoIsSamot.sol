@@ -22,7 +22,7 @@ contract WhoIsSamot is ERC721Tradable {
     address constant WALLET1 = 0xc4eeB8020e539C70Ecbd6464F7dB3Fe61de91986; // Z
     uint256 constant public MAX_SUPPLY = 10000;
     bool public saleIsActive = false;
-    bool public preSaleIsActive = true;
+    bool public preSaleIsActive = false;
     uint256 public mintPrice = 69000000000000000; // 0.069 ETH
     uint256 public maxToMint = 10;
     uint256 public maxToMintWhitelist = 20;

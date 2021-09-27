@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "ganache-cli -d -p 7545 --gasLimit=10000000",
-    "deploy": "yarn truffle deploy --network rinkeby --reset",
-    "verify": "yarn truffle run verify WhoIsSamot --network rinkeby",
-    "mint": "node scripts/mint.js"
+    "deploy": "yarn truffle deploy --network development --reset",
+    "verify": "yarn truffle run verify WhoIsSamot --network development",
+    "mint": "node scripts/mint.js",
+    "flipSaleState": "node scripts/flipSaleState.js"
   },
   "repository": {
     "type": "git",
