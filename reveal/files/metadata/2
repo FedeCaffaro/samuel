@@ -1,50 +1,38 @@
 {
-  "dna": "cf9ab1f1ca24d801f809766abbfd0f916a620836",
+  "dna": "752430c9b7d5b68f11fe31b6a9e15237edaf6428",
   "name": "#2",
-  "description": "Who is $AMOT?",
-  "image": "https://assets.samotnftapi.com/images/2.png",
+  "description": "This is the description of your NFT project, remember to replace this",
+  "image": "https://samotnft-assets-prod.s3.amazonaws.com/images/2.png",
   "edition": 2,
-  "date": 1632174376056,
+  "date": 1632785765796,
   "attributes": [
     {
       "trait_type": "Background",
-      "value": "nyc"
+      "value": "Black"
     },
     {
-      "trait_type": "Back accesories",
-      "value": "katanas"
+      "trait_type": "Eyeball",
+      "value": "Red"
     },
     {
-      "trait_type": "Body Rabbit",
-      "value": "rabbit4"
+      "trait_type": "Eye color",
+      "value": "Yellow"
     },
     {
-      "trait_type": "Tattoo",
-      "value": "tattoo_2"
+      "trait_type": "Iris",
+      "value": "Small"
     },
     {
-      "trait_type": "Shirt",
-      "value": "tshirt_black"
+      "trait_type": "Shine",
+      "value": "Shapes"
     },
     {
-      "trait_type": "Necklace",
-      "value": "necklace_studded"
+      "trait_type": "Bottom lid",
+      "value": "High"
     },
     {
-      "trait_type": "Jacket",
-      "value": "jacket_yellow"
-    },
-    {
-      "trait_type": "Headwear",
-      "value": "cowboy"
-    },
-    {
-      "trait_type": "Body accesories",
-      "value": "holster"
-    },
-    {
-      "trait_type": "Head accesories",
-      "value": "earring"
+      "trait_type": "Top lid",
+      "value": "High"
     }
   ],
   "compiler": "HashLips Art Engine"

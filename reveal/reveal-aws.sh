@@ -1,20 +1,19 @@
 #!/bin/bash
 
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
-export AWS_REGION=
+export AWS_ACCESS_KEY_ID=AKIAVBH3H7X3LETBS4D7
+export AWS_SECRET_ACCESS_KEY=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
+export AWS_REGION=us-east-1
 
 ext=png
-BASE_URI=https://assets.samotnftapi.com
-START_TOKEN=11
-END_TOKEN=20
+BASE_URI=https://samotnft-assets-prod.s3.amazonaws.com
+START_TOKEN=1
+END_TOKEN=10
 
 mkdir tmp
 
 # Update the image metadata
 for i in $(eval echo "{$START_TOKEN..$END_TOKEN}")
 do
-   mv ./files/metadata/$i.json ./files/metadata/$i
    URL=$BASE_URI jq ".image = \"$BASE_URI/images/$i.$ext\"" ./files/metadata/$i > ./tmp/$i.tmp
    mv ./tmp/$i.tmp ./files/metadata/$i
 done

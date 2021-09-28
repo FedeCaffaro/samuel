@@ -10,7 +10,7 @@ const NETWORK_URL = process.env.NETWORK_URL
 const NETWORK = process.env.NETWORK
 
 // input params
-const NUMBER_OF_TOKENS = 10;
+const NUMBER_OF_TOKENS = 1;
 
 if (!MNEMONIC || !OWNER_ADDRESS || !NETWORK) {
   console.error(
@@ -59,7 +59,7 @@ async function main() {
       .mint(OWNER_ADDRESS, NUMBER_OF_TOKENS)
       .send({ 
         from: OWNER_ADDRESS,
-        value: web3.utils.toHex(web3.utils.toWei("0.69", "ether")),
+        value: web3.utils.toHex(web3.utils.toWei("0.2", "ether")),
       });
     console.log(JSON.stringify(result))
     console.log("Minted NFTs. Transaction: " + result.transactionHash);

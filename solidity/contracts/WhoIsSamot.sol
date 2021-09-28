@@ -21,7 +21,7 @@ contract WhoIsSamot is ERC721Tradable {
     address constant WALLET1 = 0xc4eeB8020e539C70Ecbd6464F7dB3Fe61de91986; // Z
     uint256 public constant MAX_SUPPLY = 5000;
     bool public saleIsActive = false;
-    bool public preSaleIsActive = true;
+    bool public preSaleIsActive = false;
     uint256 public mintPrice = getNFTPrice();
     uint256 public maxToMint = 10;
     uint256 public maxToMintWhitelist = 20;
@@ -131,7 +131,6 @@ contract WhoIsSamot is ERC721Tradable {
     }
 
     function getNFTPrice() public view returns (uint256) {
-        require(saleIsActive, "Sale is not active.");
         require(totalSupply() <= MAX_SUPPLY, "Sold out.");
 
         uint256 currentSupply = totalSupply();
@@ -192,31 +191,4 @@ contract WhoIsSamot is ERC721Tradable {
         payable(WALLET1).transfer(wallet1Balance);
         payable(msg.sender).transfer(balance.sub(wallet1Balance));
     }
-}
-
-// Burner
-
-function burn(uint256 tokenId) public virtual override nonReentrant {
-    require(
-        _isApprovedOrOwner(msg.sender, tokenId),
-        "Caller is not owner nor approved"
-    );
-    address owner = ownerOf(tokenId);
-    _burn(tokenId);
-    // _postBurn(owner, tokenId);
-    toBurnlist(owner); // or msg.sender ? what happens when it is burnt with the owner variable ?
-}
-
-function toBurnlist(address addr) public onlyOwner returns (bool success) {
-    if (isBurnlisted(addr)) {
-        burlist[addr].burnCount++;
-    } else {
-        burnlist[addr].addr = addr;
-        burnlist[addr].burnCount = 1;
-        success = true;
-    }
-}
-
-function isBurnlisted(address addr) public view returns (bool isBurnListed) {
-    return burnlist[addr].addr == addr;
 }
