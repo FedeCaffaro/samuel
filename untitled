@@ -1,5 +1,0 @@
-serverless config credentials --provider aws --key AKIAVBH3H7X3LETBS4D7 --secret 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 --profile samot
-
-export AWS_ACCESS_KEY_ID=AKIAVBH3H7X3LETBS4D7
-export AWS_SECRET_ACCESS_KEY=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
-export AWS_REGION=us-east-1
