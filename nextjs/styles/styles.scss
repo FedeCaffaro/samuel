@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;700;900&display=swap');
+@import url('https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css');
+
+// Media Queries Break Points
+$phone-width: 640px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+
+// Override default variables before the import
+$theme-colors: (
+  "primary": #ffc107,
+);
+
+body {
+	font-family: 'Chivo', sans-serif !important;
+}
+
+
+.body-wrapper {
+	min-height: 100vh;
+	background: #000;
+	display: flex;
+	justify-content: center;
+	/*padding: 0 200px;*/
+	align-items: center;
+	background-image: url('/mint-bg.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.btn-round {
+	border-radius: 50px !important;
+}
+
+.btn-lg {
+	min-width: 200px !important;
+	font-size: 24px !important;
+}
+
+.mint-form {
+	background: #000 !important;
+	color: #fff;
+	padding: 50px 100px;
+	min-height: 50vh;
+	min-width: 600px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.logo-wrapper {
+		margin-bottom: 20px;
+	}
+	.mint-price {
+		font-size: 24px;
+		line-height: 30px;
+		margin: 20px auto;
+		svg {
+			color: grey;
+			position: relative;
+			top: -3px;
+		}
+	}
+
+	.btn {
+		margin: 30px auto 20px;
+	}
+}
+@import '~bootstrap/scss/bootstrap.scss';
+
