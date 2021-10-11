@@ -58,10 +58,6 @@ contract WhoIsSamot is ERC721Tradable {
         _contractURI = _uri;
     }
 
-    function setMintPrice(uint256 _price) external onlyOwner {
-        mintPrice = _price;
-    }
-
     function setMaxToMint(uint256 _maxToMint) external onlyOwner {
         maxToMint = _maxToMint;
     }
