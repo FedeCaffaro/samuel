@@ -1,0 +1,63 @@
+name: samot
+
+on:
+  push:
+    branches:
+      - development
+      - main
+
+jobs:
+  build:
+    name: deploy
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+
+    steps:
+      
+      # Checkout the repo
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      # Setup Node.js build environment
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.17.0
+
+      # Delete .next folder
+      - name: Delete .next
+        run: rm -rf nextjs/.next
+
+      # Create .env file
+      - name: Create .env
+        run: |
+          echo "AWS_ACCESS_KEY_ID"=$AWS_ACCESS_KEY_ID >> .env
+          echo "AWS_SECRET_ACCESS_KEY"=$AWS_SECRET_ACCESS_KEY >> .env
+          echo "AWS_REGION"=$AWS_REGION >> .env
+
+      # Install project dependencies
+      - name: Install Dependencies
+        run: cd nextjs && yarn
+
+      # Build the app
+      - name: Build
+        run: cd nextjs && yarn build
+
+      # Deploy to development
+      - name: Deploy Dev
+        if: endsWith(github.ref, '/development')
+        run: |
+          cd nextjs && aws s3 sync s3://samot-nextjs-deployment/dev .serverless --delete
+          npx serverless --env=dev
+          aws s3 sync .serverless s3://samot-nextjs-deployment/dev --delete
+
+      # Deploy to production
+      - name: Deploy Prod
+        if: endsWith(github.ref, '/main')
+        run: |
+          cd nextjs && aws s3 sync s3://samot-nextjs-deployment/prod .serverless --delete
+          npx serverless --env=prod
+          aws s3 sync .serverless s3://samot-nextjs-deployment/prod --delete

@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-export const NFT_CONTRACT_ADDRESS = "0x0BCd0f6AEb1C88cF87760ec7Ea2c354b2EcA5157"
+export const NFT_CONTRACT_ADDRESS = "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD"
 const NFT_ABI = [
   {
     inputs: [
@@ -36,20 +36,6 @@ const NFT_ABI = [
   },
   {
     inputs: [],
-    name: "maxSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
-  },
-  {
-    inputs: [],
     name: "maxToMint",
     outputs: [
       {
@@ -64,7 +50,7 @@ const NFT_ABI = [
   },
   {
     inputs: [],
-    name: "mintPrice",
+    name: "getNFTPrice",
     outputs: [
       {
         internalType: "uint256",
@@ -161,18 +147,6 @@ export const totalSupply = async () => {
     .call();
 }
 
-export const maxSupply = async () => {
-  const web3Instance = await getWeb3();
-  const nftContract = new web3Instance.eth.Contract(
-    NFT_ABI,
-    NFT_CONTRACT_ADDRESS
-  );
-
-  return nftContract.methods
-    .maxSupply()
-    .call();
-}
-
 export const mintPrice = async () => {
   const web3Instance = await getWeb3();
   const nftContract = new web3Instance.eth.Contract(
@@ -181,7 +155,7 @@ export const mintPrice = async () => {
   );
 
   return nftContract.methods
-    .mintPrice()
+    .getNFTPrice()
     .call();
 }
 
