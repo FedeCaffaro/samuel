@@ -125,8 +125,8 @@ export default function Home() {
 		    	<div>
 			    	<p>{totalMinted} / 8888</p>
 			    	<p>
-			    		<a target="_blank" href={`${etherscanUrl}/address/${NFT_CONTRACT_ADDRESS}`}>View Contract</a><br />
-			    		{transactionUrl && <a target="_blank" href={transactionUrl}>View Transaction</a>}
+			    		<a rel="noreferrer" target="_blank" href={`${etherscanUrl}/address/${NFT_CONTRACT_ADDRESS}`}>View Contract</a><br />
+			    		{transactionUrl && <a rel="noreferrer" target="_blank" href={transactionUrl}>View Transaction</a>}
 			    	</p>
 		    	</div>
 		    )}
