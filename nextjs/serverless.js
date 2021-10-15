@@ -10,8 +10,8 @@ class Deploy extends Component {
           component: '@sls-next/serverless-component@1.18.1-alpha.2',
           inputs: {
             bucketName: `samot-${inputs.env}`,
-            domain:
-              inputs.env === 'prod' ? 'samot.club' : [`${inputs.env}`, 'samot.club'],
+            // domain:
+            //   inputs.env === 'prod' ? 'samot.club' : [`${inputs.env}`, 'samot.club'],
           },
         },
       },
