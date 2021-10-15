@@ -37,22 +37,17 @@ exports.token = async (event) => {
       body: JSON.stringify(body)
     }
   } else {
-    const body = {
-      name: `#${tokenId}`,
-      description: "Who is Samot?",
-      external_url: "https://samotnft.com",
-      image: "https://assets.samotnftapi.com/collection/collection.png",
-      attributes: []
-    }
+    const assetsBucket = `samotclub-assets-${process.env.ENV}`
+    let metadata = await s3.getObject(`collection/contract`, assetsBucket)
     return {
       statusCode: 200,
-      body: JSON.stringify(body)
+      body: metadata.Body.toString()
     }
   }
 }
 
 exports.contract = async (event) => {
-  const assetsBucket = `samotnft-assets-${process.env.ENV}`
+  const assetsBucket = `samotclub-assets-${process.env.ENV}`
   let metadata = await s3.getObject(`collection/contract`, assetsBucket)
   return {
     statusCode: 200,
@@ -63,8 +58,8 @@ exports.contract = async (event) => {
 const getMetadata = async (tokenId) => {
   const index = parseInt(tokenId) - 1
   try {
-      const assetsBucket = `samotnft-assets-${process.env.ENV}`
-      const sourceBucket = `samotnft-source-${process.env.ENV}`
+      const assetsBucket = `samotclub-assets-${process.env.ENV}`
+      const sourceBucket = `samotclub-source-${process.env.ENV}`
       try {
         let metadata = await s3.getObject(`metadata/${tokenId}`, assetsBucket)
         return JSON.parse(metadata.Body)

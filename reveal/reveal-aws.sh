@@ -5,7 +5,7 @@ export AWS_SECRET_ACCESS_KEY=
 export AWS_REGION=
 
 ext=png
-BASE_URI=https://assets.samotnftapi.com
+BASE_URI=https://assets.samot.club
 START_TOKEN=11
 END_TOKEN=20
 

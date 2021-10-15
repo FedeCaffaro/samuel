@@ -8,10 +8,11 @@ provider:
   runtime: nodejs12.x
   environment:
     ENV: ${opt:stage, 'prod'}
-    IMAGE_TYPE: 'png'
-    CONTRACT_ADDRESS: ""
-    MNEMONIC: ""
-    NETWORK_URL: https://mainnet.infura.io/v3/your-infuria-key
+    DOMAIN: ${self:custom.domain.${self:provider.stage}}
+    CONTRACT_ADDRESS: ${self:custom.CONTRACT_ADDRESS.${self:provider.stage}}
+    MNEMONIC: "" # add wallet mnemonic here
+    INFURIA_KEY: "" # add infuria key here
+    NETWORK_URL: ${self:custom.NETWORK_URL.${self:provider.stage}}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -20,10 +21,26 @@ provider:
 
 plugins:
   - serverless-offline
+  - serverless-domain-manager
 
 custom:
   serverless-offline:
     httpPort: 4000
+  domain:
+    dev: dev-api.samot.club
+    prod: api.samot.club
+  customDomain:
+    domainName: ${self:provider.environment.DOMAIN}
+    stage: ${self:provider.stage}
+    basePath: ""
+    certificateName: "*.samot.club"
+    createRoute53Record: true
+  CONTRACT_ADDRESS:
+    dev: "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD"
+    prod: "" # add mainnet contract here
+  NETWORK_URL:
+    dev: https://rinkeby.infura.io/v3/${self:provider.environment.INFURIA_KEY}
+    prod: https://mainnet.infura.io/v3/${self:provider.environment.INFURIA_KEY}
 
 functions:
   token:
@@ -42,58 +59,7 @@ functions:
           cors: true
 
 resources:
-  Resources:
-    PrivatAssetBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: samotnft-source-${self:provider.stage}
-        # Set the CORS policy
-        CorsConfiguration:
-          CorsRules:
-            -
-              AllowedOrigins:
-                - '*'
-              AllowedHeaders:
-                - '*'
-              AllowedMethods:
-                - GET
-                - PUT
-                - POST
-                - DELETE
-                - HEAD
-              MaxAge: 3000
-    PublicAssetBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: samotnft-assets-${self:provider.stage}
-        # Set the CORS policy
-        CorsConfiguration:
-          CorsRules:
-            -
-              AllowedOrigins:
-                - '*'
-              AllowedHeaders:
-                - '*'
-              AllowedMethods:
-                - GET
-                - PUT
-                - POST
-                - DELETE
-                - HEAD
-              MaxAge: 3000
-    PublicAssetBucketAllowPublicReadPolicy:
-      Type: AWS::S3::BucketPolicy
-      Properties:
-        Bucket: 
-          Ref: PublicAssetBucket
-        PolicyDocument:
-          Statement:
-            - Sid: PublicReadForGetBucketObjects
-              Effect: Allow
-              Principal: '*'
-              Action:
-                - 's3:GetObject'
-              Resource: arn:aws:s3:::samotnft-assets-${self:provider.stage}/*
+  - ${file(./config/s3.yml)}
 
 
 

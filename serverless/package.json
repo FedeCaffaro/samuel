@@ -7,6 +7,7 @@
     "deploy": "sls deploy --stage prod"
   },
   "devDependencies": {
+    "serverless-domain-manager": "^5.1.5",
     "serverless-offline": "^7.0.0"
   },
   "dependencies": {
