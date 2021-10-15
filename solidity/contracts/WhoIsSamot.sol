@@ -21,26 +21,26 @@ contract WhoIsSamot is ERC721Tradable {
     using SafeMath for uint256;
     address constant WALLET1 = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
     uint256 constant public MAX_SUPPLY = 8888;
-    uint256 public maxToMint = 10;
-    uint256 public maxToMintWhitelist = 20;
+    uint256 public maxToMint = 8;
+    uint256 public maxToMintWhitelist = 8;
     bool public saleIsActive = false;
     bool public preSaleIsActive = false;
-    bool public whitelistRegistration = false;
     string _baseTokenURI;
     string _contractURI;
+    address[] whitelistAddr;
 
-    constructor(address _proxyRegistryAddress) ERC721Tradable("Who Is Samot?", "SAMOT", _proxyRegistryAddress) {}
+    constructor(address _proxyRegistryAddress, address[] memory addrs) ERC721Tradable("Who Is Samot?", "SAMOT", _proxyRegistryAddress) {
+        whitelistAddr = addrs;
+        for(uint i = 0; i < whitelistAddr.length; i++) {
+            addAddressToWhitelist(whitelistAddr[i]);
+        }
+    }
 
-    struct AddressWhitelist {
+    struct Whitelist {
         address addr;
         uint hasMinted;
     }
-    mapping(address => AddressWhitelist) public addressWhitelist;
-
-    struct ContractWhitelist {
-        address addr;
-    }
-    mapping(address => ContractWhitelist) public contractWhitelist;
+    mapping(address => Whitelist) public whitelist;
 
     function baseTokenURI() public view virtual override returns (string memory) {
         return _baseTokenURI;
@@ -74,10 +74,6 @@ contract WhoIsSamot is ERC721Tradable {
         preSaleIsActive = !preSaleIsActive;
     }
 
-    function flipWhitelistRegistration() public onlyOwner {
-        whitelistRegistration = !whitelistRegistration;
-    }
-
     function reserve(address to, uint256 numberOfTokens) public onlyOwner {
         uint256 i;
         for (i = 0; i < numberOfTokens; i++) {
@@ -85,33 +81,30 @@ contract WhoIsSamot is ERC721Tradable {
         }
     }
 
-    function isAddressWhitelisted(address addr) public view returns (bool isWhiteListed) {
-        return addressWhitelist[addr].addr == addr;
-    }
-
-    function isContractWhitelisted(address addr) public view returns (bool isWhiteListed) {
-        return contractWhitelist[addr].addr == addr;
-    }
-
-    function addAddressToWhitelist(address addr) public returns(bool success) {
-        require(!isAddressWhitelisted(addr), "Already whitelisted.");
-        require(whitelistRegistration, "Whitelist registration is not active.");
-        addressWhitelist[addr].addr = addr;
-        addressWhitelist[addr].hasMinted = 0;
+    function addAddressToWhitelist(address addr) onlyOwner public returns(bool success) {
+        require(!isWhitelisted(addr), "Already whitelisted");
+        whitelist[addr].addr = addr;
+        whitelist[addr].hasMinted = 0;
         success = true;
     }
 
-    function addContractToWhitelist(address addr) public onlyOwner returns(bool success) {
-        require(!isContractWhitelisted(addr), "Already whitelisted.");
-        contractWhitelist[addr].addr = addr;
+    function addAddressesToWhitelist(address[] memory addrs) onlyOwner public returns(bool success) {
+        whitelistAddr = addrs;
+        for(uint i = 0; i < whitelistAddr.length; i++) {
+            addAddressToWhitelist(whitelistAddr[i]);
+        }
         success = true;
+    }
+
+    function isWhitelisted(address addr) public view returns (bool isWhiteListed) {
+        return whitelist[addr].addr == addr;
     }
 
     function getNFTPrice() public view returns (uint256) {
         require(totalSupply() < MAX_SUPPLY, "Sale has already ended");
         uint currentSupply = totalSupply();
         if (currentSupply >= 8001) {
-            return 128000000000000000000; // 8001 - 8888 12.8 ETH
+            return 12800000000000000000; // 8001 - 8888 12.8 ETH
         } else if (currentSupply >= 7001) {
             return 6400000000000000000; // 7001 - 8000 6.4 ETH
         } else if (currentSupply >= 6001) {
@@ -138,10 +131,10 @@ contract WhoIsSamot is ERC721Tradable {
         require(getNFTPrice().mul(numberOfTokens) <= msg.value, "ETH sent is incorrect.");
         if(preSaleIsActive) {
             require(numberOfTokens <= maxToMintWhitelist, "Exceeds wallet pre-sale limit.");
-            require(isAddressWhitelisted(to), "Your address is not whitelisted.");
-            require(addressWhitelist[to].hasMinted.add(numberOfTokens) <= maxToMintWhitelist, "Exceeds per wallet pre-sale limit.");
-            require(addressWhitelist[to].hasMinted <= maxToMintWhitelist, "Exceeds per wallet pre-sale limit.");
-            addressWhitelist[to].hasMinted = addressWhitelist[to].hasMinted.add(numberOfTokens);
+            require(isWhitelisted(to), "Your address is not whitelisted.");
+            require(whitelist[to].hasMinted.add(numberOfTokens) <= maxToMintWhitelist, "Exceeds per wallet pre-sale limit.");
+            require(whitelist[to].hasMinted <= maxToMintWhitelist, "Exceeds per wallet pre-sale limit.");
+            whitelist[to].hasMinted = whitelist[to].hasMinted.add(numberOfTokens);
         } else {
             require(numberOfTokens <= maxToMint, "Exceeds per transaction limit.");
         }
