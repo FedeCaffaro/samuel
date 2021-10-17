@@ -20,7 +20,6 @@ provider:
 
 plugins:
   - serverless-offline
-  - serverless-domain-manager
 
 custom:
   serverless-offline:
