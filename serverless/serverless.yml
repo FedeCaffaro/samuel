@@ -8,10 +8,9 @@ provider:
   runtime: nodejs12.x
   environment:
     ENV: ${opt:stage, 'prod'}
-    DOMAIN: ${self:custom.domain.${self:provider.stage}}
     CONTRACT_ADDRESS: ${self:custom.CONTRACT_ADDRESS.${self:provider.stage}}
-    MNEMONIC: "" # add wallet mnemonic here
-    INFURIA_KEY: "" # add infuria key here
+    MNEMONIC: ${ssm:mnemonic~true}
+    INFURIA_KEY: ${ssm:infuria~true}
     NETWORK_URL: ${self:custom.NETWORK_URL.${self:provider.stage}}
   iamRoleStatements:
     - Effect: Allow
@@ -26,18 +25,9 @@ plugins:
 custom:
   serverless-offline:
     httpPort: 4000
-  domain:
-    dev: dev-api.samot.club
-    prod: api.samot.club
-  customDomain:
-    domainName: ${self:provider.environment.DOMAIN}
-    stage: ${self:provider.stage}
-    basePath: ""
-    certificateName: "*.samot.club"
-    createRoute53Record: true
   CONTRACT_ADDRESS:
     dev: "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD"
-    prod: "" # add mainnet contract here
+    prod: "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD"
   NETWORK_URL:
     dev: https://rinkeby.infura.io/v3/${self:provider.environment.INFURIA_KEY}
     prod: https://mainnet.infura.io/v3/${self:provider.environment.INFURIA_KEY}
