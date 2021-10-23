@@ -1,5 +1,13 @@
 import Web3 from 'web3';
-export const NFT_CONTRACT_ADDRESS = "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD"
+
+const isBrowser = typeof window !== "undefined"
+let CONTRACT_ADDRESS = "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d" // mainnet
+if (isBrowser && (window.location.hostname.includes('dev') || window.location.hostname.includes('localhost'))) {
+  CONTRACT_ADDRESS = "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD" // rinkeby
+}
+
+export const NFT_CONTRACT_ADDRESS = CONTRACT_ADDRESS
+
 const NFT_ABI = [
   {
     inputs: [
