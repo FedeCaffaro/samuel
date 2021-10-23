@@ -49,7 +49,7 @@ exports.token = async (event) => {
     let metadata = await s3.getObject(`metadata/default`, assetsBucket)
     return {
       statusCode: 200,
-      body: JSON.stringify(body)
+      body: metadata.Body.toString()
     }
   }
 }
