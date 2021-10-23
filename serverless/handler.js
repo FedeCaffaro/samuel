@@ -29,16 +29,24 @@ const CONTRACT_ABI = [,
 ];
 
 exports.token = async (event) => {
+  const assetsBucket = `samotclub-assets-${process.env.ENV}`
   const tokenId = event.pathParameters.tokenId
-  const body = await getMetadata(tokenId)
-  if (body && body.image && body.name && body.description && body.attributes) {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(body)
+  if (process.env.REVEAL) {
+    const body = await getMetadata(tokenId)
+    if (body && body.image && body.name && body.description && body.attributes) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(body)
+      }
+    } else {
+      let metadata = await s3.getObject(`metadata/default`, assetsBucket)
+      return {
+        statusCode: 200,
+        body: metadata.Body.toString()
+      }
     }
   } else {
-    const assetsBucket = `samotclub-assets-${process.env.ENV}`
-    let metadata = await s3.getObject(`collection/contract`, assetsBucket)
+    let metadata = await s3.getObject(`metadata/default`, assetsBucket)
     return {
       statusCode: 200,
       body: metadata.Body.toString()
