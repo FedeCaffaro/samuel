@@ -10,7 +10,7 @@ function App({ Component, pageProps }) {
 	}
   return (
   	<UseWalletProvider
-        chainId={1}
+        chainId={chainId}
         connectors={{
           portis: { dAppId: 'samot-nft' },
         }}
