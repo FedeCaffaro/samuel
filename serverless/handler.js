@@ -47,13 +47,9 @@ exports.token = async (event) => {
     }
   } else {
     let metadata = await s3.getObject(`metadata/default`, assetsBucket)
-    const body = {
-      ...metadata.Body,
-      name: `#${tokenId}`
-    }
     return {
       statusCode: 200,
-      body: JSON.stringify(body)
+      body: metadata.Body.toString()
     }
   }
 }
