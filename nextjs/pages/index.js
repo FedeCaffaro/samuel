@@ -95,7 +95,7 @@ export default function Home() {
 
 	return (
 		<div className="body-wrapper">
-		  {saleActive ? (
+		  {true ? (
 		  	<Card className="mint-form">
 			  	<div className="logo-wrapper">
 			  		<img src="/samot-logo.jpg" width="150px" />
