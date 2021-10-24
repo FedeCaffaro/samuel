@@ -12,7 +12,7 @@ provider:
     MNEMONIC: ${ssm:mnemonic~true}
     INFURIA_KEY: ${ssm:infuria~true}
     NETWORK_URL: ${self:custom.NETWORK_URL.${self:provider.stage}}
-    #REVEAL: true
+    REVEAL: true
   iamRoleStatements:
     - Effect: Allow
       Action:
