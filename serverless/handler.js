@@ -91,8 +91,8 @@ const getMetadata = async (tokenId) => {
         if (typeof parseInt(response) === 'number' && parseInt(response) == parseInt(tokenId)) {
           let metadata = await s3.getObject(`metadata/${tokenId}`, sourceBucket)
           await s3.putObject(`metadata/${tokenId}`, assetsBucket, metadata.Body)
-          let image = await s3.getObject(`images/${tokenId}.${process.env.IMAGE_TYPE}`, sourceBucket)
-          await s3.putObject(`images/${tokenId}.${process.env.IMAGE_TYPE}`, assetsBucket, image.Body)
+          let image = await s3.getObject(`images/${tokenId}.png`, sourceBucket)
+          await s3.putObject(`images/${tokenId}.png`, assetsBucket, image.Body)
           return JSON.parse(metadata.Body)
         } else {
           return false
