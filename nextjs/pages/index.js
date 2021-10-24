@@ -54,15 +54,17 @@ export default function Home() {
 	}
 
 	const mintNFTs = async () => {
-      setError(null)
-      setLoading(true)
-      setPending(true)
-      const result = await mint(wallet.account, numberOfTokens, price)
-      if (result.error) {
-        setError(result.error)
-      } else {
-        setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
-      }
+	  if (wallet && wallet.account && numberOfTokens && price) {
+	      setError(null)
+	      setLoading(true)
+	      setPending(true)
+	      const result = await mint(wallet.account, numberOfTokens, price)
+	      if (result.error) {
+	        setError(result.error)
+	      } else {
+	        setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
+	      }
+  	  }
   	}
 
 	useEffect(() => {
@@ -93,48 +95,58 @@ export default function Home() {
 
 	return (
 		<div className="body-wrapper">
-		  <Card className="mint-form">
-		  	<div className="logo-wrapper">
-		  		<img src="/samot-logo.jpg" width="150px" />
-		  	</div>
-		  	<h1>Mint Samot NFTs</h1>
-		  	{wallet && wallet.account && 
-		  		((wallet.networkName == 'rinkeby' && network == 'test') ||
-		  		 (wallet.networkName == 'main' && network == 'main')) ? (
-			  	<div>
-				  	<div className="mint-price">{parseFloat(price/Math.pow(10, 18))} <FaEthereum/> + Gas</div>
+		  {saleActive ? (
+		  	<Card className="mint-form">
+			  	<div className="logo-wrapper">
+			  		<img src="/samot-logo.jpg" width="150px" />
+			  	</div>
+			  	<h1>Mint Samot NFTs</h1>
+			  	{wallet && wallet.account && 
+			  		((wallet.networkName == 'rinkeby' && network == 'test') ||
+			  		 (wallet.networkName == 'main' && network == 'main')) ? (
+				  	<div>
+					  	<div className="mint-price">{parseFloat(price/Math.pow(10, 18))} <FaEthereum/> + Gas</div>
 
-				  	<RangeSlider
-				      value={numberOfTokens}
-				      size="lg"
-				      min={1}
-				      max={parseInt(maxPerTransaction)}
-				      tooltip="on"
-				      variant='warning'
-				      onChange={event => setNumberOfTokens(event.target.value)}
-				    />
-				    <Button size="lg" variant="primary" className="btn-round" onClick={() => mintNFTs()}>Mint</Button>
-				    <p>{error}</p>
-				</div>
-		    ) : (
-		    	<div>
-		    		{showNetworkWarning ? (
-		    			<div>{showNetworkWarning}</div>
-		    		) : (
-		    			<Button size="lg" variant="primary" className="btn-round" onClick={() => connect()}>Connect</Button>
-		    		)}
-		    	</div>
-		    )}
-		    {wallet && wallet.account && !showNetworkWarning && (
-		    	<div>
-			    	<p>{totalMinted} / 8888</p>
-			    	<p>
-			    		<a rel="noreferrer" target="_blank" href={`${etherscanUrl}/address/${NFT_CONTRACT_ADDRESS}`}>View Contract</a><br />
-			    		{transactionUrl && <a rel="noreferrer" target="_blank" href={transactionUrl}>View Transaction</a>}
-			    	</p>
-		    	</div>
-		    )}
-		  </Card>
+					  	<RangeSlider
+					      value={numberOfTokens}
+					      size="lg"
+					      min={1}
+					      max={parseInt(maxPerTransaction)}
+					      tooltip="on"
+					      variant='warning'
+					      onChange={event => setNumberOfTokens(event.target.value)}
+					    />
+					    <Button size="lg" variant="primary" className="btn-round" onClick={() => mintNFTs()}>Mint</Button>
+					    <p>{error}</p>
+					</div>
+			    ) : (
+			    	<div>
+			    		{showNetworkWarning ? (
+			    			<div>{showNetworkWarning}</div>
+			    		) : (
+			    			<Button size="lg" variant="primary" className="btn-round" onClick={() => connect()}>Connect</Button>
+			    		)}
+			    	</div>
+			    )}
+			    {wallet && wallet.account && !showNetworkWarning && (
+			    	<div>
+				    	<p>{totalMinted} / 8888</p>
+				    	<p>
+				    		<a rel="noreferrer" target="_blank" href={`${etherscanUrl}/address/${NFT_CONTRACT_ADDRESS}`}>View Contract</a><br />
+				    		{transactionUrl && <a rel="noreferrer" target="_blank" href={transactionUrl}>View Transaction</a>}
+				    	</p>
+			    	</div>
+			    )}
+			  </Card>
+		  ) : (
+		  	<Card className="mint-form">
+		  		<div className="logo-wrapper">
+			  		<img src="/samot-logo.jpg" width="150px" />
+			  	</div>
+			  	<h1>Mint Samot NFTs</h1>
+			  	<p>Sale is not active.</p>
+		  	</Card>
+		  )}
 		</div>
 	)
 }
