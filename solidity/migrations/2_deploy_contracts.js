@@ -1,4 +1,5 @@
-const WhoIsSamot = artifacts.require("WhoIsSamot");
+//const WhoIsSamot = artifacts.require("WhoIsSamot");
+const SamotToken = artifacts.require("SamotToken");
 const whitelist = require("./whitelist.json")
 
 module.exports = async function (deployer, network, address) {
@@ -8,6 +9,6 @@ module.exports = async function (deployer, network, address) {
     } else {
         proxyRegistryAddress = "0xa5409ec958c83c3f309868babaca7c86dcb077c1";
     }
-    await deployer.deploy(WhoIsSamot, proxyRegistryAddress, whitelist);
-
+    //await deployer.deploy(WhoIsSamot, proxyRegistryAddress, whitelist);
+    await deployer.deploy(SamotToken, "Samot Token", "SAMOT");
 };
