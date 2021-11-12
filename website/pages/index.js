@@ -19,8 +19,8 @@ import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
 export default function Home() {
-  const OS_API_ENDPOINT = "https://api.opensea.io/api/v1"
-  //const OS_API_ENDPOINT = "https://rinkeby-api.opensea.io/api/v1"
+  //const OS_API_ENDPOINT = "https://api.opensea.io/api/v1"
+  const OS_API_ENDPOINT = "https://rinkeby-api.opensea.io/api/v1"
   const wallet = useWallet()
   const [ unstakedAssets, setUnstakedAssets ] = useState([])
   const [ stakingRewards, setStakingRewards ] = useState(0)
