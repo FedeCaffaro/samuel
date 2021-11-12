@@ -53,6 +53,11 @@ jobs:
           cd nextjs && aws s3 sync s3://samot-nextjs-deployment/dev .serverless --delete
           npx serverless --env=dev
           aws s3 sync .serverless s3://samot-nextjs-deployment/dev --delete
+
+          cd website && aws s3 sync s3://samot-nextjs-deployment/website .serverless --delete
+          npx serverless --env=dev
+          aws s3 sync .serverless s3://samot-nextjs-deployment/website --delete
+
           npm install serverless -g
           cd ../serverless && npm install && serverless deploy --stage dev
 
@@ -63,5 +68,10 @@ jobs:
           cd nextjs && aws s3 sync s3://samot-nextjs-deployment/prod .serverless --delete
           npx serverless --env=prod
           aws s3 sync .serverless s3://samot-nextjs-deployment/prod --delete
+
+          cd website && aws s3 sync s3://samot-nextjs-deployment/website .serverless --delete
+          npx serverless --env=prod
+          aws s3 sync .serverless s3://samot-nextjs-deployment/website --delete
+
           npm install serverless -g
           cd ../serverless && npm install && serverless deploy --stage prod
