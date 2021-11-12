@@ -42,7 +42,7 @@ export default function Pyramyd() {
 				 	</div>
 				 </div>
 				 <Row className="vertical-center collection-overview">
-				 	<Col className="collection-summary">
+				 	<Col className="collection-summary" sm={12} md={6} lg={6} xl={6}>
 				 		<h1>{collection.name}</h1>
 						<div dangerouslySetInnerHTML={{ __html: collection.html }} />
 						<h3>LAUNCH: {collection.datetime}</h3>
@@ -56,7 +56,7 @@ export default function Pyramyd() {
 						<Button onClick={() => Router.push(`/mint/${collection.contract}`)} variant="outline-light" className="btn-xl">Mint</Button>
 
 				 	</Col>
-				 	<Col>
+				 	<Col sm={12} md={6} lg={6} xl={6}>
 				 		<div className="small-gallery">
 				 			{collection && collection.smallGallery && collection.smallGallery.map(image => (
 				 				<img src={image.src} />

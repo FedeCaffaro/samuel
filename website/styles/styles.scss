@@ -1023,6 +1023,9 @@ h5 {
 .home-wrapper {
 	margin-top: 20px;
 	padding: 0 24px 100px;
+	@media (max-width: 767px) {
+		padding: 0 12px 100px;
+	}
 }
 
 .nav-pills .nav-link {
@@ -1428,7 +1431,7 @@ h5 {
 			}
 			h1 {
 				text-transform: uppercase;
-				font-size: 3em;
+				font-size: 2.5em;
 				margin-bottom: 20px;
 				@media (min-width: 956px) {
 					font-size: 5em;
@@ -1468,6 +1471,9 @@ h5 {
 		&.home-content {
 			max-height: 100vh;
 			overflow: hidden;
+			@media (max-width: 956px) {
+				overflow-y: scroll;
+			}
 		}
 		&.launches {
 			margin-top: 75px;
@@ -1823,18 +1829,30 @@ h5 {
 		}
 	}
 	.collection-overview {
-		padding: 12px 60px;
+		padding: 12px 24px;
+		@media screen and (min-width: 957px) {
+			padding: 12px 60px;
+		}
 	}
 	.collection-summary {
-		padding: 12px 48px;
+		padding: 12px;
+		@media screen and (min-width: 957px) {
+			padding: 12px 48px;
+		}
 		h1 {
 			font-size: 110px;
 			line-height: 1;
 			margin-bottom: 20px;
+			@media screen and (max-width: 957px) {
+				font-size: 50px;
+			}
 		}
 		h2{
 			font-size: 70px;
 			margin: 20px 0;
+			@media screen and (max-width: 957px) {
+				font-size: 50px;
+			}
 		}
 		h3 {
 			font-size: 40px;
@@ -1866,11 +1884,14 @@ h5 {
 	}
 	.pyramyd_bg {
 		margin: 24px;
-		padding: 100px 50px;
+		padding: 50px 25px;
 		background-image: url(/pyramyd/pyramyd_bg_light.png);
 		background-position: center;
 		background-size: 40%;
 		background-repeat: repeat;
+		@media screen and (min-width: 957px) {
+			padding: 100px 50px;
+		}
 	}
 	.main-gallery {
 		padding: 50px 0;
