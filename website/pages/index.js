@@ -109,7 +109,7 @@ export default function Home() {
   }
 
   const startCountdown = () => {
-    let countDownDate = new Date("Nov 28, 2021 19:00:00").getTime();
+    let countDownDate = new Date("Dec 10, 2021 19:00:00").getTime();
     setInterval(function() {
       let now = new Date().getTime();
       let distance = countDownDate - now;
@@ -349,7 +349,7 @@ export default function Home() {
                     {drops && drops.length > 0 && _.filter(drops, drop => {
                       return drop.type == 'active' || drop.type == 'previous'
                     }).map(drop => (
-                      <Dropdown.Item onClick={() => loadUnstakedAssets(drop)} eventKey={drop.contract}>{drop.name}</Dropdown.Item>
+                      <Dropdown.Item key={drop.symbol} onClick={() => loadUnstakedAssets(drop)} eventKey={drop.contract}>{drop.name}</Dropdown.Item>
                     ))}
                   </DropdownButton>
                   {collection && collection.name == "SAMOT" ? (

@@ -26,11 +26,11 @@ export default function Home() {
 	let network
 	if (isBrowser) {
 	  etherscanUrl = window.location.hostname.includes('test') ||
-	  	window.location.hostname.includes('dev') ||
+	  	window.location.hostname.includes('cloudfront') ||
 	  	window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
 	  network = window.location.hostname.includes('test') ||
 	  	window.location.hostname.includes('dev') ||
-	  	window.location.hostname.includes('localhost') ? 'test' : 'main'
+	  	window.location.hostname.includes('cloudfront') ? 'test' : 'main'
 	}
 
 	useEffect(() => {
