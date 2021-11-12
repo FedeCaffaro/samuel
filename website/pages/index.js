@@ -287,7 +287,7 @@ export default function Home() {
                 </div>
               </div>
             </Col>
-            <Col sm={11}>
+            <Col sm={12} md={12}  lg={11} xl={11}>
               <Tab.Content className="outter-tab-content">
                 <Tab.Pane eventKey="home">
                   <Tabs defaultActiveKey="home-inner" className="inner-tabs">
