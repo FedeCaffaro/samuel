@@ -30,6 +30,10 @@ jobs:
       # Delete .next folder
       - name: Delete .next
         run: rm -rf nextjs/.next
+        
+      # Delete .next folder
+      - name: Delete .next
+        run: rm -rf website/.next
 
       # Create .env file
       - name: Create .env
@@ -45,6 +49,14 @@ jobs:
       # Build the app
       - name: Build
         run: cd nextjs && yarn build
+        
+      # Install project dependencies
+      - name: Install Dependencies
+        run: cd website && yarn
+
+      # Build the app
+      - name: Build
+        run: cd website && yarn build
 
       # Deploy to development
       - name: Deploy Dev
