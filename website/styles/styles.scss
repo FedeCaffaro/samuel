@@ -26,6 +26,10 @@ a {
 	}
 }
 
+.btn-primary{
+	color: #151515 !important;
+}
+
 body {
 	font-family:  'Playfair Display', serif !important;
 	margin: 0 !important;
@@ -1316,6 +1320,7 @@ h5 {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 20000;
 }
 
 .outter-tab-content {
