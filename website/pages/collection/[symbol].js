@@ -33,7 +33,7 @@ export default function Pyramyd() {
 				 </Link>
 				 <div className="collection-header">
 				 	<div className="logo">
-				 		<img src={collection.logo} width="200px" />
+				 		<img src={`/${collection.imageUrl}`} width="200px" />
 				 	</div>
 				 	<div className="social-links">
 				 		<a href={collection.instagram} target="_blank">
