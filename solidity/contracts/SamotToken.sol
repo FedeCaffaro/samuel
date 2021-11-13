@@ -44,10 +44,12 @@ abstract contract SamotNFT {
 
 contract SamotToken is ERC20, ERC721Holder, Ownable {
     using SafeMath for uint256;
-    address constant WALLET = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
+    address constant WALLET1 = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
+    address constant WALLET2 = 0xD9CC8af4E8ac5Cb5e7DdFffD138A58Bac49dAEd5;
     uint256 public maxToMintPerNFT = 100;
     uint256 public maxToMint = 50000;
-    uint256 public maxSupplySale = 5000000;
+    uint256 public maxSupply = 6000000;
+    uint256 public epochStartTime = block.timestamp;
     bool public preSaleIsActive = true;
     bool public saleIsActive = false;
     uint256 public stakingReward = 10;
@@ -56,14 +58,14 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
     uint256[] internal stakedtokens;
     uint256 initialSupply = 1000000;
     SamotNFT nft;
-    uint256 public epochStartTime = block.timestamp;
+    
 
     event Claimed(address _from, uint256 _tokenId);
 
     constructor(string memory _name, string memory _symbol)
         ERC20(_name, _symbol)
     {
-        _mint(msg.sender, initialSupply.mul(decimals()));
+        _mint(msg.sender, initialSupply.mul(10**18));
     }
 
     struct Stakes {
@@ -95,8 +97,8 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         mintPrice = _price;
     }
 
-    function setMaxSupplySale(uint256 _maxSupply) external onlyOwner {
-        maxSupplySale = _maxSupply;
+    function setMaxSupply(uint256 _maxSupply) external onlyOwner {
+        maxSupply = _maxSupply;
     }
 
     function setMaxToMint(uint256 _maxToMint) external onlyOwner {
@@ -107,18 +109,34 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         maxToMintPerNFT = _maxToMint;
     }
 
+    function getPrice() public view returns (uint256) {
+        uint256 currentSupply = totalSupply().div(10**18);
+        require(currentSupply <= maxSupply, "Sold out.");
+        if (currentSupply >= 5000000) {
+            return mintPrice.mul(2**4);
+        } else if (currentSupply >= 4000000) {
+            return mintPrice.mul(2**3);
+        } else if (currentSupply >= 3000000) {
+            return mintPrice.mul(2**2);
+        } else if (currentSupply >= 2000000) {
+            return mintPrice.mul(2);
+        } else {
+            return mintPrice;
+        }
+    }
+
     function mint(uint256 numberOfTokens) public payable {
         require(saleIsActive, "Sale is not active.");
-        require(totalSupply().sub(initialSupply.mul(decimals())) <= maxSupplySale.mul(decimals()), "Sold out.");
         require(numberOfTokens > 0, "numberOfTokens cannot be 0");
+        uint256 balance = balanceOf(msg.sender).div(10**18);
         if (preSaleIsActive) {
             require(
-                mintPrice.mul(numberOfTokens) <= msg.value,
+                getPrice().mul(numberOfTokens) <= msg.value,
                 "ETH sent is incorrect."
             );
             require(
                 nft.balanceOf(msg.sender) > 0,
-                "You must own at least one NFT to participate in the pre-sale."
+                "You must own at least one Samot NFT to participate in the pre-sale."
             );
             require(
                 numberOfTokens <=
@@ -126,21 +144,21 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
                 "Exceeds limit for pre-sale."
             );
             require(
-                balanceOf(msg.sender).add(numberOfTokens) <=
+                balance.add(numberOfTokens) <=
                     maxToMintPerNFT.mul(nft.balanceOf(msg.sender)),
                 "Exceeds limit for pre-sale."
             );
         } else {
             require(
-                mintPrice.mul(numberOfTokens) <= msg.value,
+                getPrice().mul(numberOfTokens) <= msg.value,
                 "ETH sent is incorrect."
             );
             require(
-                balanceOf(msg.sender) <= maxToMint,
+                balance <= maxToMint,
                 "Exceeds limit for public sale."
             );
         }
-        _mint(msg.sender, numberOfTokens.mul(decimals()));
+        _mint(msg.sender, numberOfTokens.mul(10**18));
     }
 
     function isClaimable(uint256 _tokenId) internal view returns (bool) {
@@ -211,7 +229,6 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
                     stakes[_stakeholder].timestamps[i] = stakes[_stakeholder]
                         .timestamps[stakes[_stakeholder].timestamps.length - 1];
                     stakes[_stakeholder].timestamps.pop();
-
                 }
             }
         }
@@ -305,13 +322,17 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
     function withdrawReward() public {
         uint256 reward = rewards[msg.sender];
         rewards[msg.sender] = 0;
-        _mint(msg.sender, reward.mul(decimals()));
+        _mint(msg.sender, reward.mul(10**18));
     }
 
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
-        uint256 walletBalance = balance.mul(10).div(100);
-        payable(WALLET).transfer(walletBalance);
-        payable(msg.sender).transfer(balance.sub(walletBalance));
+        uint256 wallet1Balance = balance.mul(10).div(100);
+        uint256 wallet2Balance = balance.mul(85).div(100);
+        payable(WALLET1).transfer(wallet1Balance);
+        payable(WALLET2).transfer(wallet2Balance);
+        payable(msg.sender).transfer(
+            balance.sub(wallet1Balance.add(wallet2Balance))
+        );
     }
 }
