@@ -164,39 +164,42 @@ export default function Home() {
   const loadStakedAssets = async () => {
     const rewards = await rewardOf(wallet.account)
     setStakingRewards(rewards)
-    const ids = await stakeOf(wallet.account)
+    const stakedIds = await stakeOf(wallet.account)
     const fetchedAssets = [];
     const getVaultBatch = async (tokenIds, offset, limit) => {
-      let ids = []
-      let tokenString = ""
-      if (tokenIds.length <= limit) {
-        ids = tokenIds
-      } else if (tokenIds.length > offset + limit) {
-        ids = tokenIds.slice(offset, offset + limit)
-      } else {
-        ids = tokenIds.slice(offset)
-      }
-      _.map(ids, id => {
-        tokenString += `&token_ids=${id}`
-      })
-      const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&asset_contract_address=${NFT_CONTRACT_ADDRESS}${tokenString}`)
-      const data = await response.json()
-      if (data && data.assets && data.assets.length > 0) {
-        _.map(data.assets, asset => {
-          fetchedAssets.push({
-            ...asset,
-            token_id: parseInt(asset.token_id),
-          })
+      if (tokenIds.length > 0) {
+        let ids = []
+        let tokenString = ""
+        if (tokenIds.length <= limit) {
+          ids = tokenIds
+        } else if (tokenIds.length > offset + limit) {
+          ids = tokenIds.slice(offset, offset + limit)
+        } else {
+          ids = tokenIds.slice(offset)
+        }
+        _.map(ids, id => {
+          tokenString += `&token_ids=${id}`
         })
-        if(offset + limit < tokenIds.length) {
-          await sleep(500)
-          await getVaultBatch(tokenIds, offset + limit, limit);
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&asset_contract_address=${NFT_CONTRACT_ADDRESS}${tokenString}`)
+        const data = await response.json()
+        if (data && data.assets && data.assets.length > 0) {
+          _.map(data.assets, asset => {
+            fetchedAssets.push({
+              ...asset,
+              token_id: parseInt(asset.token_id),
+            })
+          })
+          if(offset + limit < tokenIds.length) {
+            await sleep(500)
+            await getVaultBatch(tokenIds, offset + limit, limit);
+          }
         }
       }
       return fetchedAssets
+
     }
 
-    const data = await getVaultBatch(ids, 0, 20);
+    const data = await getVaultBatch(stakedIds, 0, 20);
     setStakedAssets(data)
   }
 
