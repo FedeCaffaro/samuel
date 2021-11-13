@@ -17,12 +17,16 @@ import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
  * Pyramyd - a contract for Pyramyd NFTs
  */
 
-abstract contract Samot {
+abstract contract SamotToken {
     function stakeOf(address _stakeholder)
         public
         view
         virtual
         returns (uint256[] memory);
+}
+
+abstract contract SamotNFT {
+    function balanceOf(address owner) public virtual view returns (uint256 balance);
 }
 
 contract Pyramyd is ERC721Tradable {
@@ -38,7 +42,8 @@ contract Pyramyd is ERC721Tradable {
     bool public preSaleIsActive = true;
     string _baseTokenURI;
     string _contractURI;
-    Samot samot;
+    SamotToken token;
+    SamotNFT nft;
 
     constructor(
         address _proxyRegistryAddress,
@@ -56,8 +61,12 @@ contract Pyramyd is ERC721Tradable {
         return _baseTokenURI;
     }
 
-    function setContract(address _contract) external onlyOwner {
-        samot = Samot(_contract);
+    function setNFTContract(address _contract) external onlyOwner {
+        nft = SamotNFT(_contract);
+    }
+
+    function setTokenContract(address _contract) external onlyOwner {
+        token = SamotToken(_contract);
     }
 
     function setBaseTokenURI(string memory _uri) public onlyOwner {
@@ -80,12 +89,12 @@ contract Pyramyd is ERC721Tradable {
         mintPricePreSale = _price;
     }
 
-    function setMintPrice(uint256 _price) external onlyOwner {
-        mintPrice = _price;
-    }
-
     function setMaxToMintPerNFT(uint256 _maxToMint) external onlyOwner {
         maxToMintPerNFT = _maxToMint;
+    }
+
+    function setMintPrice(uint256 _price) external onlyOwner {
+        mintPrice = _price;
     }
 
     function flipSaleState() public onlyOwner {
@@ -103,8 +112,10 @@ contract Pyramyd is ERC721Tradable {
         }
     }
 
-    function mint(address to, uint256 numberOfTokens) public payable {
-        uint256[] memory staked = samot.stakeOf(msg.sender);
+    function mint(uint256 numberOfTokens) public payable {
+        uint256 staked = token.stakeOf(msg.sender).length;
+        uint256 unstaked = nft.balanceOf(msg.sender);
+        uint256 balance = staked.add(unstaked);
         require(saleIsActive, "Sale is not active.");
         require(
             totalSupply().add(numberOfTokens) <= MAX_SUPPLY,
@@ -117,11 +128,11 @@ contract Pyramyd is ERC721Tradable {
                 "ETH sent is incorrect."
             );
             require(
-                staked.length > 0,
-                "You must have at least one Samot NFT staked to participate in the pre-sale."
+                balance > 0,
+                "You must own at least one Samot NFT to participate in the pre-sale."
             );
             require(
-                balanceOf(msg.sender) < maxToMintPerNFT.mul(staked.length),
+                balanceOf(msg.sender).add(numberOfTokens) <= maxToMintPerNFT.mul(balance),
                 "Exceeds pre-sale limit."
             );
         } else {
@@ -136,7 +147,7 @@ contract Pyramyd is ERC721Tradable {
         }
 
         for (uint256 i = 0; i < numberOfTokens; i++) {
-            mintTo(to);
+            mintTo(msg.sender);
         }
     }
 
