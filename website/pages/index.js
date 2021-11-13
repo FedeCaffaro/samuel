@@ -327,7 +327,7 @@ export default function Home() {
                         <Col sm={12} md={4} lg={4} xl={4} className="overview-feature">
                           <img src="music.png"/>
                           <h2>Music</h2>
-                          <p>Explore the music of Latin America and many other countries.</p>
+                          <p>Explore the music of Latin America and many other cultures.</p>
                         </Col>
                         <Col sm={12} md={4} lg={4} xl={4} className="overview-feature">
                           <img src="community.png" />
