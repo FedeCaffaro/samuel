@@ -202,10 +202,10 @@ export default function Home() {
 
   useEffect(() => {
     if (wallet && wallet.account && didLoadAssets === false) {
-      loadUnstakedAssets(drops[0])
-      isApprovedForAll(wallet.account).then(setIsApproved)
-      loadStakedAssets()
-      setDidLoadAssets(true);
+        loadUnstakedAssets(drops[0])
+        isApprovedForAll(wallet.account).then(setIsApproved)
+        loadStakedAssets()
+        setDidLoadAssets(true);
     }
   }, [wallet])
 
@@ -231,10 +231,6 @@ export default function Home() {
   useEffect(() => {
     startCountdown()
   }, [])
-
-  useEffect(() => {
-    console.log(isApproved)
-  }, [isApproved])
 
   return (
     <div className="den-wrapper">
