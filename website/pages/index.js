@@ -297,8 +297,7 @@ export default function Home() {
                           <h2>Where Latin American art, music and culture meet NFTs.</h2>
                           {!wallet || !wallet.account && <Button className="btn-xl" onClick={() => wallet.connect()}>CONNECT WALLET</Button>}
                           <div className="connect-links">
-                            <Button variant="link">Club Overview <AiOutlineDoubleRight /></Button>
-                            <Button variant="link"><FaDiscord /> Discord Chat <AiOutlineDoubleRight /></Button>
+                            <Button target="_blank" href="https://discord.com/invite/Xwx3ey5XT9" variant="link"><FaDiscord /> Discord Chat <AiOutlineDoubleRight /></Button>
                           </div>
                         </div>
                       </div>
@@ -315,17 +314,17 @@ export default function Home() {
                         <Col sm={12} md={4} lg={4} xl={4} className="overview-feature">
                           <img src="art.png"/>
                           <h2>Art</h2>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                          <p>Discover new artists and art styles from around the world.</p>
                         </Col>
                         <Col sm={12} md={4} lg={4} xl={4} className="overview-feature">
                           <img src="music.png"/>
                           <h2>Music</h2>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                          <p>Explore the music of Latin America and many other countries.</p>
                         </Col>
                         <Col sm={12} md={4} lg={4} xl={4} className="overview-feature">
                           <img src="community.png" />
                           <h2>Community</h2>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                          <p>Party with people from different cultures at Samot events.</p>
                         </Col>
                       </Row>
 
@@ -536,34 +535,42 @@ export default function Home() {
                             <Col sm={12} md={2} lg={2} xl={2}>
                               <div className="launch-date">{drop.datetime}</div>
                             </Col>
-                            <Col sm={12} md={2} lg={2} xl={2}>
-                              Coming Soon...
-                            </Col>
+                            {drop.ready ? (
+                              <Col sm={12} md={2} lg={2} xl={2} >
+                                <Button size="lg" onClick={() => showCollection(drop)}>View Collection</Button>
+                              </Col>
+                            ) : (
+                              <Col sm={12} md={2} lg={2} xl={2}>
+                                Coming Soon...
+                              </Col>
+                            )}
                           </Row>
                         ))}
                       </Container>
                     </Tab>
-                    <Tab eventKey="previou-drops" title="Previous" className="inner-tab-content launches">
-                      <Container>
-                        {drops && _.filter(drops, {type: "previous"}).map(drop => (
-                          <Row className="vertical-center drop-row">
-                            <Col sm={12} md={2} lg={2} xl={2}>
-                              <img src={drop.imageUrl} width="150px"/>
-                            </Col>
-                            <Col sm={12} md={6} lg={6} xl={6}>
-                              <h3>{drop.name}</h3>
-                              <p>{drop.description}</p>
-                            </Col>
-                            <Col sm={12} md={2} lg={2} xl={2}>
-                              <div className="launch-date">{drop.datetime}</div>
-                            </Col>
-                            <Col sm={12} md={2} lg={2} xl={2}>
-                              <Button size="lg" onClick={() => showCollection(drop)}>View Collection</Button>
-                            </Col>
-                          </Row>
-                        ))}
-                      </Container>
-                    </Tab>
+                    {drops && drops.length > 0 && _.find(drops, {type: "previous"}) && (
+                      <Tab eventKey="previou-drops" title="Previous" className="inner-tab-content launches">
+                        <Container>
+                          {drops && _.filter(drops, {type: "previous"}).map(drop => (
+                            <Row className="vertical-center drop-row">
+                              <Col sm={12} md={2} lg={2} xl={2}>
+                                <img src={drop.imageUrl} width="150px"/>
+                              </Col>
+                              <Col sm={12} md={6} lg={6} xl={6}>
+                                <h3>{drop.name}</h3>
+                                <p>{drop.description}</p>
+                              </Col>
+                              <Col sm={12} md={2} lg={2} xl={2}>
+                                <div className="launch-date">{drop.datetime}</div>
+                              </Col>
+                              <Col sm={12} md={2} lg={2} xl={2}>
+                                <Button size="lg" onClick={() => showCollection(drop)}>View Collection</Button>
+                              </Col>
+                            </Row>
+                          ))}
+                        </Container>
+                      </Tab>
+                    )}
                   </Tabs>
                 </Tab.Pane>
                 <Tab.Pane eventKey="token">
@@ -574,7 +581,7 @@ export default function Home() {
                       </div>
                       <div className="overview-header">
                         <h1>$AMOT Token</h1>
-                        <p>$AMOT is a mintable ERC20 token that can be burned to mint NFTs in Samot Club drops, acquire merch, physical art, music and more.</p>
+                        <p>$AMOT is a mintable ERC20 token that can be burned to mint NFTs in Samot Club drops, acquire merch, physical art, music and more. Details and tokenomics will be released on this page soon.</p>
                       </div>
                       <Row>
                         <Col>
@@ -601,13 +608,9 @@ export default function Home() {
                       <Row>
                         <Col sm={12}>
                           <div className="utility-item">
-                            
                             <div>
                               <h4>NFTs</h4>
-                              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa</p>
-                            </div>
-                            <div className="utility-icon">
-                              <img src="/icon-nft.png" width="100px" />
+                              <p>If you're a Samot NFT staker, you will earn $AMOT tokens and you will have pre-sale access to Samot Club NFT drops. If you choose to participate in a drop, you can burn $AMOT tokens to mint NFTs in the pre-sale.</p>
                             </div>
                           </div>
                         </Col>
@@ -616,34 +619,31 @@ export default function Home() {
                             
                             <div>
                               <h4>Merch</h4>
-                              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa</p>
-                            </div>
-                            <div className="utility-icon">
-                              <img src="/icon-merch.png" width="100px" />
+                              <p>$AMOT tokens can be used to purchase merchandise from our upcoming store, which will feature a clothing line designed by Samot himself and digital merch that can be used in the metaverse.</p>
                             </div>
                           </div>
                         </Col>
                         <Col sm={12}>
                           <div className="utility-item">
-                            
                             <div>
-                              <h4>Physical Art</h4>
-                              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa</p>
-                            </div>
-                            <div className="utility-icon">
-                              <img src="/icon-art.png" width="100px" />
+                              <h4>Gallery</h4>
+                              <p>$SAMOT tokens can be used to purchase physical and digital art pieces from our upcoming online gallery, which will include art from some of the most well known artists in Latin America and around the world.</p>
                             </div>
                           </div>
                         </Col>
                         <Col sm={12}>
                           <div className="utility-item">
-                            
                             <div>
                               <h4>Music</h4>
-                              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa</p>
+                              <p>If you're a Samot NFT staker, you will earn $AMOT tokens and you will have pre-sale access to Samot Club music NFT drops. If you choose to participate in a drop, you can burn $AMOT tokens to mint music NFTs in the pre-sale.</p>
                             </div>
-                            <div className="utility-icon">
-                              <img src="/icon-music.png" width="100px" />
+                          </div>
+                        </Col>
+                        <Col sm={12}>
+                          <div className="utility-item">
+                            <div>
+                              <h4>Liquidity</h4>
+                              <p>Samot Club members will be able to provide liquidity to the Samot Club community (similar to NFT20.io) and to the DEXs (e.g., Uniswap) from within the Samot Club website and earn a yield on their $AMOT tokens by doing so.</p>
                             </div>
                           </div>
                         </Col>
