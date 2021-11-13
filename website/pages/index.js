@@ -111,7 +111,7 @@ export default function Home() {
   }
 
   const startCountdown = () => {
-    let countDownDate = new Date("Nov 10, 2021 19:00:00").getTime();
+    let countDownDate = new Date("Nov 20, 2021 19:00:00").getTime();
     setInterval(function() {
       let now = new Date().getTime();
       let distance = countDownDate - now;
