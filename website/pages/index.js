@@ -19,8 +19,8 @@ import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
 export default function Home() {
-  //const OS_API_ENDPOINT = "https://api.opensea.io/api/v1"
-  const OS_API_ENDPOINT = "https://rinkeby-api.opensea.io/api/v1"
+  const OS_API_ENDPOINT = "https://api.opensea.io/api/v1"
+  //const OS_API_ENDPOINT = "https://rinkeby-api.opensea.io/api/v1"
   const wallet = useWallet()
   const [ unstakedAssets, setUnstakedAssets ] = useState([])
   const [ stakingRewards, setStakingRewards ] = useState(0)
@@ -45,11 +45,11 @@ export default function Home() {
   const [ seconds, setSeconds ] = useState(0)
 
   const isBrowser = typeof window !== "undefined"
-  let etherscanUrl = 'https://rinkeby.etherscan.io'
+  let etherscanUrl = 'https://etherscan.io'
   let network
-  if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('cloudfront') || window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
-  }
+  // if (isBrowser) {
+  //   etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
+  // }
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
