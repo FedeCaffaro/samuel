@@ -17,14 +17,13 @@ export default function Pyramyd() {
     const { symbol } = router.query
     console.log(symbol)
 	useEffect(() => {
-		console.log(drops)
 		if (drops && drops.length && symbol) {
 			setCollection(_.find(drops, { symbol: symbol }))
 		}
-	}, [])
+	}, [symbol])
 	return (
 	  	<Container fluid className="collection-wrapper pyramyd">
-	  		{collection && (
+	  		{collection && symbol && collection.smallGallery && collection.smallGallery.length > 0 && (
 		  		<div>
 				 <Link href="/">
 				 	<div className="back-btn">
@@ -53,12 +52,12 @@ export default function Pyramyd() {
 						    <li>{collection.publicSale}</li>
 						</ul>
 
-						<Button onClick={() => Router.push(`/mint/${collection.contract}`)} variant="outline-light" className="btn-xl">Mint</Button>
+						{/*<Button onClick={() => Router.push(`/mint/${collection.contract}`)} variant="outline-light" className="btn-xl">Mint</Button>*/}
 
 				 	</Col>
 				 	<Col sm={12} md={6} lg={6} xl={6}>
 				 		<div className="small-gallery">
-				 			{collection && collection.smallGallery && collection.smallGallery.map(image => (
+				 			{collection && collection.smallGallery && collection.smallGallery.length > 0 && collection.smallGallery.map(image => (
 				 				<img src={image.src} />
 				 			))}
 				 		</div>
