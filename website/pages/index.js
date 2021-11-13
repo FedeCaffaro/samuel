@@ -296,8 +296,10 @@ export default function Home() {
                   <Tabs defaultActiveKey="home-inner" className="inner-tabs">
                     <Tab eventKey="home-inner" title="Home" className="inner-tab-content home-content">
                       <div className="home-video">
-                        <video className='videoTag' autoPlay loop muted>
+                        <video className='videoTag' autoPlay="true" loop="true" muted="true" playsinline="true" poster="/samot_poster.png" width="100%" >
+                            <source src="/samot.webm" type="video/webm" />
                             <source src="/samot.mp4" type='video/mp4' />
+                            <img src="/samot_poster.png" />
                         </video>
                         <div className="connect-wrapper">
                           <h1>Welcome to Samot Life</h1>
