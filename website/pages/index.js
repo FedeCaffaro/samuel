@@ -70,6 +70,7 @@ export default function Home() {
         setError(result.error)
       } else {
         setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
+        loadAssets(drops[0])
       }
     }
   }
@@ -134,39 +135,10 @@ export default function Home() {
     }
   }
 
-  const loadUnstakedAssets = async (drop) => {
-    const getAllAssets = async (owner, contractAddress) => {
-      const fetchedAssets = [];
-      const fetchAssets = async (offset, limit) => {
-        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${contractAddress}`)
-        const data = await response.json()
-        if (data && data.assets && data.assets.length > 0) {
-          for (let asset of data.assets) {
-              fetchedAssets.push({
-                ...asset,
-                token_id: parseInt(asset.token_id),
-              })
-          }
-          if(data.assets.length === limit) {
-            await sleep(500)
-            await fetchAssets(offset + limit, limit);
-          }
-        }
-      }
-      await fetchAssets(0, 50);
-      return fetchedAssets;
-    }
-    updateCollection(drop)
-    const data = await getAllAssets(wallet.account, drop.contract)
-    setUnstakedAssets(data)
-  }
-
-  const loadStakedAssets = async () => {
-    const rewards = await rewardOf(wallet.account)
-    setStakingRewards(rewards)
+  const loadAssets = async (drop) => {
+    let fetchedAssets = [];
     const stakedIds = await stakeOf(wallet.account)
-    const fetchedAssets = [];
-    const getVaultBatch = async (tokenIds, offset, limit) => {
+    const getStakedAssets = async (tokenIds, offset, limit) => {
       if (tokenIds.length > 0) {
         let ids = []
         let tokenString = ""
@@ -191,23 +163,55 @@ export default function Home() {
           })
           if(offset + limit < tokenIds.length) {
             await sleep(500)
-            await getVaultBatch(tokenIds, offset + limit, limit);
+            await getStakedAssets(tokenIds, offset + limit, limit);
           }
         }
       }
       return fetchedAssets
-
     }
 
-    const data = await getVaultBatch(stakedIds, 0, 20);
-    setStakedAssets(data)
+    const stakedData = await getStakedAssets(stakedIds, 0, 20);
+    setStakedAssets(stakedData)
+
+    fetchedAssets = [];
+    const getUnstakedAssets = async (owner, contractAddress) => {
+      const fetchAssets = async (offset, limit) => {
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${contractAddress}`)
+        const data = await response.json()
+        if (data && data.assets && data.assets.length > 0) {
+          for (let asset of data.assets) {
+              fetchedAssets.push({
+                ...asset,
+                token_id: parseInt(asset.token_id),
+              })
+          }
+          if(data.assets.length === limit) {
+            await sleep(500)
+            await fetchAssets(offset + limit, limit);
+          }
+        }
+      }
+      await fetchAssets(0, 50);
+      return fetchedAssets;
+    }
+    updateCollection(drop)
+    let unstakedData = await getUnstakedAssets(wallet.account, drop.contract)
+    const assets = []
+    for (let asset of unstakedData) {
+      if (!_.find(stakedData, {token_id: asset.token_id})) {
+        assets.push(asset)
+      }
+    }
+    setUnstakedAssets(assets)
+    const rewards = await rewardOf(wallet.account)
+    setStakingRewards(rewards)
+
   }
 
   useEffect(() => {
     if (wallet && wallet.account && didLoadAssets === false) {
-        loadUnstakedAssets(drops[0])
+        loadAssets(drops[0])
         isApprovedForAll(wallet.account).then(setIsApproved)
-        loadStakedAssets()
         setDidLoadAssets(true);
     }
   }, [wallet])
@@ -230,10 +234,6 @@ export default function Home() {
       Router.push(`/collection/${drop.symbol}`)
     }
   }
-
-  useEffect(() => {
-    startCountdown()
-  }, [])
 
   return (
     <div className="den-wrapper">
@@ -347,7 +347,7 @@ export default function Home() {
                     {drops && drops.length > 0 && _.filter(drops, drop => {
                       return drop.type == 'active' || drop.type == 'previous'
                     }).map(drop => (
-                      <Dropdown.Item key={drop.symbol} onClick={() => loadUnstakedAssets(drop)} eventKey={drop.contract}>{drop.name}</Dropdown.Item>
+                      <Dropdown.Item key={drop.symbol} onClick={() => loadAssets(drop)} eventKey={drop.contract}>{drop.name}</Dropdown.Item>
                     ))}
                   </DropdownButton>
                   {collection && collection.name == "SAMOT" ? (
