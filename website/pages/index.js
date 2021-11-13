@@ -91,6 +91,7 @@ export default function Home() {
       setError(result.error)
     } else {
       setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
+      loadAssets(drops[0])
     }
   }
 
