@@ -307,6 +307,7 @@ export default function Home() {
                           {!wallet || !wallet.account && <Button className="btn-xl" onClick={() => wallet.connect()}>CONNECT WALLET</Button>}
                           <div className="connect-links">
                             <Button target="_blank" href="https://twitter.com/samotclub" variant="link"><FaTwitter /> Twitter <AiOutlineDoubleRight /></Button>
+                            <Button target="_blank" href="https://snapshot.org/#/samotclub.eth" variant="link">DAO <AiOutlineDoubleRight /></Button>
                             <Button target="_blank" href="https://discord.com/invite/Xwx3ey5XT9" variant="link"><FaDiscord /> Discord <AiOutlineDoubleRight /></Button>
                           </div>
                         </div>
