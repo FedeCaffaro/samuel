@@ -15,7 +15,6 @@ export default function Pyramyd() {
 	const [ collection, setCollection ] = useState({})
 	const router = useRouter()
     const { symbol } = router.query
-    console.log(symbol)
 	useEffect(() => {
 		if (drops && drops.length && symbol) {
 			setCollection(_.find(drops, { symbol: symbol }))
