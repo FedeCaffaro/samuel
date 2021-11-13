@@ -723,7 +723,7 @@ export default function Home() {
                         <div className="apply-now">
                           <h1>Are You Ready?</h1>
                           <p>Existing Samot NFT holders will have exclusive, pre-sale access to your collection, after which the general public will be able to mint your artwork. We charge a small % of the ETH you raise during your sale for providing launch support. The remainder of the ETH raised goes directly to you and you also receive ongoing royalty fees for secondary sales. Click Apply below to tell us about your work and someone from our team will be in touch.</p>
-                          <Button target="_blank" href="https://samot.club/apply" variant="outline-light" className="btn-xl">Apply Now</Button>
+                          <Button target="_blank" href="https://samot.art/apply" variant="outline-light" className="btn-xl">Apply Now</Button>
                         </div>
                       </div>
                     </Tab>
