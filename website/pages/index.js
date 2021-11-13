@@ -14,7 +14,7 @@ import drops from '../data/drops'
 import { BsArrowRight, BsChevronDown } from "react-icons/bs";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { CgDollar } from "react-icons/cg";
-import { FaEthereum, FaCheckCircle, FaDiscord, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn,  } from "react-icons/fa";
+import { FaEthereum, FaCheckCircle, FaDiscord, FaTwitter, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn,  } from "react-icons/fa";
 import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
@@ -304,7 +304,8 @@ export default function Home() {
                           <h2>Where Latin American art, music and culture meet NFTs.</h2>
                           {!wallet || !wallet.account && <Button className="btn-xl" onClick={() => wallet.connect()}>CONNECT WALLET</Button>}
                           <div className="connect-links">
-                            <Button target="_blank" href="https://discord.com/invite/Xwx3ey5XT9" variant="link"><FaDiscord /> Discord Chat <AiOutlineDoubleRight /></Button>
+                            <Button target="_blank" href="https://twitter.com/samotclub" variant="link"><FaTwitter /> Twitter <AiOutlineDoubleRight /></Button>
+                            <Button target="_blank" href="https://discord.com/invite/Xwx3ey5XT9" variant="link"><FaDiscord /> Discord <AiOutlineDoubleRight /></Button>
                           </div>
                         </div>
                       </div>
