@@ -47,25 +47,28 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
     address constant WALLET = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
     uint256 public maxToMintPerNFT = 100;
     uint256 public maxToMint = 50000;
+    uint256 public maxSupplySale = 5000000;
     bool public preSaleIsActive = true;
     bool public saleIsActive = false;
     uint256 public stakingReward = 10;
     uint256 public mintPrice = 200000000000000;
     address[] internal stakeholders;
     uint256[] internal stakedtokens;
-    uint256 initialSupply = 5000000;
+    uint256 initialSupply = 1000000;
     SamotNFT nft;
+    uint256 public epochStartTime = block.timestamp;
 
     event Claimed(address _from, uint256 _tokenId);
 
     constructor(string memory _name, string memory _symbol)
         ERC20(_name, _symbol)
     {
-        _mint(msg.sender, initialSupply.mul(1000000000000000000));
+        _mint(msg.sender, initialSupply.mul(decimals()));
     }
 
     struct Stakes {
         uint256[] tokens;
+        uint256[] timestamps;
         bool exists;
     }
 
@@ -92,6 +95,10 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         mintPrice = _price;
     }
 
+    function setMaxSupplySale(uint256 _maxSupply) external onlyOwner {
+        maxSupplySale = _maxSupply;
+    }
+
     function setMaxToMint(uint256 _maxToMint) external onlyOwner {
         maxToMint = _maxToMint;
     }
@@ -102,6 +109,7 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
 
     function mint(uint256 numberOfTokens) public payable {
         require(saleIsActive, "Sale is not active.");
+        require(totalSupply().sub(initialSupply.mul(decimals())) <= maxSupplySale.mul(decimals()), "Sold out.");
         require(numberOfTokens > 0, "numberOfTokens cannot be 0");
         if (preSaleIsActive) {
             require(
@@ -132,7 +140,7 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
                 "Exceeds limit for public sale."
             );
         }
-        _mint(msg.sender, numberOfTokens.mul(1000000000000000000));
+        _mint(msg.sender, numberOfTokens.mul(decimals()));
     }
 
     function isClaimable(uint256 _tokenId) internal view returns (bool) {
@@ -182,6 +190,7 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         if (!_isStaked) {
             stakedtokens.push(_tokenId);
             stakes[_stakeholder].tokens.push(_tokenId);
+            stakes[_stakeholder].timestamps.push(block.timestamp);
         }
     }
 
@@ -199,6 +208,10 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
                     stakes[_stakeholder].tokens[i] = stakes[_stakeholder]
                         .tokens[stakes[_stakeholder].tokens.length - 1];
                     stakes[_stakeholder].tokens.pop();
+                    stakes[_stakeholder].timestamps[i] = stakes[_stakeholder]
+                        .timestamps[stakes[_stakeholder].timestamps.length - 1];
+                    stakes[_stakeholder].timestamps.pop();
+
                 }
             }
         }
@@ -273,10 +286,15 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         view
         returns (uint256)
     {
-        return stakingReward.mul(stakes[_stakeholder].tokens.length);
+        uint256 staked = 0;
+        for (uint256 t = 0; t < stakes[_stakeholder].timestamps.length; t += 1) {
+            if (stakes[_stakeholder].timestamps[t] <= epochStartTime) staked.add(1);
+        }
+        return stakingReward.mul(staked);
     }
 
     function distributeRewards() public onlyOwner {
+        epochStartTime = block.timestamp;
         for (uint256 s = 0; s < stakeholders.length; s += 1) {
             address stakeholder = stakeholders[s];
             uint256 reward = calculateReward(stakeholder);
@@ -287,7 +305,7 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
     function withdrawReward() public {
         uint256 reward = rewards[msg.sender];
         rewards[msg.sender] = 0;
-        _mint(msg.sender, reward.mul(1000000000000000000));
+        _mint(msg.sender, reward.mul(decimals()));
     }
 
     function withdraw() external onlyOwner {
