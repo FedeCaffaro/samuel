@@ -311,12 +311,12 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
     }
 
     function distributeRewards() public onlyOwner {
-        epochStartTime = block.timestamp;
         for (uint256 s = 0; s < stakeholders.length; s += 1) {
             address stakeholder = stakeholders[s];
             uint256 reward = calculateReward(stakeholder);
             rewards[stakeholder] = rewards[stakeholder].add(reward);
         }
+        epochStartTime = block.timestamp;
     }
 
     function withdrawReward() public {
