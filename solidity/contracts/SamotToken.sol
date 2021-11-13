@@ -154,6 +154,11 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
                 "ETH sent is incorrect."
             );
             require(
+                numberOfTokens <=
+                    maxToMint,
+                "Exceeds limit for public sale."
+            );
+            require(
                 balance <= maxToMint,
                 "Exceeds limit for public sale."
             );
@@ -276,6 +281,14 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         return stakes[_stakeholder].tokens;
     }
 
+    function stakeTimestampsOf(address _stakeholder)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return stakes[_stakeholder].timestamps;
+    }
+
     function totalStakes() public view returns (uint256) {
         uint256 _totalStakes = 0;
         for (uint256 s = 0; s < stakeholders.length; s += 1) {
@@ -305,7 +318,9 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
     {
         uint256 staked = 0;
         for (uint256 t = 0; t < stakes[_stakeholder].timestamps.length; t += 1) {
-            if (stakes[_stakeholder].timestamps[t] <= epochStartTime) staked.add(1);
+            if (stakes[_stakeholder].timestamps[t] <= epochStartTime) {
+                staked = staked.add(1);
+            }
         }
         return stakingReward.mul(staked);
     }

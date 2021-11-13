@@ -204,8 +204,7 @@ export default function Home() {
       }
     }
     setUnstakedAssets(assets)
-    const rewards = await rewardOf(wallet.account)
-    setStakingRewards(rewards)
+    rewardOf(wallet.account).then(setStakingRewards)
 
   }
 

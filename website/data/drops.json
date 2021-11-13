@@ -150,8 +150,28 @@
 		"name": "SAM ELGRECO", 
 		"imageUrl": "sam_logo.png", 
 		"description": "Sam Elgreco was born in Sao Paulo, Brazil, in 1986. After a few years he moves to Buenos Aires to study fine arts and design, and that’s where the idea of painting in public spaces becomes a constant.", 
-		"contract": "0x882a47e6070aca3f38ce6929501f4787803a072b", 
+		"contract": "", 
 		"datetime": "11/28/21", 
+		"type": "upcoming",
+		"ready": false
+	},
+	{
+		"symbol": "DYLAN",
+		"name": "DYLAN LERNER", 
+		"imageUrl": "dylan_logo.jpeg", 
+		"description": "Throw the name around a couple of places: Cannes Film Festival, Berlin's underground scene, or even among vintage Rolling Stones managers. Big chances are someone has worked with him.", 
+		"contract": "", 
+		"datetime": "TBD", 
+		"type": "upcoming",
+		"ready": false
+	},
+	{
+		"symbol": "TOMI", 
+		"name": "TOMI POMO", 
+		"imageUrl": "tomi_logo.jpg", 
+		"description": "Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.", 
+		"contract": "", 
+		"datetime": "TBD", 
 		"type": "upcoming",
 		"ready": false
 	}
