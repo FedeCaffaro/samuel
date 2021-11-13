@@ -235,6 +235,10 @@ export default function Home() {
       Router.push(`/collection/${drop.symbol}`)
     }
   }
+  
+  useEffect(() => {
+    startCountdown()
+  }, []) 
 
   return (
     <div className="den-wrapper">
