@@ -33,7 +33,7 @@ functions:
     handler: handler.token
     events:
       - http:
-          path: token/{collection}/{tokenId}
+          path: token/{collection}/id/{tokenId}
           method: get
           cors: true
   contract:
