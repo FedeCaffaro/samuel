@@ -8,7 +8,6 @@ provider:
   runtime: nodejs12.x
   environment:
     ENV: ${opt:stage, 'prod'}
-    CONTRACT_ADDRESS: ${self:custom.CONTRACT_ADDRESS.${self:provider.stage}}
     MNEMONIC: ${ssm:mnemonic~true}
     INFURIA_KEY: ${ssm:infuria~true}
     NETWORK_URL: ${self:custom.NETWORK_URL.${self:provider.stage}}
@@ -25,9 +24,6 @@ plugins:
 custom:
   serverless-offline:
     httpPort: 4000
-  CONTRACT_ADDRESS:
-    dev: "0xD26C84db8652f68B9ea24996a53566A7FFBA9DdD"
-    prod: "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d"
   NETWORK_URL:
     dev: https://rinkeby.infura.io/v3/${self:provider.environment.INFURIA_KEY}
     prod: https://mainnet.infura.io/v3/${self:provider.environment.INFURIA_KEY}
@@ -37,14 +33,14 @@ functions:
     handler: handler.token
     events:
       - http:
-          path: token/{tokenId}
+          path: token/{collection}/{tokenId}
           method: get
           cors: true
   contract:
     handler: handler.contract
     events:
       - http:
-          path: contract
+          path: contract/{collection}
           method: get
           cors: true
 

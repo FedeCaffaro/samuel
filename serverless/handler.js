@@ -4,10 +4,15 @@ const _ = require('lodash')
 const s3 = require('./lib/s3')
 
 const MNEMONIC = process.env.MNEMONIC
-const CONTRACT_ADDRESS=process.env.CONTRACT_ADDRESS
 const NETWORK_URL=process.env.NETWORK_URL
 
-const CONTRACT_ABI = [,
+// add new projects here
+const CONTRACT_ADDRESSES = [
+  {name: 'samotclub', contract: '0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d'},
+  {name: 'pyramyd', contract: '0x7467e6e48AF4C3D71978A6af34ca2116384DceC2'},
+]
+
+const CONTRACT_ABI = [
   {
     inputs: [{
       internalType: "uint256",
@@ -29,24 +34,27 @@ const CONTRACT_ABI = [,
 ];
 
 exports.token = async (event) => {
-  const assetsBucket = `samotclub-assets-${process.env.ENV}`
   const tokenId = event.pathParameters.tokenId
+  const collection = _.find(CONTRACT_ADDRESSES, {
+    name: event.pathParameters.collection
+  })
+  const assetsBucket = `samotclub-assets-${process.env.ENV}`
   if (process.env.REVEAL) {
-    const body = await getMetadata(tokenId)
+    const body = await getMetadata(collection, tokenId)
     if (body && body.image && body.name && body.description && body.attributes) {
       return {
         statusCode: 200,
         body: JSON.stringify(body)
       }
     } else {
-      let metadata = await s3.getObject(`metadata/default`, assetsBucket)
+      let metadata = await s3.getObject(`${collection}/metadata/default`, assetsBucket)
       return {
         statusCode: 200,
         body: metadata.Body.toString()
       }
     }
   } else {
-    let metadata = await s3.getObject(`metadata/default`, assetsBucket)
+    let metadata = await s3.getObject(`${collection}/metadata/default`, assetsBucket)
     let body = JSON.parse(metadata.Body.toString())
     body.name = `#${tokenId}`
     return {
@@ -57,21 +65,24 @@ exports.token = async (event) => {
 }
 
 exports.contract = async (event) => {
+  const collection = _.find(CONTRACT_ADDRESSES, {
+    name: event.pathParameters.collection
+  })
   const assetsBucket = `samotclub-assets-${process.env.ENV}`
-  let metadata = await s3.getObject(`collection/contract`, assetsBucket)
+  let metadata = await s3.getObject(`${collection.name}/collection/contract`, assetsBucket)
   return {
     statusCode: 200,
     body: metadata.Body.toString()
   }
 }
 
-const getMetadata = async (tokenId) => {
+const getMetadata = async (collection, tokenId) => {
   const index = parseInt(tokenId) - 1
   try {
       const assetsBucket = `samotclub-assets-${process.env.ENV}`
       const sourceBucket = `samotclub-source-${process.env.ENV}`
       try {
-        let metadata = await s3.getObject(`metadata/${tokenId}`, assetsBucket)
+        let metadata = await s3.getObject(`${collection.name}/metadata/${tokenId}`, assetsBucket)
         return JSON.parse(metadata.Body)
       } catch (e) {
         const provider = new HDWalletProvider(
@@ -81,16 +92,16 @@ const getMetadata = async (tokenId) => {
         const web3Instance = new web3(provider);
         const contract = new web3Instance.eth.Contract(
           CONTRACT_ABI,
-          CONTRACT_ADDRESS,
+          collection.contract,
         );
         const response = await contract.methods
           .tokenByIndex(index)
           .call();
         if (typeof parseInt(response) === 'number' && parseInt(response) == parseInt(tokenId)) {
-          let metadata = await s3.getObject(`metadata/${tokenId}`, sourceBucket)
-          await s3.putObject(`metadata/${tokenId}`, assetsBucket, metadata.Body)
-          let image = await s3.getObject(`images/${tokenId}.png`, sourceBucket)
-          await s3.putObject(`images/${tokenId}.png`, assetsBucket, image.Body)
+          let metadata = await s3.getObject(`${collection.name}/metadata/${tokenId}`, sourceBucket)
+          await s3.putObject(`${collection.name}/metadata/${tokenId}`, assetsBucket, metadata.Body)
+          let image = await s3.getObject(`${collection.name}/images/${tokenId}.png`, sourceBucket)
+          await s3.putObject(`${collection.name}/images/${tokenId}.png`, assetsBucket, image.Body)
           return JSON.parse(metadata.Body)
         } else {
           return false
