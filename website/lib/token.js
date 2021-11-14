@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 const TOKEN_ABI = require('../abis/Token.json');
-//export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
-export const TOKEN_CONTRACT_ADDRESS = "0xAbc8c46b6f659789FE0f6A4960053b359Fa06aA6" // dev
+export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
+//export const TOKEN_CONTRACT_ADDRESS = "0xAbc8c46b6f659789FE0f6A4960053b359Fa06aA6" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"

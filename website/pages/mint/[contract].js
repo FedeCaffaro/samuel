@@ -101,15 +101,16 @@ export default function Home() {
   		const owned = parseInt(staked) + parseInt(unstaked)
   		setNFTsOwned(owned)
   		const max = (owned * maxPerNFT) - parseInt(minted)
-  		if (max < 1 && preSaleActive) setNumberOfTokens(0)
+  		if (max < 1 && preSaleActive) {
+  			setNumberOfTokens(0)
+  		} else {
+  			setNumberOfTokens(1)
+  		}
 		return max
   	}
 
   	useEffect(() => {
   		setNumberOfTokens(1)
-  		if (!saleActive && preSaleActive) {
-  			setMessage("Minting is not available.")
-  		}
   	}, [preSaleActive, saleActive])
 
 	useEffect(() => {
@@ -186,7 +187,7 @@ export default function Home() {
 						    )}
 						</div>
 					): (
-						<p>{message}</p>
+						<p>Minting is not available.</p>
 					)}
 				</div>
 			)}
