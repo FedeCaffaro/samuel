@@ -47,14 +47,14 @@ exports.token = async (event) => {
         body: JSON.stringify(body)
       }
     } else {
-      let metadata = await s3.getObject(`${collection}/metadata/default`, assetsBucket)
+      let metadata = await s3.getObject(`${collection.name}/metadata/default`, assetsBucket)
       return {
         statusCode: 200,
         body: metadata.Body.toString()
       }
     }
   } else {
-    let metadata = await s3.getObject(`${collection}/metadata/default`, assetsBucket)
+    let metadata = await s3.getObject(`${collection.name}/metadata/default`, assetsBucket)
     let body = JSON.parse(metadata.Body.toString())
     body.name = `#${tokenId}`
     return {

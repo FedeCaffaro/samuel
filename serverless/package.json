@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Samot pre-sale metadata api",
   "scripts": {
-    "start": "sls offline start --noPrependStageInUrl --stage dev",
+    "start": "sls offline start --noPrependStageInUrl --stage prod",
     "deploy": "sls deploy --stage prod"
   },
   "devDependencies": {
