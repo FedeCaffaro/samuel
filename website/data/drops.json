@@ -12,7 +12,7 @@
 	},
 	{
 		"symbol": "PYRMD", 
-		"name": "PYRAMYD", 
+		"name": "PYRAMYD (SOLD OUT)", 
 		"imageUrl": "pyramyd-logo.png", 
 		"description": "PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.", 
 		"html": "<p>PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.</p><p>During the month of September, he forced himself to live in his studio for 30 days. Determined to create one painting a day, PYRAMYD emerged from that extreme experience with a breathtaking series of unique pieces that make up the backbone for his NFT collection. This is PYRAMYD x Samot Club.</p>",
@@ -20,7 +20,7 @@
 		"whoisImage": "/pyramyd/IMG-20201209.jpeg",
 		"whoisDescription": "Graffiti, muralism, sculpture and design come together in this 27 year old Argentinian artist’s work. An innate rule breaker, he has taken his artistic expression to many cities and countries around the globe. A combination of calligraphy, symbology, geometry, strong color pallets and impacting visuals turn his pieces into an intoxicating experience, colliding the boundaries of language and artistic perception.",
 		"datetime": "11/14 @ 6PM UTC", 
-		"type": "upcoming",
+		"type": "previous",
 		"ready": true,
 		"supply": 500,
 		"preSale": "Pre-Sale: 11/14/21 @ 6PM UTC | Price .05 ETH (Samot Holders) | Limit 1 per Samot NFT",
