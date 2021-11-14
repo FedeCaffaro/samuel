@@ -1,13 +1,13 @@
 service: samot-api
 frameworkVersion: '2'
 provider:
-  stage: ${opt:stage, 'prod'}
+  stage: ${opt:stage, 'dev'}
   name: aws
   versionFunctions: false
   region: us-east-1
   runtime: nodejs12.x
   environment:
-    ENV: ${opt:stage, 'prod'}
+    ENV: ${opt:stage, 'dev'}
     MNEMONIC: ${ssm:mnemonic~true}
     INFURIA_KEY: ${ssm:infuria~true}
     NETWORK_URL: ${self:custom.NETWORK_URL.${self:provider.stage}}
@@ -29,11 +29,22 @@ custom:
     prod: https://mainnet.infura.io/v3/${self:provider.environment.INFURIA_KEY}
 
 functions:
-  token:
+  samotclub:
     handler: handler.token
+    environment:
+      COLLECTION: samotclub
     events:
       - http:
-          path: token/{collection}/id/{tokenId}
+          path: token/samotclub/{tokenId}
+          method: get
+          cors: true
+  pyramyd:
+    handler: handler.token
+    environment:
+      COLLECTION: pyramyd
+    events:
+      - http:
+          path: token/pyramyd/{tokenId}
           method: get
           cors: true
   contract:

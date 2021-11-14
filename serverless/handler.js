@@ -36,7 +36,7 @@ const CONTRACT_ABI = [
 exports.token = async (event) => {
   const tokenId = event.pathParameters.tokenId
   const collection = _.find(CONTRACT_ADDRESSES, {
-    name: event.pathParameters.collection
+    name: process.env.COLLECTION
   })
   const assetsBucket = `samotclub-assets-${process.env.ENV}`
   if (process.env.REVEAL) {
@@ -66,7 +66,7 @@ exports.token = async (event) => {
 
 exports.contract = async (event) => {
   const collection = _.find(CONTRACT_ADDRESSES, {
-    name: event.pathParameters.collection
+    name: process.env.COLLECTION
   })
   const assetsBucket = `samotclub-assets-${process.env.ENV}`
   let metadata = await s3.getObject(`${collection.name}/collection/contract`, assetsBucket)
