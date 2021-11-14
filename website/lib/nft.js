@@ -2,7 +2,6 @@ import Web3 from 'web3';
 import NFT_ABI from '../abis/NFT.json';
 import TOKEN_ABI from '../abis/Token.json';
 import { TOKEN_CONTRACT_ADDRESS }  from '../lib/token';
-export const NFT_CONTRACT_ADDRESS = "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d"
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
@@ -33,11 +32,11 @@ const getWeb3 = async (options = {}) => {
   return web3
 }
 
-export const isApprovedForAll = async (address) => {
+export const isApprovedForAll = async (contract, address) => {
   const web3Instance = await getWeb3();
   const nftContract = new web3Instance.eth.Contract(
     NFT_ABI,
-    NFT_CONTRACT_ADDRESS
+    contract
   );
 
   return nftContract.methods
@@ -45,12 +44,12 @@ export const isApprovedForAll = async (address) => {
     .call();
 }
 
-export const setApproveForAll = async (address) => {
+export const setApproveForAll = async (contract, address) => {
   const web3Instance = await getWeb3();
   try {
     const nftContract = new web3Instance.eth.Contract(
       NFT_ABI,
-      NFT_CONTRACT_ADDRESS
+      contract
     );
     const isApproved = await nftContract.methods
         .isApprovedForAll(address, TOKEN_CONTRACT_ADDRESS).call();
@@ -155,6 +154,18 @@ export const mintPrice = async (contract) => {
     .call();
 }
 
+export const mintPricePreSale = async (contract) => {
+  const web3Instance = await getWeb3();
+  const nftContract = new web3Instance.eth.Contract(
+    NFT_ABI,
+    contract
+  );
+
+  return nftContract.methods
+    .mintPricePreSale()
+    .call();
+}
+
 export const maxToMintPerNFT = async (contract) => {
   const web3Instance = await getWeb3();
   const nftContract = new web3Instance.eth.Contract(
@@ -188,5 +199,17 @@ export const saleIsActive = async (contract) => {
 
   return nftContract.methods
     .saleIsActive()
+    .call();
+}
+
+export const preSaleIsActive = async (contract) => {
+  const web3Instance = await getWeb3();
+  const nftContract = new web3Instance.eth.Contract(
+    NFT_ABI,
+    contract
+  );
+
+  return nftContract.methods
+    .preSaleIsActive()
     .call();
 }

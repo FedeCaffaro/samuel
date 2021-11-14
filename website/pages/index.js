@@ -19,8 +19,6 @@ import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
 export default function Home() {
-  const OS_API_ENDPOINT = "https://api.opensea.io/api/v1"
-  //const OS_API_ENDPOINT = "https://rinkeby-api.opensea.io/api/v1"
   const wallet = useWallet()
   const [ unstakedAssets, setUnstakedAssets ] = useState([])
   const [ stakingRewards, setStakingRewards ] = useState(0)
@@ -45,11 +43,13 @@ export default function Home() {
   const [ seconds, setSeconds ] = useState(0)
 
   const isBrowser = typeof window !== "undefined"
-  let etherscanUrl = 'https://etherscan.io'
+  let etherscanUrl
   let network
-  // if (isBrowser) {
-  //   etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
-  // }
+  let OS_API_ENDPOINT
+  if (isBrowser) {
+    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1" : "https://api.opensea.io/api/v1"
+  }
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -60,7 +60,7 @@ export default function Home() {
   }
 
   const stake = async () => {
-    let result = await setApproveForAll(wallet.account)
+    let result = await setApproveForAll(drops[0].contract, wallet.account)
     if (result.error) {
       setErrorShow(true)
       setError(result.error)
@@ -76,12 +76,12 @@ export default function Home() {
   }
 
   const approve = async () => {
-    let result = await setApproveForAll(wallet.account)
+    let result = await setApproveForAll(drops[0].contract, wallet.account)
     if (result.error) {
       setErrorShow(true)
       setError(result.error)
     } else {
-      isApprovedForAll(wallet.account).then(setIsApproved)
+      isApprovedForAll(drops[0].contract, wallet.account).then(setIsApproved)
     }
   }
 
@@ -153,7 +153,7 @@ export default function Home() {
         _.map(ids, id => {
           tokenString += `&token_ids=${id}`
         })
-        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&asset_contract_address=${NFT_CONTRACT_ADDRESS}${tokenString}`)
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&asset_contract_address=${drop.contract}${tokenString}`)
         const data = await response.json()
         if (data && data.assets && data.assets.length > 0) {
           _.map(data.assets, asset => {
@@ -175,9 +175,9 @@ export default function Home() {
     setStakedAssets(stakedData)
 
     fetchedAssets = [];
-    const getUnstakedAssets = async (owner, contractAddress) => {
+    const getUnstakedAssets = async (owner) => {
       const fetchAssets = async (offset, limit) => {
-        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${contractAddress}`)
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${drop.contract}`)
         const data = await response.json()
         if (data && data.assets && data.assets.length > 0) {
           for (let asset of data.assets) {
@@ -209,9 +209,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (wallet && wallet.account && didLoadAssets === false) {
+    if (wallet && wallet.account) {
         loadAssets(drops[0])
-        isApprovedForAll(wallet.account).then(setIsApproved)
+        isApprovedForAll(drops[0].contract, wallet.account).then(setIsApproved)
         setDidLoadAssets(true);
     }
   }, [wallet])

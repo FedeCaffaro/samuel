@@ -29,9 +29,12 @@ contract WhoIsSamot is ERC721Tradable {
     string _contractURI;
     address[] whitelistAddr;
 
-    constructor(address _proxyRegistryAddress, address[] memory addrs)
-        ERC721Tradable("Who Is Samot?", "SAMOT", _proxyRegistryAddress)
-    {
+    constructor(
+        address _proxyRegistryAddress,
+        string memory _name,
+        string memory _symbol,
+        address[] memory addrs
+    ) ERC721Tradable(_name, _symbol, _proxyRegistryAddress) {
         whitelistAddr = addrs;
         for (uint256 i = 0; i < whitelistAddr.length; i++) {
             addAddressToWhitelist(whitelistAddr[i]);

@@ -1,6 +1,7 @@
 const Pyramyd = artifacts.require("Pyramyd");
-//const SamotToken = artifacts.require("SamotToken");
-//const whitelist = require("./whitelist.json")
+const SamotToken = artifacts.require("SamotToken");
+const WhoIsSamot = artifacts.require("WhoIsSamot");
+const whitelist = require("./whitelist.json")
 
 module.exports = async function (deployer, network, address) {
     let proxyRegistryAddress = "";
@@ -9,6 +10,7 @@ module.exports = async function (deployer, network, address) {
     } else {
         proxyRegistryAddress = "0xa5409ec958c83c3f309868babaca7c86dcb077c1";
     }
-    await deployer.deploy(Pyramyd, proxyRegistryAddress, "PYRAMYD", "PYRMD");
-    //await deployer.deploy(SamotToken, "Samot Token", "$AMOT");
+    await deployer.deploy(WhoIsSamot, proxyRegistryAddress, "Who Is Samot?", "SAMOTTEST", whitelist);
+    await deployer.deploy(Pyramyd, proxyRegistryAddress, "PYRAMYD", "PYRMDTEST");
+    await deployer.deploy(SamotToken, "Samot Token", "$AMOTTEST");
 };
