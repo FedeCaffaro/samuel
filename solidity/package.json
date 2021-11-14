@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ganache-cli -d -p 7545 --gasLimit=10000000",
     "deploy": "yarn truffle deploy --network rinkeby --reset",
-    "verify": "yarn truffle run verify Pyramyd --network rinkeby",
+    "verify": "yarn truffle run verify SamotToken --network rinkeby",
     "mint": "node scripts/mint.js",
     "flipSaleState": "node scripts/flipSaleState.js",
     "solhint": "./node_modules/.bin/solhint -f table contracts/**/*.sol",

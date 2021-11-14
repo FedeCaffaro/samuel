@@ -6,7 +6,8 @@ import {Card, Button, InputGroup, FormControl, Container} from 'react-bootstrap'
 import RangeSlider from 'react-bootstrap-range-slider';
 import { FaEthereum } from "react-icons/fa";
 import { BiMinus, BiPlus } from "react-icons/bi";
-import { mint, mintPrice, maxSupply, totalSupply, maxToMint, maxToMintPresale, saleIsActive, preSaleIsActive } from '../../lib/nft'
+import { mint, mintPrice, mintPricePreSale, maxSupply, totalSupply, maxToMint, maxToMintPerNFT, saleIsActive, preSaleIsActive, balanceOf } from '../../lib/nft'
+import { stakeOf } from '../../lib/token'
 import { useWallet } from 'use-wallet'
 import _ from 'lodash'
 import drops from '../../data/drops'
@@ -19,30 +20,27 @@ export default function Home() {
 	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [totalMinted, setTotalMinted] = useState(0)
-	const [maxPerWallet, setMaxPerWallet] = useState(0)
-	const [maxPerTransaction, setMaxPerTransaction] = useState(0)
+	const [maxMint, setMaxMint] = useState(0)
+	const [maxMintPreSale, setMaxMintPreSale] = useState(0)
 	const [saleActive, setSaleActive] = useState(false)
-	const [presaleActive, setPreSaleActive] = useState(false)
-	const [whitelisted, setWhitelisted] = useState(false)
+	const [preSaleActive, setPreSaleActive] = useState(false)
 	const [price, setPrice] = useState(0)
+	const [pricePreSale, setPricePreSale] = useState(0)
 	const [supply, setSupply] = useState(0)
 	const [numberOfTokens, setNumberOfTokens] = useState(1)
 	const [transactionUrl, setTransactionUrl] = useState("")
-	const [pending, setPending] = useState(false)
+	const [message, setMessage] = useState("")
 	const [nftsOwned, setNFTsOwned] = useState(0)
 
 	const isBrowser = typeof window !== "undefined"
-	let etherscanUrl = 'https://rinkeby.etherscan.io'
+	let etherscanUrl
 	let network
 	if (isBrowser) {
-	  etherscanUrl = window.location.hostname.includes('test') ||
-	  	window.location.hostname.includes('cloudfront') ||
+	  etherscanUrl = window.location.hostname.includes('dev') ||
 	  	window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
-	  network = window.location.hostname.includes('test') ||
-	  	window.location.hostname.includes('cloudfront') ||
+	  network = window.location.hostname.includes('dev') ||
 	  	window.location.hostname.includes('localhost') ? 'test' : 'main'
 	}
-
 
 	const connect = () => {
 	  wallet.connect()
@@ -53,95 +51,145 @@ export default function Home() {
 	}
 
 	const increment = () => {
-		if (presaleActive && saleActive) {
-			setNumberOfTokens(numberOfTokens + 1 <= maxPerWallet ? numberOfTokens + 1 : maxPerWallet)
-		} else if (saleActive) {
-			setNumberOfTokens(numberOfTokens + 1 <= maxPerTransaction ? numberOfTokens + 1 : maxPerTransaction)
+		if (preSaleActive) {
+			setNumberOfTokens(numberOfTokens + 1 <= maxMintPreSale ? numberOfTokens + 1 : maxMintPreSale)
+		} else {
+			setNumberOfTokens(numberOfTokens + 1 <= maxMint ? numberOfTokens + 1 : maxMint)
 		}
 	}
 
   	const decrement = () => {
-    	setNumberOfTokens(numberOfTokens - 1 > 0 ? numberOfTokens - 1 : 1)
+  		if (preSaleActive) {
+  			const lower = maxMintPreSale == 0 ? 0 : 1
+			setNumberOfTokens(numberOfTokens - 1 > 0 ? numberOfTokens - 1 : lower)
+		} else {
+			setNumberOfTokens(numberOfTokens - 1 > 0 ? numberOfTokens - 1 : 1)
+		}
   	}
 
 	const mintNFTs = async () => {
       setError(null)
       setLoading(true)
-      setPending(true)
       const result = await mint(collection.contract, wallet.account, numberOfTokens, price)
       if (result.error) {
+      	setNumberOfTokens(1)
         setError(result.error)
       } else {
+      	setNumberOfTokens(1)
         setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
       }
   	}
 
-	useEffect(() => {
-		if (wallet && wallet.account && drops) {
-			setCollection(_.find(drops, {contract: contract}))
+  	const readContract = async () => {
+		if (wallet && wallet.account) {
 	       	totalSupply(contract).then(setTotalMinted);
-		    mintPrice(contract).then(setPrice);
-		    maxToMint(contract).then(setMaxPerTransaction);
 		    maxSupply(contract).then(setSupply);
-		    saleIsActive(contract).then(setSaleActive);
-		    //balanceOfDragons(wallet.account).then(setDragonsOwned)
+		    saleIsActive(contract).then(setSaleActive)
+		    preSaleIsActive(contract).then(setPreSaleActive)
+  			mintPricePreSale(contract).then(setPricePreSale)
+  			maxToMintPreSale(contract).then(setMaxMintPreSale)
+  			mintPrice(contract).then(setPrice);
+  			maxToMint(contract).then(setMaxMint);
 	    }
+  	}
+
+  	const maxToMintPreSale = async (contract) => {
+  		const maxPerNFT = await maxToMintPerNFT(contract)
+  		const staked = (await stakeOf(wallet.account)).length
+  		const unstaked = await balanceOf(drops[0].contract, wallet.account)
+  		const minted = await balanceOf(contract, wallet.account)
+  		const owned = parseInt(staked) + parseInt(unstaked)
+  		setNFTsOwned(owned)
+  		const max = (owned * maxPerNFT) - parseInt(minted)
+  		if (max < 1 && preSaleActive) setNumberOfTokens(0)
+		return max
+  	}
+
+  	useEffect(() => {
+  		setNumberOfTokens(1)
+  		if (!saleActive && preSaleActive) {
+  			setMessage("Minting is not available.")
+  		}
+  	}, [preSaleActive, saleActive])
+
+	useEffect(() => {
+		if (drops && drops.length > 0 && contract) {
+			const drop = _.find(drops, {contract: contract})
+		  	setCollection(drop)
+	  	}
+	}, [contract, drops])
+
+	useEffect(() => {
+	    if (wallet.account) readContract()
 	}, [wallet])
 
 	useEffect(() => {
 		wallet.connect()
+		setInterval(() => {
+	    	if (wallet.account) readContract()
+	    }, 3000)
 	}, [])
 
 	return (
 	  	<Container fluid className="mint-wrapper pyramyd">
-			<div className="form-wrapper">
-				<div className="logo">
-					<img src={`/${collection.imageUrl}`} width="252px" />
-				</div>
-				<div className="divider"></div>
-  				<h1>Mint a {collection.name}</h1>
-  				
-  				{saleActive ? (
-  				<div>
-					{wallet && wallet.account ? (
-					  	<div>
-							<div>
-								<p>Please use Chrome/Firefox with metamask extension for PC or metamask app for mobile.</p>
-							  	<div className="mint-price">{parseFloat(price/Math.pow(10, 18)).toFixed(2)} <FaEthereum/> + Gas</div>
-							  	<InputGroup className="mint-input">
-								    <Button variant="primary" className="btn-left" onClick={() => decrement()}>
-								      <BiMinus />
-								    </Button>
-								    <FormControl
-								      type="number"
-								      placeholder="1"
-								      aria-label="Example text with button addon"
-								      aria-describedby="basic-addon1"
-								      value={numberOfTokens}
-								    />
-								    <Button variant="primary" className="btn-right" onClick={() => increment()}>
-								      <BiPlus  />
-								    </Button>
-								</InputGroup>
-							    <Button size="lg" variant="primary" onClick={() => mintNFTs()}>Mint</Button>
-							    <div className="supply">Total Minted: {totalMinted} / {supply}</div>
-							</div>
-							{<div>
-						    	<p>
-						    		<a target="_blank" href={`${etherscanUrl}/address/${collection.contract}`}>View Contract</a><br />
-						    		{transactionUrl && <a target="_blank" href={transactionUrl}>View Transaction</a>}
-						    	</p>
-					    	</div>}
+	  		{collection && collection.contract && contract && (
+				<div className="form-wrapper">
+					<div className="logo">
+						<img src={`/${collection.imageUrl}`} width="252px" />
+					</div>
+					<div className="divider"></div>
+	  				<h1>Mint a {collection.name}</h1>
+	  				
+	  				{saleActive ? (
+		  				<div>
+							{wallet && wallet.account ? (
+							  	<div>
+							  		{preSaleActive && nftsOwned == 0 ? (
+							  			<p>You must own at least one Samot NFT to participate in the pre-sale.</p>
+							  		) : (
+								  		<div>
+											<div>
+												<p>Please use Chrome/Firefox with MetaMask.</p>
+											  	<div className="mint-price">{preSaleActive ?
+											  		parseFloat(pricePreSale/Math.pow(10, 18)).toFixed(2) : 
+											  		parseFloat(price/Math.pow(10, 18)).toFixed(2)
+											  	} <FaEthereum/> + Gas</div>
+											  	<InputGroup className="mint-input">
+												    <Button variant="primary" className="btn-left" onClick={() => decrement()}>
+												      <BiMinus />
+												    </Button>
+												    <FormControl
+												      type="number"
+												      placeholder="1"
+												      aria-label="Example text with button addon"
+												      aria-describedby="basic-addon1"
+												      value={numberOfTokens}
+												    />
+												    <Button variant="primary" className="btn-right" onClick={() => increment()}>
+												      <BiPlus  />
+												    </Button>
+												</InputGroup>
+											    <Button size="lg" variant="primary" onClick={() => mintNFTs()}>Mint</Button>
+											    <div className="supply">Total Minted: {totalMinted} / {supply}</div>
+											</div>
+											<div>
+										    	<p>
+										    		<a target="_blank" href={`${etherscanUrl}/address/${collection.contract}`}>View Contract</a><br />
+										    		{transactionUrl && <a target="_blank" href={transactionUrl}>View Transaction</a>}
+										    	</p>
+									    	</div>
+										</div>
+									)}
+								</div>
+						    ) : (
+						    	<Button size="lg" variant="primary" onClick={() => connect()}>Connect</Button>
+						    )}
 						</div>
-				    ) : (
-				    	<Button size="lg" variant="primary" onClick={() => connect()}>Connect</Button>
-				    )}
+					): (
+						<p>{message}</p>
+					)}
 				</div>
-				): (
-					<p>Minting is not available.</p>
-				)}
-			</div>
-			 
+			)}
 		</Container>
 	)
 }
