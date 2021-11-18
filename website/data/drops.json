@@ -146,12 +146,23 @@
 		]
 	},
 	{
+		"symbol": "TRIPPY", 
+		"name": "PARADISE TRIPPIES", 
+		"imageUrl": "paradise_logo.png", 
+		"description": "A collection of 10,000 unique NFTs that were born from Party Pete's (BAYC #9696). Get your unique Paradise Trippy and own a slice of Paradise along with many member-only benefits. There will be 500 pre-sale whitelist spots available to Samot holders.", 
+		"contract": "", 
+		"infoUrl": "https://paradise.com",
+		"datetime": "11/29/21",
+		"type": "upcoming",
+		"ready": true
+	},
+	{
 		"symbol": "SAM", 
 		"name": "SAM ELGRECO", 
 		"imageUrl": "sam_logo.png", 
 		"description": "Sam Elgreco was born in Sao Paulo, Brazil, in 1986. After a few years he moves to Buenos Aires to study fine arts and design, and that’s where the idea of painting in public spaces becomes a constant.", 
 		"contract": "", 
-		"datetime": "11/28/21", 
+		"datetime": "TBD", 
 		"type": "upcoming",
 		"ready": false
 	},
