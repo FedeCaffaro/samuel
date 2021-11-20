@@ -268,9 +268,6 @@ export default function Home() {
                     <Nav.Link eventKey="drops">Drops</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="token">Token</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
                     <Nav.Link eventKey="launchpad">Launch</Nav.Link>
                   </Nav.Item>
                 </Nav>
