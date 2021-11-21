@@ -66,7 +66,7 @@ jobs:
           npx serverless --env=dev
           aws s3 sync .serverless s3://samot-nextjs-deployment/dev --delete
 
-          cd website && aws s3 sync s3://samot-nextjs-deployment/dev/website .serverless --delete
+          cd ../website && aws s3 sync s3://samot-nextjs-deployment/dev/website .serverless --delete
           npx serverless --env=dev
           aws s3 sync .serverless s3://samot-nextjs-deployment/dev/website --delete
 
@@ -77,6 +77,6 @@ jobs:
       - name: Deploy Prod
         if: endsWith(github.ref, '/main')
         run: |
-          cd ../website && aws s3 sync s3://samot-nextjs-deployment/prod/website .serverless --delete
+          cd website && aws s3 sync s3://samot-nextjs-deployment/prod/website .serverless --delete
           npx serverless --env=prod
           aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website --delete
