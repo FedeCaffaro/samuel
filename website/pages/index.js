@@ -268,6 +268,9 @@ export default function Home() {
                     <Nav.Link eventKey="drops">Drops</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
+                    <Nav.Link eventKey="token">Token</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
                     <Nav.Link eventKey="launchpad">Launch</Nav.Link>
                   </Nav.Item>
                 </Nav>
@@ -591,7 +594,7 @@ export default function Home() {
                         <h1>$AMOT Token</h1>
                         <p>$AMOT is a mintable ERC20 token that can be burned to mint NFTs in Samot Club drops, acquire merch, physical art, music and more. Details and tokenomics will be released on this page soon.</p>
                       </div>
-                      <Row>
+                      {/*<Row>
                         <Col>
                           <div className="countdown-wrapper">
                             <div className="counter">
@@ -612,7 +615,7 @@ export default function Home() {
                             </div>
                           </div>
                         </Col>
-                      </Row>
+                      </Row>*/}
                       <Row>
                         <Col sm={12}>
                           <div className="utility-item">

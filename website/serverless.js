@@ -9,7 +9,7 @@ class Deploy extends Component {
         nextApp: {
           component: '@sls-next/serverless-component@1.18.1-alpha.2',
           inputs: {
-            bucketName: `samot-website-${inputs.env}`,
+            bucketName: `samot-website2-${inputs.env}`,
           },
         },
       },
