@@ -78,5 +78,6 @@ jobs:
       - name: Deploy Prod
         if: endsWith(github.ref, '/main')
         run: |
-          npx serverless --env=prod
+          npm install serverless -g
+          serverless deploy
           aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website2 --delete

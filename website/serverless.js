@@ -1,15 +1,15 @@
 const { Component } = require('@serverless/core')
 
 class Deploy extends Component {
-  async default(inputs = { env: 'dev', name: 'samot-website' }) {
-    const template = await this.load('@serverless/template', inputs.env)
+  async default(inputs = { env: 'prod', name: 'samot-website' }) {
+    const template = await this.load('@serverless/template', "prod")
     const output = await template({
       template: {
         name: inputs.name,
         nextApp: {
           component: '@sls-next/serverless-component@1.18.1-alpha.2',
           inputs: {
-            bucketName: `samot-website2-${inputs.env}`,
+            bucketName: `samot-website2-prod`,
           },
         },
       },
