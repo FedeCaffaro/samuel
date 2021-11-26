@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ganache-cli -d -p 7545 --gasLimit=10000000",
-    "deploy": "yarn truffle deploy --network rinkeby --reset",
-    "verify": "yarn truffle run verify SamotToken --network rinkeby",
+    "deploy": "yarn truffle deploy --network live --reset",
+    "verify": "yarn truffle run verify GoldenToken --network live",
     "mint": "node scripts/mint.js",
     "flipSaleState": "node scripts/flipSaleState.js",
     "solhint": "./node_modules/.bin/solhint -f table contracts/**/*.sol",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/FedeCaffaro/samuel#readme",
   "dependencies": {
     "@0x/subproviders": "^6.4.1",
+    "all": "^0.0.0",
     "dotenv": "^10.0.0",
     "eth-gas-reporter": "^0.2.17",
     "eth-sig-util": "^3.0.1",
