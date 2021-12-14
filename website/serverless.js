@@ -7,7 +7,7 @@ class Deploy extends Component {
       template: {
         name: inputs.name,
         nextApp: {
-          component: '@sls-next/serverless-component@1.18.1-alpha.2',
+          component: '@sls-next/serverless-component',
           inputs: {
             bucketName: `samot-website2-prod`,
           },
