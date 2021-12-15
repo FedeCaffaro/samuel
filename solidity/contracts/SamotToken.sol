@@ -31,27 +31,134 @@ abstract contract SamotNFT {
 
 contract SamotToken is ERC20, Ownable {
     using SafeMath for uint256;
+
+    //addresses
     address constant WALLET1 = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
     address constant WALLET2 = 0xD9CC8af4E8ac5Cb5e7DdFffD138A58Bac49dAEd5;
     address stakingAddress;
+    address[] burnlistAddr;
+    address[] claimlistAddr;
+
+    //uint256
     uint256 public maxToMintPerNFT = 100;
     uint256 public maxToMint = 50000;
-    uint256 public maxSupply = 6000000;
+    uint256 public maxSupply = 5000000;
+    uint256 public mintPrice = 200000000000000;
+    uint256 multiplier = 2;
+
+    //bools
     bool public preSaleIsActive = true;
     bool public saleIsActive = false;
-    uint256 public mintPrice = 200000000000000;
-    uint256 initialSupply = 1000000;
+
+    //contracts
     SamotNFT nft;
 
+    //mappings
+    mapping(address => bool) public burnlist;
+    mapping(address => bool) public claimlist;
+
+    //constructor
     constructor(
         string memory _name,
         string memory _symbol,
-        address _contractAddress
+        address _nftAddress
     ) ERC20(_name, _symbol) {
-        _mint(msg.sender, initialSupply.mul(10**18));
-        nft = SamotNFT(_contractAddress);
+        nft = SamotNFT(_nftAddress);
     }
 
+    //modifiers
+    modifier onlyBurnersOrOwner() {
+        require(
+            isBurnlisted(msg.sender) || owner() == _msgSender(),
+            "Only callable by Burner Contract or Owner"
+        );
+        _;
+    }
+
+    modifier onlyClaimersOrOwner() {
+        require(
+            isClaimlisted(msg.sender) || owner() == _msgSender(),
+            "Only callable by Claimer Contract or Owner"
+        );
+        _;
+    }
+
+    //Burnlist logic
+    function addAddressToBurnlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(!isBurnlisted(addr), "Already burnlisted");
+        burnlist[addr] = true;
+        success = true;
+    }
+
+    function addAddressesToBurnlist(address[] memory addrs)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        burnlistAddr = addrs;
+        for (uint256 i = 0; i < burnlistAddr.length; i++) {
+            addAddressToBurnlist(burnlistAddr[i]);
+        }
+        success = true;
+    }
+
+    function isBurnlisted(address addr)
+        public
+        view
+        returns (bool isBurnListed)
+    {
+        return burnlist[addr];
+    }
+
+    //Claimlist logic
+    function addAddressToClaimlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(!isClaimlisted(addr), "Already claimlisted");
+        claimlist[addr] = true;
+        success = true;
+    }
+
+    function addAddressesToClaimlist(address[] memory addrs)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        claimlistAddr = addrs;
+        for (uint256 i = 0; i < claimlistAddr.length; i++) {
+            addAddressToClaimlist(claimlistAddr[i]);
+        }
+        success = true;
+    }
+
+    function isClaimlisted(address addr)
+        public
+        view
+        returns (bool isWhiteListed)
+    {
+        return claimlist[addr];
+    }
+
+    // Burn function
+    function burn(address _from, uint256 _amount) external onlyBurnersOrOwner {
+        _burn(_from, _amount);
+    }
+
+    // Claim function
+    function claim(address _claimer, uint256 _reward)
+        external
+        onlyClaimersOrOwner
+    {
+        _mint(_claimer, _reward);
+    }
+
+    // Set functions
     function flipSaleState() public onlyOwner {
         saleIsActive = !saleIsActive;
     }
@@ -64,8 +171,8 @@ contract SamotToken is ERC20, Ownable {
         stakingAddress = _stakingAddress;
     }
 
-    function setNFTContract(address _contractAddress) external onlyOwner {
-        nft = SamotNFT(_contractAddress);
+    function setNFTContract(address _nftAddress) external onlyOwner {
+        nft = SamotNFT(_nftAddress);
     }
 
     function setMintPrice(uint256 _price) external onlyOwner {
@@ -84,22 +191,26 @@ contract SamotToken is ERC20, Ownable {
         maxToMintPerNFT = _maxToMint;
     }
 
+    function setMultiplier(uint256 _multiplier) external onlyOwner {
+        multiplier = _multiplier;
+    }
+
+    // Get price function
     function getPrice() public view returns (uint256) {
         uint256 currentSupply = totalSupply().div(10**18);
         require(currentSupply <= maxSupply, "Sold out.");
-        if (currentSupply >= 5000000) {
-            return mintPrice.mul(2**4);
-        } else if (currentSupply >= 4000000) {
-            return mintPrice.mul(2**3);
+        if (currentSupply >= 4000000) {
+            return mintPrice.mul(multiplier**3);
         } else if (currentSupply >= 3000000) {
-            return mintPrice.mul(2**2);
+            return mintPrice.mul(multiplier**2);
         } else if (currentSupply >= 2000000) {
-            return mintPrice.mul(2);
+            return mintPrice.mul(multiplier);
         } else {
             return mintPrice;
         }
     }
 
+    // Minting function
     function mint(uint256 numberOfTokens) public payable {
         require(saleIsActive, "Sale is not active.");
         require(numberOfTokens > 0, "numberOfTokens cannot be 0");
@@ -135,25 +246,6 @@ contract SamotToken is ERC20, Ownable {
             require(balance <= maxToMint, "Exceeds limit for public sale.");
         }
         _mint(msg.sender, numberOfTokens.mul(10**18));
-    }
-
-    function burn(address _from, uint256 _amount) external {
-		require(msg.sender == stakingAddress);
-		_burn(_from, _amount);
-	}
-    modifier onlyVaultorOwner() {
-        require(
-            msg.sender == stakingAddress || owner() == _msgSender(),
-            "Only callable by Staking contract or Owner"
-        );
-        _;
-    }
-
-    function claim(address _claimer, uint256 _reward)
-        external
-        onlyVaultorOwner
-    {
-        _mint(_claimer, _reward);
     }
 
     function withdraw() external onlyOwner {

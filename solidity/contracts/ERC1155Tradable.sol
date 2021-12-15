@@ -260,3 +260,4 @@ contract ERC1155Tradable is ContextMixin, ERC1155, NativeMetaTransaction, Ownabl
         return ContextMixin.msgSender();
     }
 }
+

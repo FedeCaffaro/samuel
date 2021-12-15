@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ganache-cli -d -p 7545 --gasLimit=10000000",
-    "deploy": "yarn truffle deploy --network live --reset",
-    "verify": "yarn truffle run verify GoldenToken --network live",
+    "deploy": "yarn truffle deploy --network rinkeby --reset",
+    "verify": "yarn truffle run verify SamotStaking --network rinkeby",
     "mint": "node scripts/mint.js",
     "flipSaleState": "node scripts/flipSaleState.js",
     "solhint": "./node_modules/.bin/solhint -f table contracts/**/*.sol",
