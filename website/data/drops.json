@@ -1,188 +1,130 @@
 [
-	{	
-		"symbol": "SAMOT", 
-		"name": "SAMOT", 
-		"imageUrl": "logo.png", 
-		"description": "An NFT Club that introduces the amazing Latin American artistic style. From diverse artists, the first collection comes from the creator himself. Welcome to Samot´s World and enjoy the ride.", 
+	{
+		"symbol": "SAMOT",
+		"name": "SAMOT",
+		"imageUrl": "logo.png",
+		"description": "An NFT Club that introduces the amazing Latin American artistic style. From diverse artists, the first collection comes from the creator himself. Welcome to Samot´s World and enjoy the ride.",
 		"contract": "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d",
-		"infoUrl": "https://samot.art", 
-		"datetime": "10/24 @ 6PM UTC", 
+		"infoUrl": "https://samot.art",
+		"datetime": "10/24 @ 6PM UTC",
 		"type": "active",
 		"ready": true
 	},
 	{
-		"symbol": "PYRMD", 
-		"name": "PYRAMYD", 
-		"imageUrl": "pyramyd-logo.png", 
-		"description": "PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.", 
+		"symbol": "PYRMD",
+		"name": "PYRAMYD",
+		"imageUrl": "pyramyd-logo.png",
+		"description": "PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.",
 		"html": "<p>PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.</p><p>During the month of September, he forced himself to live in his studio for 30 days. Determined to create one painting a day, PYRAMYD emerged from that extreme experience with a breathtaking series of unique pieces that make up the backbone for his NFT collection. This is PYRAMYD x Samot Club.</p>",
 		"contract": "0xB68E12f3BcCb852BC9343E892fAE704c8294dC2F",
-		"whoisImage": "/pyramyd/IMG-20201209.jpeg",
-		"whoisDescription": "Graffiti, muralism, sculpture and design come together in this 27 year old Argentinian artist’s work. An innate rule breaker, he has taken his artistic expression to many cities and countries around the globe. A combination of calligraphy, symbology, geometry, strong color pallets and impacting visuals turn his pieces into an intoxicating experience, colliding the boundaries of language and artistic perception.",
-		"datetime": "11/14 @ 6PM UTC", 
+		"infoUrl": "https://opensea.io/collection/pyramyd/",
+		"datetime": "11/14 @ 6PM UTC",
 		"type": "previous",
-		"ready": true,
-		"supply": 500,
-		"preSale": "Pre-Sale: 11/14/21 @ 6PM UTC | Price .05 ETH (Samot Holders) | Limit 1 per Samot NFT",
-		"publicSale": "Public Sale: 11/14/21 @ 7PM UTC | Price .1 ETH | Limit 8 per transaction",
-		"twitter": "",
-		"instagram": "https://www.instagram.com/pyramydart/",
-		"smallGallery": [
-			{"src": "/pyramyd/56.png"},
-			{"src": "/pyramyd/53.png"}, 
-			{"src": "/pyramyd/48.png"},
- 			{"src": "/pyramyd/31.png"},
- 			{"src": "/pyramyd/16.png"},
- 			{"src": "/pyramyd/13.png"},
- 			{"src": "/pyramyd/51.png"},
- 			{"src": "/pyramyd/6.png"},
- 			{"src": "/pyramyd/38.png"},
- 			{"src": "/pyramyd/55.png"},
- 			{"src": "/pyramyd/1.png"},
- 			{"src": "/pyramyd/17.png"}
- 		],
-		"largeGallery": [
-		  {
-		    "src": "/pyramyd/gallery/1.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/17.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/2.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/14.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/15.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/18.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/16.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/29.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/11.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/30.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/19.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/20.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/21.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/22.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/23.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/24.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/26.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/6.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/27.jpeg",
-		    "width": 2,
-		    "height": 3
-		  },
-		  {
-		    "src": "/pyramyd/gallery/28.jpeg",
-		    "width": 2,
-		    "height": 3
-		  }
-
-		]
-	},
-	{
-		"symbol": "TRIPPY", 
-		"name": "PARADISE TRIPPIES", 
-		"imageUrl": "paradise_logo.png", 
-		"description": "A collection of 10,000 unique NFTs that were born from Party Pete's (BAYC #9696). Get your unique Paradise Trippy and own a slice of Paradise along with many member-only benefits. There will be 500 pre-sale whitelist spots available to Samot holders.", 
-		"contract": "", 
-		"infoUrl": "https://paradise.com",
-		"datetime": "11/29/21",
-		"type": "upcoming",
 		"ready": true
 	},
 	{
-		"symbol": "SAM", 
-		"name": "SAM ELGRECO", 
-		"imageUrl": "sam_logo.png", 
-		"description": "Sam Elgreco was born in Sao Paulo, Brazil, in 1986. After a few years he moves to Buenos Aires to study fine arts and design, and that’s where the idea of painting in public spaces becomes a constant.", 
-		"contract": "", 
-		"datetime": "TBD", 
+		"symbol": "TOMI",
+		"name": "TOMI POMO",
+		"imageUrl": "tomi_logo.png",
+		"description": "Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.",
+		"contract": "",
+		"infoUrl": "",
+		"datetime": "12/17/21 ",
 		"type": "upcoming",
-		"ready": false
+		"ready": true,
+		"html": "<p>Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support. The rise of Tomi to the top of Argentina's contemporary art scene was built consistently over the last decade, as he introduced his tradermark characters into the cityscape. </p>",
+		"whoisImage": "/pomo/gallery/1.png",
+		"whoisDescription": "Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.The rise of Tomi to the top of Argentina´s contemporary art scene was built consistently over the last decade, as he introduced his tradermark characters into the cityscape. This universe of beings with burlesque characteristics and childish overtones, placed thoughtfully in scenes of cotidianity, creates a striking contradiction which is now familiar to the urban crowds.One of the artist's biggest projects is to carry out the art direction of the successful Buenos Aires party Linda Nene, where in addition to being a set designer, he uses the context of the party to further popularize the creatures that inhabit his imagination. From this artistic and personal search, his first 41 Linda Nene characters are born. Living as NFTs within the blockchain, they'll carry their hard earned knowledge of the physical world with them into this new, uncharted metaverse.",
+		"supply": 44,
+		"preSale":"Launching will be streamed live while hosting the Linda Nene party",
+		"publicSale": "Public Sale: 12/17/21 | Price .05 ETH ",
+		"twitter": "",
+		"instagram": "https://www.instagram.com/tomipomo/",
+		"smallGallery": [
+			{
+				"src": "/pomo/buzo.jpg"
+			},
+			{
+				"src": "/pomo/gatito.jpg"
+			},
+			{
+				"src": "/pomo/gitana.jpg"
+			},
+			{
+				"src": "/pomo/hongo.jpg"
+			},
+			{
+				"src": "/pomo/miguel.jpg"
+			},
+			{
+				"src": "/pomo/scorpio.jpg"
+			},
+			{
+				"src": "/pomo/jason.jpg"
+			},
+			{
+				"src": "/pomo/sol.jpg"
+			},
+			{
+				"src": "/pomo/sifon.jpg"
+			},
+			{
+				"src": "/pomo/bebe.jpg"
+			},
+			{
+				"src": "/pomo/devil.jpg"
+			},
+			{
+				"src": "/pomo/Tibu.jpg"
+			}
+		],
+		"largeGallery": [
+			{
+				"src": "/pomo/gallery/4.png",
+				"width": 3,
+				"height": 3
+			},
+			{
+				"src": "/pomo/gallery/2.png",
+				"width": 3,
+				"height": 3
+			},
+			{
+				"src": "/pomo/gallery/5.png",
+				"width": 3,
+				"height": 3
+			}
+		]
+	},
+	{
+		"symbol": "TRIPPY",
+		"name": "PARADISE TRIPPIES",
+		"imageUrl": "paradise_logo.png",
+		"description": "A collection of 10,000 unique NFTs that were born from Party Pete's (BAYC #9696). Get your unique Paradise Trippy and own a slice of Paradise along with many member-only benefits. There will be 500 pre-sale whitelist spots available to Samot holders.",
+		"contract": "",
+		"infoUrl": "https://paradise.com",
+		"datetime": "11/29/21",
+		"type": "previous",
+		"ready": true
+	},
+	{
+		"symbol": "SAM",
+		"name": "SAM ELGRECO",
+		"imageUrl": "sam_logo.png",
+		"description": "Sam Elgreco was born in Sao Paulo, Brazil, in 1986. After a few years he moves to Buenos Aires to study fine arts and design, and that’s where the idea of painting in public spaces becomes a constant.",
+		"contract": "",
+		"infoUrl": "https://opensea.io/collection/samelgrecoxsoldelrio",
+		"datetime": "12/14/21",
+		"type": "active",
+		"ready": true
 	},
 	{
 		"symbol": "DYLAN",
-		"name": "DYLAN LERNER", 
-		"imageUrl": "dylan_logo.jpeg", 
-		"description": "Throw the name around a couple of places: Cannes Film Festival, Berlin's underground scene, or even among vintage Rolling Stones managers. Big chances are someone has worked with him.", 
-		"contract": "", 
-		"datetime": "TBD", 
-		"type": "upcoming",
-		"ready": false
-	},
-	{
-		"symbol": "TOMI", 
-		"name": "TOMI POMO", 
-		"imageUrl": "tomi_logo.jpg", 
-		"description": "Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.", 
-		"contract": "", 
-		"datetime": "TBD", 
+		"name": "DYLAN LERNER",
+		"imageUrl": "dylan_logo.jpeg",
+		"description": "Throw the name around a couple of places: Cannes Film Festival, Berlin's underground scene, or even among vintage Rolling Stones managers. Big chances are someone has worked with him.",
+		"contract": "",
+		"datetime": "TBD",
 		"type": "upcoming",
 		"ready": false
 	}
