@@ -289,14 +289,17 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         counter = _counter;
     }
 
-    function claimV1Rewards() external onlyV1Stakers whenNotPaused {
-        uint256 rewardsV1 = calculateV1Rewards(msg.sender);
+    function calculateV1Rewards() external view onlyV1Stakers whenNotPaused returns (uint256 _rewardsV1){
+        uint256 rewardsV1;
         uint256 blockCur = block.number;
-        token.claim(msg.sender, rewardsV1);
-        stakedV1.stakeTimestampsOf(msg.sender)[counter] = blockCur;
+        for(uint256 i;i<stakedV1.stakeOf(msg.sender).length;i++){
+            rewardsV1+=calculateV1Reward(i);
+            stakedV1.stakeTimestampsOf(msg.sender)[i]=blockCur;
+        }
+        return rewardsV1;
     }
 
-    function calculateV1Rewards(address _account)
+    function calculateV1Reward(uint256 _tokenId)
         public
         view
         returns (uint256 v1Rewards)
@@ -304,7 +307,6 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         uint256 blockCur = block.number;
         return
             (rate *
-                (blockCur - stakedV1.stakeTimestampsOf(msg.sender)[counter]))
-                .mul((stakedV1.stakeOf(_account)).length);
+                (blockCur - stakedV1.stakeTimestampsOf(msg.sender)[_tokenId]));
     }
 }
