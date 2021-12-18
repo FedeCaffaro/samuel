@@ -28,73 +28,11 @@
 		"imageUrl": "tomi_logo.png",
 		"description": "Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.",
 		"contract": "",
-		"infoUrl": "",
+		"infoUrl": "https://opensea.io/collection/linda-nene",
 		"datetime": "12/17/21 ",
-		"type": "upcoming",
-		"ready": true,
-		"html": "<p>Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support. The rise of Tomi to the top of Argentina's contemporary art scene was built consistently over the last decade, as he introduced his tradermark characters into the cityscape. </p>",
-		"whoisImage": "/pomo/gallery/1.png",
-		"whoisDescription": "Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.The rise of Tomi to the top of Argentina´s contemporary art scene was built consistently over the last decade, as he introduced his tradermark characters into the cityscape. This universe of beings with burlesque characteristics and childish overtones, placed thoughtfully in scenes of cotidianity, creates a striking contradiction which is now familiar to the urban crowds.One of the artist's biggest projects is to carry out the art direction of the successful Buenos Aires party Linda Nene, where in addition to being a set designer, he uses the context of the party to further popularize the creatures that inhabit his imagination. From this artistic and personal search, his first 41 Linda Nene characters are born. Living as NFTs within the blockchain, they'll carry their hard earned knowledge of the physical world with them into this new, uncharted metaverse.",
-		"supply": 44,
-		"preSale":"Launching will be streamed live while hosting the Linda Nene party",
-		"publicSale": "Public Sale: 12/17/21 | Price .05 ETH ",
-		"twitter": "",
-		"instagram": "https://www.instagram.com/tomipomo/",
-		"smallGallery": [
-			{
-				"src": "/pomo/buzo.jpg"
-			},
-			{
-				"src": "/pomo/gatito.jpg"
-			},
-			{
-				"src": "/pomo/gitana.jpg"
-			},
-			{
-				"src": "/pomo/hongo.jpg"
-			},
-			{
-				"src": "/pomo/miguel.jpg"
-			},
-			{
-				"src": "/pomo/scorpio.jpg"
-			},
-			{
-				"src": "/pomo/jason.jpg"
-			},
-			{
-				"src": "/pomo/sol.jpg"
-			},
-			{
-				"src": "/pomo/sifon.jpg"
-			},
-			{
-				"src": "/pomo/bebe.jpg"
-			},
-			{
-				"src": "/pomo/devil.jpg"
-			},
-			{
-				"src": "/pomo/Tibu.jpg"
-			}
-		],
-		"largeGallery": [
-			{
-				"src": "/pomo/gallery/4.png",
-				"width": 3,
-				"height": 3
-			},
-			{
-				"src": "/pomo/gallery/2.png",
-				"width": 3,
-				"height": 3
-			},
-			{
-				"src": "/pomo/gallery/5.png",
-				"width": 3,
-				"height": 3
-			}
-		]
+		"type": "active",
+		"ready": true
+		
 	},
 	{
 		"symbol": "TRIPPY",
