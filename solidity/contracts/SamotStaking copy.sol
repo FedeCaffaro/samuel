@@ -28,23 +28,20 @@ abstract contract SamotToken {
     function burn(address _from, uint256 _amount) external {}
 }
 
-abstract contract StakingV1{
+abstract contract StakingV1 {
     function stakeOf(address _stakeholder)
         public
         view
         virtual
         returns (uint256[] memory);
+
     function stakeTimestampsOf(address _stakeholder)
         public
         view
         virtual
         returns (uint256[] memory);
-    function isStakeholder(address _address)
-        internal
-        view
-        virtual
-        returns (bool, uint256);
 }
+
 abstract contract SamotNFT {
     function ownerOf(uint256 tokenId) public view virtual returns (address);
 
@@ -73,15 +70,18 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     //addresses
     address public nftAddress;
     address public erc20Address;
+    address public stakingV1Address;
 
     //uint256's
     //rate governs how often you receive your token
     uint256 public rate;
+    uint256 public startBlock = 13606743;
+    uint256 counter = 0;
 
     //smart contracts
     SamotToken token;
     SamotNFT nft;
-    StakingV1 stakingV1;
+    StakingV1 stakedV1;
 
     // mappings
     mapping(address => EnumerableSet.UintSet) private _deposits;
@@ -90,17 +90,35 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     constructor(
         address _nftAddress,
         uint256 _rate,
-        address _erc20Address
+        address _erc20Address,
+        address _stakingV1Address
     ) {
         rate = _rate;
         nftAddress = _nftAddress;
         token = SamotToken(_erc20Address);
         nft = SamotNFT(_nftAddress);
+        stakedV1 = StakingV1(_stakingV1Address);
         _pause();
+    }
+
+    // modifiers
+    modifier onlyV1Stakers() {
+        require(
+            stakedV1.stakeOf(msg.sender).length > 0,
+            "Only callable by V1 Staker"
+        );
+        _;
     }
 
     function setTokenContract(address _erc20Address) external onlyOwner {
         token = SamotToken(_erc20Address);
+    }
+
+    function setStakingV1Contract(address _stakingV1Address)
+        external
+        onlyOwner
+    {
+        stakedV1 = StakingV1(_stakingV1Address);
     }
 
     function setNFTContract(address _nftAddress) external onlyOwner {
@@ -261,7 +279,34 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         uint256 balance = address(this).balance;
         payable(msg.sender).transfer(balance);
     }
+
+    // Staking V1 mechanics
+    function setStartBlock(uint256 _startBlock) public onlyOwner {
+        startBlock = _startBlock;
+    }
+
+    function setCounter(uint256 _counter) public onlyOwner {
+        counter = _counter;
+    }
+
+    function calculateV1Rewards() external view onlyV1Stakers whenNotPaused returns (uint256 _rewardsV1){
+        uint256 rewardsV1;
+        uint256 blockCur = block.number;
+        for(uint256 i;i<stakedV1.stakeOf(msg.sender).length;i++){
+            rewardsV1+=calculateV1Reward(i);
+            stakedV1.stakeTimestampsOf(msg.sender)[i]=blockCur;
+        }
+        return rewardsV1;
+    }
+
+    function calculateV1Reward(uint256 _tokenId)
+        public
+        view
+        returns (uint256 v1Rewards)
+    {
+        uint256 blockCur = block.number;
+        return
+            (rate *
+                (blockCur - stakedV1.stakeTimestampsOf(msg.sender)[_tokenId]));
+    }
 }
-
-
-// if is stakeholder del viejo, reparti stake stamps * cantidad de nfts stakeados en el calculate rewards
