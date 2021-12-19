@@ -29,8 +29,8 @@ jobs:
           node-version: 14.17.0
 
       # Delete .next folder
-      # - name: Delete .next
-      #   run: rm -rf nextjs/.next
+      - name: Delete .next
+        run: rm -rf nextjs/.next
         
       # Delete .next folder
       - name: Delete .next
@@ -44,12 +44,12 @@ jobs:
           echo "AWS_REGION"=$AWS_REGION >> .env
 
       # Install project dependencies
-      # - name: Install Dependencies
-      #   run: cd nextjs && yarn
+      - name: Install Dependencies
+        run: cd nextjs && yarn
 
       # Build the app
-      # - name: Build
-      #   run: cd nextjs && yarn build
+      - name: Build
+        run: cd nextjs && yarn build
         
       # Install project dependencies
       - name: Install Dependencies
@@ -78,6 +78,14 @@ jobs:
       - name: Deploy Prod
         if: endsWith(github.ref, '/main')
         run: |
-          npm install serverless
-          serverless deploy
-          aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website2 --delete
+          cd nextjs && aws s3 sync s3://samot-nextjs-deployment/prod .serverless --delete
+          npx serverless --env=prod
+          aws s3 sync .serverless s3://samot-nextjs-deployment/prod --delete
+
+          cd ../website && aws s3 sync s3://samot-nextjs-deployment/prod/website .serverless --delete
+          npx serverless --env=prod
+          aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website --delete
+          
+          npm install serverless -g
+          cd ../serverless && npm install && serverless deploy --stage prod
+

@@ -22,9 +22,28 @@ import "openzeppelin-solidity/contracts/utils/Address.sol";
  * SamotStaking - a contract for the Samot NFT Staking
  */
 
-contract SamotToken {
-    function claim(address account, uint256 amount) external {}
-    function burn(address _from, uint256 _amount) external{}
+abstract contract SamotToken {
+    function claim(address _claimer, uint256 _reward) external {}
+
+    function burn(address _from, uint256 _amount) external {}
+}
+
+abstract contract StakingV1{
+    function stakeOf(address _stakeholder)
+        public
+        view
+        virtual
+        returns (uint256[] memory);
+    function stakeTimestampsOf(address _stakeholder)
+        public
+        view
+        virtual
+        returns (uint256[] memory);
+    function isStakeholder(address _address)
+        internal
+        view
+        virtual
+        returns (bool, uint256);
 }
 abstract contract SamotNFT {
     function ownerOf(uint256 tokenId) public view virtual returns (address);
@@ -52,34 +71,40 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     using EnumerableSet for EnumerableSet.UintSet;
     using SafeMath for uint256;
     //addresses
-    address public stakingDestinationAddress;
+    address public nftAddress;
     address public erc20Address;
 
     //uint256's
     //rate governs how often you receive your token
     uint256 public rate;
 
+    //smart contracts
     SamotToken token;
     SamotNFT nft;
+    StakingV1 stakingV1;
 
     // mappings
     mapping(address => EnumerableSet.UintSet) private _deposits;
     mapping(address => mapping(uint256 => uint256)) public _depositBlocks;
 
     constructor(
-        address _stakingDestinationAddress,
+        address _nftAddress,
         uint256 _rate,
         address _erc20Address
     ) {
-        stakingDestinationAddress = _stakingDestinationAddress;
         rate = _rate;
+        nftAddress = _nftAddress;
         token = SamotToken(_erc20Address);
-        nft=SamotNFT(_stakingDestinationAddress);
+        nft = SamotNFT(_nftAddress);
         _pause();
     }
 
     function setTokenContract(address _erc20Address) external onlyOwner {
         token = SamotToken(_erc20Address);
+    }
+
+    function setNFTContract(address _nftAddress) external onlyOwner {
+        nft = SamotNFT(_nftAddress);
     }
 
     function pause() public onlyOwner {
@@ -94,8 +119,8 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
 
     // Set a multiplier for how many tokens to earn each time a block passes.
     // 1 $AMOT PER DAY
-    // n Blocks per day= 6000, Token Decimal = 18
-    // Rate = 238095238100000
+    // n Blocks per day= 6200, Token Decimal = 18
+    // Rate = 161290322600000
     function setRate(uint256 _rate) public onlyOwner {
         rate = _rate;
     }
@@ -151,6 +176,15 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
             (block.number - _depositBlocks[account][tokenId]);
     }
 
+    //Returns the number of blocks that have passed since staking
+    function calculateBlocks(address account, uint256 tokenId)
+        public
+        view
+        returns (uint256)
+    {
+        return (block.number - _depositBlocks[account][tokenId]);
+    }
+
     //reward claim function
     function claimRewards(uint256[] calldata tokenIds) public whenNotPaused {
         uint256 reward;
@@ -168,19 +202,21 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
 
     //Staking function
     function stake(uint256[] calldata tokenIds) external whenNotPaused {
+        require(msg.sender != nftAddress, "Invalid address");
+        require(
+            nft.isApprovedForAll(msg.sender, address(this)),
+            "This contract is not approved to transfer your NFT."
+        );
         for (uint256 i = 0; i < tokenIds.length; i++) {
             require(
                 nft.ownerOf(tokenIds[i]) == msg.sender,
                 "You do not own this NFT."
             );
-            require(
-                nft.isApprovedForAll(msg.sender, address(this)),
-                "This contract is not approved to transfer your NFT."
-            );
         }
+
         claimRewards(tokenIds);
         for (uint256 i; i < tokenIds.length; i++) {
-            IERC721(stakingDestinationAddress).safeTransferFrom(
+            IERC721(nftAddress).safeTransferFrom(
                 msg.sender,
                 address(this),
                 tokenIds[i],
@@ -203,21 +239,13 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
                 "Staking: token not deposited"
             );
             _deposits[msg.sender].remove(tokenIds[i]);
-            IERC721(stakingDestinationAddress).safeTransferFrom(
+            IERC721(nftAddress).safeTransferFrom(
                 address(this),
                 msg.sender,
                 tokenIds[i],
                 ""
             );
         }
-    }
-
-// poner los burnings
-
-
-    function withdraw() external onlyOwner {
-        uint256 balance = address(this).balance;
-        payable(msg.sender).transfer(balance);
     }
 
     function onERC721Received(
@@ -228,4 +256,12 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     ) external pure override returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
     }
+
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        payable(msg.sender).transfer(balance);
+    }
 }
+
+
+// if is stakeholder del viejo, reparti stake stamps * cantidad de nfts stakeados en el calculate rewards
