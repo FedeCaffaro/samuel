@@ -160,6 +160,10 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return tokenIds;
     }
 
+    function totalStakes() public view returns (uint256 _totalStakes) {
+        return nft.balanceOf(address(this));
+    }
+
     //Calculate rewards amount by address/tokenIds[]
     function calculateRewards(address account, uint256[] memory tokenIds)
         public
