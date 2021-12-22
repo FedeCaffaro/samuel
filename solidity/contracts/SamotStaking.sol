@@ -84,9 +84,15 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     SamotNFT nft;
     StakingV1 stakedV1;
 
+    //bools
+    bool public stakingV1IsActive = true;
+
     // mappings
     mapping(address => EnumerableSet.UintSet) private _deposits;
     mapping(address => mapping(uint256 => uint256)) public _depositBlocks;
+
+    mapping(address => uint256) public v1Timestamp;
+    mapping(address => bool) public hasClaimedDrop;
 
     constructor(
         address _nftAddress,
@@ -103,15 +109,6 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         nft = SamotNFT(_nftAddress);
         stakedV1 = StakingV1(_stakingV1Address);
         _pause();
-    }
-
-    // modifiers
-    modifier onlyV1Stakers() {
-        require(
-            stakedV1.stakeOf(msg.sender).length > 0,
-            "Only callable by V1 Staker"
-        );
-        _;
     }
 
     function setTokenContract(address _erc20Address) external onlyOwner {
@@ -279,22 +276,31 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return IERC721Receiver.onERC721Received.selector;
     }
 
-    function withdraw() external onlyOwner {
-        uint256 balance = address(this).balance;
-        payable(msg.sender).transfer(balance);
+    // Staking V1 mechanics
+    // You should claim your tokens before UNSTAKING V1
+
+    function setStartBlock(uint256 _startBlock) public onlyOwner {
+        startBlock = _startBlock;
     }
 
-    // Staking V1 mechanics
+    function setV1Rate(uint256 _v1Rate) public onlyOwner {
+        v1Rate = _v1Rate;
+    }
 
-    //mapping
-    mapping(address => uint256) public v1Timestamp;
-    mapping(address => bool) public hasClaimedDrop;
+    function setV1RatePostV2(uint256 _v1RatePost) public onlyOwner {
+        v1RatePost = _v1RatePost;
+    }
 
-    function calculateBlocksV1(address _address)
+    function flipStakingV1State() public onlyOwner {
+        stakingV1IsActive = !stakingV1IsActive;
+    }
+
+    function calculateStakingBlocksV1(address _address)
         public
         view
         returns (uint256 _blocks)
     {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
         uint256 blocks;
         uint256 blockCur = block.number;
         if (hasClaimedDrop[_address] == false) {
@@ -305,23 +311,12 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return blocks;
     }
 
-    function setStartBlock(uint256 _startBlock) public onlyOwner {
-        startBlock = _startBlock;
-    }
-
-    function setV1Rate(uint256 _v1Rate) public onlyOwner {
-        v1Rate = _v1Rate;
-    }
-
-    function setV1RatePost(uint256 _v1RatePost) public onlyOwner {
-        v1RatePost = _v1RatePost;
-    }
-
     function calculateV1Rewards(address _address)
         public
         view
         returns (uint256 v1Rewards)
     {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
         uint256 rewards;
         uint256 blockCur = block.number;
         if (hasClaimedDrop[_address] == false) {
@@ -336,7 +331,17 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return rewards;
     }
 
-    function claimV1Rewards() external onlyV1Stakers whenNotPaused {
+    function numberStakedV1(address _address)
+        public
+        view
+        returns (uint256 _numberStaked)
+    {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
+        return stakedV1.stakeOf(_address).length;
+    }
+
+    function claimV1Rewards() external whenNotPaused {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
         uint256 blockCur = block.number;
         if (hasClaimedDrop[msg.sender] == false) {
             token.claim(msg.sender, calculateV1Rewards(msg.sender));
@@ -346,5 +351,10 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
             token.claim(msg.sender, calculateV1Rewards(msg.sender));
             v1Timestamp[msg.sender] = blockCur;
         }
+    }
+
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        payable(msg.sender).transfer(balance);
     }
 }
