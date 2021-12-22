@@ -47,7 +47,7 @@ contract SamotToken is ERC20, Ownable {
     uint256 multiplier = 2;
 
     //bools
-    bool public preSaleIsActive = true;
+    bool public preSaleIsActive = false;
     bool public saleIsActive = false;
 
     //contracts
@@ -114,6 +114,16 @@ contract SamotToken is ERC20, Ownable {
         return burnlist[addr];
     }
 
+    function removeAddressFromBurnlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(isBurnlisted(addr), "Not burnlisted");
+        burnlist[addr] = false;
+        success = true;
+    }
+
     //Claimlist logic
     function addAddressToClaimlist(address addr)
         public
@@ -140,9 +150,19 @@ contract SamotToken is ERC20, Ownable {
     function isClaimlisted(address addr)
         public
         view
-        returns (bool isWhiteListed)
+        returns (bool isClaimListed)
     {
         return claimlist[addr];
+    }
+
+    function removeAddressFromClaimlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(isClaimlisted(addr), "Not claimlisted");
+        claimlist[addr] = false;
+        success = true;
     }
 
     // Burn function
@@ -155,6 +175,10 @@ contract SamotToken is ERC20, Ownable {
         external
         onlyClaimersOrOwner
     {
+        require(
+            ((totalSupply().add(_reward)).div(10**18)) <= maxSupply,
+            "Exceeds token limit."
+        );
         _mint(_claimer, _reward);
     }
 
@@ -212,8 +236,13 @@ contract SamotToken is ERC20, Ownable {
 
     // Minting function
     function mint(uint256 numberOfTokens) public payable {
+        uint256 currentSupply = totalSupply().div(10**18);
         require(saleIsActive, "Sale is not active.");
         require(numberOfTokens > 0, "numberOfTokens cannot be 0");
+        require(
+            currentSupply.add(numberOfTokens) <= maxSupply,
+            "Exceeds token limit."
+        );
         uint256 balance = balanceOf(msg.sender).div(10**18);
         if (preSaleIsActive) {
             require(
