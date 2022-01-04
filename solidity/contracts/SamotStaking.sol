@@ -146,7 +146,7 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
 
     //Checks staked amount
     function depositsOf(address account)
-        external
+        public
         view
         returns (uint256[] memory)
     {
@@ -209,7 +209,7 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     }
 
     //reward claim function
-    function claimRewards(uint256[] calldata tokenIds) public whenNotPaused {
+    function claimRewards(uint256[] memory tokenIds) public whenNotPaused {
         uint256 reward;
         uint256 blockCur = block.number;
 
@@ -221,6 +221,12 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         if (reward > 0) {
             token.claim(msg.sender, reward);
         }
+    }
+
+    function claimTotalRewards() public {
+        uint256[] memory v2TokenIds = depositsOf(msg.sender);
+        claimRewards(v2TokenIds);
+        claimV1Rewards();
     }
 
     //Staking function
@@ -344,7 +350,7 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return stakedV1.stakeOf(_address).length;
     }
 
-    function claimV1Rewards() external whenNotPaused {
+    function claimV1Rewards() public whenNotPaused {
         require(stakingV1IsActive, "Staking V1 is deprecated");
         uint256 blockCur = block.number;
         if (hasClaimedDrop[msg.sender] == false) {

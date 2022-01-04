@@ -279,12 +279,7 @@ contract SamotToken is ERC20, Ownable {
 
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
-        uint256 wallet1Balance = balance.mul(10).div(100);
-        uint256 wallet2Balance = balance.mul(85).div(100);
-        payable(WALLET1).transfer(wallet1Balance);
-        payable(WALLET2).transfer(wallet2Balance);
         payable(msg.sender).transfer(
-            balance.sub(wallet1Balance.add(wallet2Balance))
-        );
+            balance);
     }
 }
