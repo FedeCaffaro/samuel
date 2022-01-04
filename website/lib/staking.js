@@ -1,7 +1,12 @@
 import Web3 from 'web3';
+import _ from "lodash";
+const STAKING_ABI = require('../abis/Staking.json');
+// export const STAKING_CONTRACT_ADDRESS = "0xe8D1a43FaF827f018140558d4954742Ddc564099" // prod
+export const STAKING_CONTRACT_ADDRESS = "0x91f5C63ebE2897749a3F2D84809b527F30d46562" // dev
+
 const TOKEN_ABI = require('../abis/Token.json');
 // export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
-export const TOKEN_CONTRACT_ADDRESS = "0xAbc8c46b6f659789FE0f6A4960053b359Fa06aA6" // dev
+export const TOKEN_CONTRACT_ADDRESS = "0x8040Eaf450e42b1784809cE9344FB17A7674cFEC" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
@@ -36,11 +41,11 @@ export const stakeNFTs = async (address, tokenIds) => {
   const web3Instance = await getWeb3();
   try {
     const nftContract = new web3Instance.eth.Contract(
-      TOKEN_ABI,
-      TOKEN_CONTRACT_ADDRESS
+      STAKING_ABI,
+      STAKING_CONTRACT_ADDRESS
     );
     const result = await nftContract.methods
-      .stakeNFTs(tokenIds)
+      .stake(tokenIds)
       .send({
         from: address
       });
@@ -63,11 +68,11 @@ export const unstakeNFTs = async (address, tokenIds) => {
   const web3Instance = await getWeb3();
   try {
     const nftContract = new web3Instance.eth.Contract(
-      TOKEN_ABI,
-      TOKEN_CONTRACT_ADDRESS
+      STAKING_ABI,
+      STAKING_CONTRACT_ADDRESS
     );
     const result = await nftContract.methods
-      .unstakeNFTs(tokenIds)
+      .unstake(tokenIds)
       .send({
         from: address
       });
@@ -86,27 +91,60 @@ export const unstakeNFTs = async (address, tokenIds) => {
   }
 };
 
-export const stakeOf = async (address) => {
+export const depositsOf = async (address) => {
   console.log(address)
   const web3Instance = await getWeb3();
-  const nftContract = new web3Instance.eth.Contract(
+
+  const v1Contract = new web3Instance.eth.Contract(
     TOKEN_ABI,
     TOKEN_CONTRACT_ADDRESS
   );
 
-  return nftContract.methods
+  const v1Deposits = await v1Contract.methods
     .stakeOf(address)
     .call();
-}
 
-export const rewardOf = async (address) => {
-  const web3Instance = await getWeb3();
-  const nftContract = new web3Instance.eth.Contract(
-    TOKEN_ABI,
-    TOKEN_CONTRACT_ADDRESS
+  const v2Contract = new web3Instance.eth.Contract(
+    STAKING_ABI,
+    STAKING_CONTRACT_ADDRESS
   );
 
-  return nftContract.methods
-    .rewardOf(address)
+  const v2Deposits = await v2Contract.methods
+    .depositsOf(address)
     .call();
+
+    // console.log(v1Deposits.concat(v2Deposits));
+
+
+    return v1Deposits.concat(v2Deposits);
+}
+
+export const calculateRewards = async (address) => {
+  const web3Instance = await getWeb3();
+  const nftContract = new web3Instance.eth.Contract(
+    STAKING_ABI,
+    STAKING_CONTRACT_ADDRESS
+  );
+
+  const v1Rewards = await nftContract.methods
+    .calculateV1Rewards(address)
+    .call();
+
+    const tokenIds = await nftContract.methods
+    .depositsOf(address)
+    .call();
+
+    // console.log(tokenIds);
+
+    const v2RewardsArray = await nftContract.methods
+    .calculateRewards(address, tokenIds)
+    .call();
+
+    let v2Rewards = 0;
+    for (let reward of v2RewardsArray) {
+        v2Rewards += parseInt(reward)/Math.pow(10, 18)
+    }
+    // console.log(v2Rewards);
+
+    return (parseFloat(v1Rewards)/Math.pow(10,18) + parseFloat(v2Rewards)).toFixed(2);
 }

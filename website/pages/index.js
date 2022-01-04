@@ -8,7 +8,7 @@ import { Container, Button, Row, Col, Tab, Nav, Dropdown, ButtonGroup, DropdownB
 import { BiChevronDown, BiChevronRight, BiRightArrowAlt, BiDotsHorizontalRounded, BiFilter } from "react-icons/bi";
 import { GoLock } from "react-icons/go";
 import { NFT_CONTRACT_ADDRESS, setApproveForAll, isApprovedForAll, mint, mintPrice, maxSupply, totalSupply, maxToMint, saleIsActive } from '../lib/nft'
-import { TOKEN_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, stakeOf, rewardOf } from '../lib/token'
+import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards } from '../lib/staking'
 import Stats from '../components/stats'
 import drops from '../data/drops'
 import { BsArrowRight, BsChevronDown } from "react-icons/bs";
@@ -138,7 +138,7 @@ export default function Home() {
 
   const loadAssets = async (drop) => {
     let fetchedAssets = [];
-    const stakedIds = await stakeOf(wallet.account)
+    const stakedIds = await depositsOf(wallet.account)
     const getStakedAssets = async (tokenIds, offset, limit) => {
       if (tokenIds.length > 0) {
         let ids = []
@@ -204,7 +204,7 @@ export default function Home() {
       }
     }
     setUnstakedAssets(assets)
-    rewardOf(wallet.account).then(setStakingRewards)
+    calculateRewards(wallet.account).then(setStakingRewards)
 
   }
 
