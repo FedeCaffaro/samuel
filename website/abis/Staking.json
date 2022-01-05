@@ -74,7 +74,13 @@
         "type": "function"
       },
 
-
+      {
+        "inputs": [],
+        "name": "claimTotalRewards",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
 
 
       {

@@ -8,7 +8,8 @@ import { Container, Button, Row, Col, Tab, Nav, Dropdown, ButtonGroup, DropdownB
 import { BiChevronDown, BiChevronRight, BiRightArrowAlt, BiDotsHorizontalRounded, BiFilter } from "react-icons/bi";
 import { GoLock } from "react-icons/go";
 import { NFT_CONTRACT_ADDRESS, setApproveForAll, isApprovedForAll, mint, mintPrice, maxSupply, totalSupply, maxToMint, saleIsActive } from '../lib/nft'
-import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards } from '../lib/staking'
+import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards, claimRewards } from '../lib/staking'
+import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2'
 import Stats from '../components/stats'
 import drops from '../data/drops'
 import { BsArrowRight, BsChevronDown } from "react-icons/bs";
@@ -23,6 +24,7 @@ export default function Home() {
   const [unstakedAssets, setUnstakedAssets] = useState([])
   const [stakingRewards, setStakingRewards] = useState(0)
   const [stakedAssets, setStakedAssets] = useState([])
+  const [balanceTokens,setBalanceTokens] = useState(0)
   const [stakes, setStakes] = useState([])
   const [collection, setCollection] = useState({})
   const [checked, setChecked] = useState(false);
@@ -109,6 +111,17 @@ export default function Home() {
       }))
     }
   }
+
+  const claimTotalRewards = async () => {
+    const result = await claimRewards(wallet.account)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
+        }
+  }
+
+
 
   const startCountdown = () => {
     let countDownDate = new Date("Nov 20, 2021 19:00:00").getTime();
@@ -205,6 +218,7 @@ export default function Home() {
     }
     setUnstakedAssets(assets)
     calculateRewards(wallet.account).then(setStakingRewards)
+    balanceOf(wallet.account).then(setBalanceTokens)
 
   }
 
@@ -238,6 +252,17 @@ export default function Home() {
   useEffect(() => {
     startCountdown()
   }, [])
+
+//   useEffect(() => {
+//     setInterval(() => {
+//       if (wallet && wallet.account && 
+//       ((wallet.networkName == 'rinkeby' && network == 'test') ||
+//         (wallet.networkName == 'main' && network == 'main'))) {
+//         balanceOf(wallet.account).then(setBalanceTokens)
+//       }
+//     }, 3000)
+// }, [])
+
 
   return (
     <div className="den-wrapper">
@@ -360,7 +385,7 @@ export default function Home() {
                     </DropdownButton>
                     {collection && collection.name == "SAMOT" ? (
                       <div className="token-count">
-                        <span>{unstakedAssets && unstakedAssets.length ? unstakedAssets.length : 0}</span> unstaked | <span>{stakedAssets && stakedAssets.length ? stakedAssets.length : 0}</span> staked
+                        <span>{unstakedAssets && unstakedAssets.length ? unstakedAssets.length : 0}</span> unstaked | <span>{stakedAssets && stakedAssets.length ? stakedAssets.length : 0}</span> staked |  <Button variant="primary" onClick={() => claimTotalRewards()}>Claim Tokens</Button>
                       </div>
                     ) : (
                       <div className="token-count">
@@ -371,7 +396,7 @@ export default function Home() {
                       <div>
                         <Tabs defaultActiveKey="unstaked" className="inner-tabs portfolio" onSelect={(k) => setTab(k)} activeKey={tab}>
                           <Tab eventKey="unstaked" title="Unstaked" className="inner-tab-content">
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} />
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} balanceTokens={balanceTokens}/>
                             <div className="nft-list">
                               {unstakedAssets && unstakedAssets.length < 1 && (
                                 <div className="no-nfts">
@@ -427,7 +452,7 @@ export default function Home() {
                             )}
                           </Tab>
                           <Tab eventKey="staked" title="Staked" className="inner-tab-content" onSelect={(k) => setTab(k)} activeKey={tab}>
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} />
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} balanceTokens={balanceTokens}/>
                             <div className="nft-list">
                               {stakedAssets && stakedAssets.length < 1 && (
                                 <div className="no-nfts">

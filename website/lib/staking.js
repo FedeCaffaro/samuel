@@ -2,11 +2,15 @@ import Web3 from 'web3';
 import _ from "lodash";
 const STAKING_ABI = require('../abis/Staking.json');
 // export const STAKING_CONTRACT_ADDRESS = "0xe8D1a43FaF827f018140558d4954742Ddc564099" // prod
-export const STAKING_CONTRACT_ADDRESS = "0x91f5C63ebE2897749a3F2D84809b527F30d46562" // dev
+export const STAKING_CONTRACT_ADDRESS = "0x2D7F45DA91D31D40D71e5057128E88D4d9750D58" // dev
 
 const TOKEN_ABI = require('../abis/Token.json');
 // export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
 export const TOKEN_CONTRACT_ADDRESS = "0x8040Eaf450e42b1784809cE9344FB17A7674cFEC" // dev
+
+const TOKENV2_ABI = require('../abis/TokenV2.json');
+// export const TOKEN_CONTRACT_ADDRESS = "" // prod
+export const TOKENV2_CONTRACT_ADDRESS = "0xd878E8365AA9a6e6aB82675B760A877C695865B9" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
@@ -119,6 +123,24 @@ export const depositsOf = async (address) => {
     return v1Deposits.concat(v2Deposits);
 }
 
+
+export const balanceOf = async (address) => {
+  console.log(address)
+  const web3Instance = await getWeb3();
+
+  const tokenContract = new web3Instance.eth.Contract(
+    TOKENV2_ABI,
+    TOKENV2_CONTRACT_ADDRESS
+  );
+
+  const tokenBalance = await tokenContract.methods
+    .balanceOf(address)
+    .call();
+
+
+    return tokenBalance;
+}
+
 export const calculateRewards = async (address) => {
   const web3Instance = await getWeb3();
   const nftContract = new web3Instance.eth.Contract(
@@ -147,4 +169,34 @@ export const calculateRewards = async (address) => {
     // console.log(v2Rewards);
 
     return (parseFloat(v1Rewards)/Math.pow(10,18) + parseFloat(v2Rewards)).toFixed(2);
-}
+
+  }
+
+
+
+    export const claimRewards = async (address) => {
+      const web3Instance = await getWeb3();
+      try {
+        const nftContract = new web3Instance.eth.Contract(
+          STAKING_ABI,
+          STAKING_CONTRACT_ADDRESS
+        );
+        const result = await nftContract.methods
+          .claimTotalRewards()
+          .send({
+            from: address
+          });
+    
+        console.log(`Rewards claimed `);
+        console.log(result.transactionHash)
+        return {
+          transactionHash: result.transactionHash,
+        }
+      } catch (error) {
+        console.log(error)
+        const reason = error.message.split(":")
+        return {
+          error: reason.length ? reason[1] : "Error.",
+        }
+      }
+    };
