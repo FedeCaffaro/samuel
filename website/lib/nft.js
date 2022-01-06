@@ -2,6 +2,7 @@ import Web3 from 'web3';
 import NFT_ABI from '../abis/NFT.json';
 import TOKEN_ABI from '../abis/Token.json';
 import { TOKEN_CONTRACT_ADDRESS }  from '../lib/token';
+export const NFT_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
@@ -122,7 +123,7 @@ export const totalSupply = async (contract) => {
   const web3Instance = await getWeb3();
   const nftContract = new web3Instance.eth.Contract(
     NFT_ABI,
-    contract
+    NFT_CONTRACT_ADDRESS
   );
 
   return nftContract.methods

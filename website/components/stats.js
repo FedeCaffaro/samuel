@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Header = (props) => {
-  const { stakesCount, stakingRewards, balanceTokens} = props
+  const { stakesCount, stakingRewards, balanceTokens, percentageStaked,stakesCount1,stakesCount2} = props
   return (
 	  <div className="stats">
       <div className="stat">
@@ -15,6 +15,10 @@ const Header = (props) => {
       <div className="stat">
         <div className="stat-number">{balanceTokens}</div>
         <div className="stat-label"> Token Balance</div>
+      </div>
+      <div className="stat">
+        <div className="stat-number">{percentageStaked}</div>
+        <div className="stat-label"> % Staked </div>
       </div>
     </div>
   )

@@ -12,6 +12,10 @@ const TOKENV2_ABI = require('../abis/TokenV2.json');
 // export const TOKEN_CONTRACT_ADDRESS = "" // prod
 export const TOKENV2_CONTRACT_ADDRESS = "0xd878E8365AA9a6e6aB82675B760A877C695865B9" // dev
 
+const NFT2_ABI = require('../abis/NFT.json');
+// export const TOKEN_CONTRACT_ADDRESS = "" // prod
+export const NFT2_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
+
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
   if (isBrowser) {
@@ -99,19 +103,20 @@ export const depositsOf = async (address) => {
   console.log(address)
   const web3Instance = await getWeb3();
 
-  const v1Contract = new web3Instance.eth.Contract(
-    TOKEN_ABI,
-    TOKEN_CONTRACT_ADDRESS
-  );
+  // const v1Contract = new web3Instance.eth.Contract(
+  //   TOKEN_ABI,
+  //   TOKEN_CONTRACT_ADDRESS
+  // );
 
-  const v1Deposits = await v1Contract.methods
-    .stakeOf(address)
-    .call();
+  // const v1Deposits = await v1Contract.methods
+  //   .stakeOf(address)
+  //   .call();
 
   const v2Contract = new web3Instance.eth.Contract(
     STAKING_ABI,
     STAKING_CONTRACT_ADDRESS
   );
+
 
   const v2Deposits = await v2Contract.methods
     .depositsOf(address)
@@ -120,26 +125,11 @@ export const depositsOf = async (address) => {
     // console.log(v1Deposits.concat(v2Deposits));
 
 
-    return v1Deposits.concat(v2Deposits);
+    // return v1Deposits.concat(v2Deposits);
+    return v2Deposits;
 }
 
 
-export const balanceOf = async (address) => {
-  console.log(address)
-  const web3Instance = await getWeb3();
-
-  const tokenContract = new web3Instance.eth.Contract(
-    TOKENV2_ABI,
-    TOKENV2_CONTRACT_ADDRESS
-  );
-
-  const tokenBalance = await tokenContract.methods
-    .balanceOf(address)
-    .call();
-
-
-    return tokenBalance;
-}
 
 export const calculateRewards = async (address) => {
   const web3Instance = await getWeb3();
@@ -199,4 +189,37 @@ export const calculateRewards = async (address) => {
           error: reason.length ? reason[1] : "Error.",
         }
       }
-    };
+    }
+      export const calculateTotalStakes = async (address) => {
+        console.log(address)
+        const web3Instance = await getWeb3();
+
+        const v1Contract = new web3Instance.eth.Contract(
+          TOKEN_ABI,
+          TOKEN_CONTRACT_ADDRESS
+        );
+      
+        const v2Contract = new web3Instance.eth.Contract(
+          STAKING_ABI,
+          STAKING_CONTRACT_ADDRESS
+        );
+
+      const NFTContract = new web3Instance.eth.Contract(
+      NFT2_ABI,
+      NFT2_CONTRACT_ADDRESS
+    );
+  
+    const totalMinted = await NFTContract.methods
+      .totalSupply()
+      .call();
+
+        const totalStakesV2 = await v2Contract.methods
+          .totalStakes()
+          .call();
+      
+        const totalStakesV1 = await v1Contract.methods
+          .totalStakes()
+          .call();
+
+          return (((parseInt(totalStakesV1)+parseInt(totalStakesV2))/totalMinted)*100).toFixed(0);
+      };
