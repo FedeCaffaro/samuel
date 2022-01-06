@@ -28,23 +28,20 @@ abstract contract SamotToken {
     function burn(address _from, uint256 _amount) external {}
 }
 
-abstract contract StakingV1{
+abstract contract StakingV1 {
     function stakeOf(address _stakeholder)
         public
         view
         virtual
         returns (uint256[] memory);
+
     function stakeTimestampsOf(address _stakeholder)
         public
         view
         virtual
         returns (uint256[] memory);
-    function isStakeholder(address _address)
-        internal
-        view
-        virtual
-        returns (bool, uint256);
 }
+
 abstract contract SamotNFT {
     function ownerOf(uint256 tokenId) public view virtual returns (address);
 
@@ -73,34 +70,56 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     //addresses
     address public nftAddress;
     address public erc20Address;
+    address public stakingV1Address;
 
     //uint256's
     //rate governs how often you receive your token
     uint256 public rate;
+    uint256 public startBlock = 13606743;
+    uint256 public v1Rate;
+    uint256 public v1RatePost;
 
     //smart contracts
     SamotToken token;
     SamotNFT nft;
-    StakingV1 stakingV1;
+    StakingV1 stakedV1;
+
+    //bools
+    bool public stakingV1IsActive = true;
 
     // mappings
     mapping(address => EnumerableSet.UintSet) private _deposits;
     mapping(address => mapping(uint256 => uint256)) public _depositBlocks;
 
+    mapping(address => uint256) public v1Timestamp;
+    mapping(address => bool) public hasClaimedDrop;
+
     constructor(
         address _nftAddress,
         uint256 _rate,
-        address _erc20Address
+        address _erc20Address,
+        address _stakingV1Address,
+        uint256 _v1Rate
     ) {
         rate = _rate;
+        v1Rate = _v1Rate;
+        v1RatePost = _rate;
         nftAddress = _nftAddress;
         token = SamotToken(_erc20Address);
         nft = SamotNFT(_nftAddress);
+        stakedV1 = StakingV1(_stakingV1Address);
         _pause();
     }
 
     function setTokenContract(address _erc20Address) external onlyOwner {
         token = SamotToken(_erc20Address);
+    }
+
+    function setStakingV1Contract(address _stakingV1Address)
+        external
+        onlyOwner
+    {
+        stakedV1 = StakingV1(_stakingV1Address);
     }
 
     function setNFTContract(address _nftAddress) external onlyOwner {
@@ -127,7 +146,7 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
 
     //Checks staked amount
     function depositsOf(address account)
-        external
+        public
         view
         returns (uint256[] memory)
     {
@@ -139,6 +158,10 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         }
 
         return tokenIds;
+    }
+
+    function totalStakes() public view returns (uint256 _totalStakes) {
+        return nft.balanceOf(address(this));
     }
 
     //Calculate rewards amount by address/tokenIds[]
@@ -186,7 +209,7 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     }
 
     //reward claim function
-    function claimRewards(uint256[] calldata tokenIds) public whenNotPaused {
+    function claimRewards(uint256[] memory tokenIds) public whenNotPaused {
         uint256 reward;
         uint256 blockCur = block.number;
 
@@ -198,6 +221,13 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         if (reward > 0) {
             token.claim(msg.sender, reward);
         }
+    }
+
+    //Claim rewards for V1 and V2
+    function claimTotalRewards() public {
+        uint256[] memory v2TokenIds = depositsOf(msg.sender);
+        claimRewards(v2TokenIds);
+        claimV1Rewards();
     }
 
     //Staking function
@@ -257,11 +287,85 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return IERC721Receiver.onERC721Received.selector;
     }
 
+    // Staking V1 mechanics
+    // You should claim your tokens before UNSTAKING V1
+
+    function setStartBlock(uint256 _startBlock) public onlyOwner {
+        startBlock = _startBlock;
+    }
+
+    function setV1Rate(uint256 _v1Rate) public onlyOwner {
+        v1Rate = _v1Rate;
+    }
+
+    function setV1RatePostV2(uint256 _v1RatePost) public onlyOwner {
+        v1RatePost = _v1RatePost;
+    }
+
+    function flipStakingV1State() public onlyOwner {
+        stakingV1IsActive = !stakingV1IsActive;
+    }
+
+    function calculateStakingBlocksV1(address _address)
+        public
+        view
+        returns (uint256 _blocks)
+    {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
+        uint256 blocks;
+        uint256 blockCur = block.number;
+        if (hasClaimedDrop[_address] == false) {
+            blocks = blockCur - startBlock;
+        } else {
+            blocks = blockCur - v1Timestamp[_address];
+        }
+        return blocks;
+    }
+
+    function calculateV1Rewards(address _address)
+        public
+        view
+        returns (uint256 v1Rewards)
+    {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
+        uint256 rewards;
+        uint256 blockCur = block.number;
+        if (hasClaimedDrop[_address] == false) {
+            rewards = (v1Rate * (blockCur - startBlock)).mul(
+                stakedV1.stakeOf(_address).length
+            );
+        } else {
+            rewards = (v1RatePost * (blockCur - v1Timestamp[_address])).mul(
+                stakedV1.stakeOf(_address).length
+            );
+        }
+        return rewards;
+    }
+
+    function numberStakedV1(address _address)
+        public
+        view
+        returns (uint256 _numberStaked)
+    {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
+        return stakedV1.stakeOf(_address).length;
+    }
+
+    function claimV1Rewards() public whenNotPaused {
+        require(stakingV1IsActive, "Staking V1 is deprecated");
+        uint256 blockCur = block.number;
+        if (hasClaimedDrop[msg.sender] == false) {
+            token.claim(msg.sender, calculateV1Rewards(msg.sender));
+            v1Timestamp[msg.sender] = blockCur;
+            hasClaimedDrop[msg.sender] = true;
+        } else {
+            token.claim(msg.sender, calculateV1Rewards(msg.sender));
+            v1Timestamp[msg.sender] = blockCur;
+        }
+    }
+
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
         payable(msg.sender).transfer(balance);
     }
 }
-
-
-// if is stakeholder del viejo, reparti stake stamps * cantidad de nfts stakeados en el calculate rewards
