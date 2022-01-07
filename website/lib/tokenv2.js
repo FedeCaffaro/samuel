@@ -2,8 +2,8 @@ import Web3 from 'web3';
 import _ from "lodash";
 
 const TOKENV2_ABI = require('../abis/TokenV2.json');
-// export const TOKEN_CONTRACT_ADDRESS = "" // prod
-export const TOKENV2_CONTRACT_ADDRESS = "0xd878E8365AA9a6e6aB82675B760A877C695865B9" // dev
+export const TOKENV2_CONTRACT_ADDRESS = "0x87532582F7eBD6d653872324836a8b5ce4A0623c" // prod
+// export const TOKENV2_CONTRACT_ADDRESS = "0xd878E8365AA9a6e6aB82675B760A877C695865B9" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"

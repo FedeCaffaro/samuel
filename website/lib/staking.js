@@ -1,20 +1,20 @@
 import Web3 from 'web3';
 import _ from "lodash";
 const STAKING_ABI = require('../abis/Staking.json');
-// export const STAKING_CONTRACT_ADDRESS = "0xe8D1a43FaF827f018140558d4954742Ddc564099" // prod
-export const STAKING_CONTRACT_ADDRESS = "0x2D7F45DA91D31D40D71e5057128E88D4d9750D58" // dev
+export const STAKING_CONTRACT_ADDRESS = "0x7d2C407611A1154342be2534bbe439cFc8682d99" // prod
+// export const STAKING_CONTRACT_ADDRESS = "0x2D7F45DA91D31D40D71e5057128E88D4d9750D58" // dev
 
 const TOKEN_ABI = require('../abis/Token.json');
-// export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
-export const TOKEN_CONTRACT_ADDRESS = "0x8040Eaf450e42b1784809cE9344FB17A7674cFEC" // dev
+export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
+// export const TOKEN_CONTRACT_ADDRESS = "0x8040Eaf450e42b1784809cE9344FB17A7674cFEC" // dev
 
 const TOKENV2_ABI = require('../abis/TokenV2.json');
-// export const TOKEN_CONTRACT_ADDRESS = "" // prod
-export const TOKENV2_CONTRACT_ADDRESS = "0xd878E8365AA9a6e6aB82675B760A877C695865B9" // dev
+export const TOKENV2_CONTRACT_ADDRESS = "0x87532582F7eBD6d653872324836a8b5ce4A0623c" // prod
+// export const TOKENV2_CONTRACT_ADDRESS = "0xd878E8365AA9a6e6aB82675B760A877C695865B9" // dev
 
 const NFT2_ABI = require('../abis/NFT.json');
-// export const TOKEN_CONTRACT_ADDRESS = "" // prod
-export const NFT2_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
+export const NFT2_CONTRACT_ADDRESS = "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d" // prod
+// export const NFT2_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
