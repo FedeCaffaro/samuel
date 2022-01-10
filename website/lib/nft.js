@@ -2,9 +2,12 @@ import Web3 from 'web3';
 import NFT_ABI from '../abis/NFT.json';
 import TOKEN_ABI from '../abis/Token.json';
 import { TOKEN_CONTRACT_ADDRESS }  from '../lib/token';
+import { STAKING_CONTRACT_ADDRESS }  from '../lib/staking';
+
 // export const NFT_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
 export const NFT_CONTRACT_ADDRESS = "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d" // prod
-
+// export const STAKING_CONTRACT_ADDRESS = "" // dev
+// export const STAKING_CONTRACT_ADDRESS = "0xAB8Ef2f9640D66bb1b8D64DdC393CBaD46c25e29" // prod
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
@@ -55,10 +58,10 @@ export const setApproveForAll = async (contract, address) => {
       contract
     );
     const isApproved = await nftContract.methods
-        .isApprovedForAll(address, TOKEN_CONTRACT_ADDRESS).call();
+        .isApprovedForAll(address, STAKING_CONTRACT_ADDRESS).call();
     if (!isApproved) {
       const result = await nftContract.methods
-          .setApprovalForAll(TOKEN_CONTRACT_ADDRESS, true)
+          .setApprovalForAll(STAKING_CONTRACT_ADDRESS, true)
           .send({
             from: address
           });
