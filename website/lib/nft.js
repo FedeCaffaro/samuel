@@ -46,7 +46,7 @@ export const isApprovedForAll = async (contract, address) => {
   );
 
   return nftContract.methods
-    .isApprovedForAll(address, TOKEN_CONTRACT_ADDRESS)
+    .isApprovedForAll(address, STAKING_CONTRACT_ADDRESS)
     .call();
 }
 
