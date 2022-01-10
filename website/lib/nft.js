@@ -2,8 +2,8 @@ import Web3 from 'web3';
 import NFT_ABI from '../abis/NFT.json';
 import TOKEN_ABI from '../abis/Token.json';
 import { TOKEN_CONTRACT_ADDRESS }  from '../lib/token';
-export const NFT_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
-// export const NFT_CONTRACT_ADDRESS = "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d" // prod
+// export const NFT_CONTRACT_ADDRESS = "0x83C26562cE37959b870240B9c06b3e7fd72Edd8c" // dev
+export const NFT_CONTRACT_ADDRESS = "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d" // prod
 
 
 const getWeb3Instance = () => new Promise((resolve) => {

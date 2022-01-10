@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import _ from "lodash";
 const STAKING_ABI = require('../abis/Staking.json');
-export const STAKING_CONTRACT_ADDRESS = "0x7d2C407611A1154342be2534bbe439cFc8682d99" // prod
+export const STAKING_CONTRACT_ADDRESS = "0xAB8Ef2f9640D66bb1b8D64DdC393CBaD46c25e29" // prod
 // export const STAKING_CONTRACT_ADDRESS = "0x2D7F45DA91D31D40D71e5057128E88D4d9750D58" // dev
 
 const TOKEN_ABI = require('../abis/Token.json');

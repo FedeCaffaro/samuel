@@ -17,7 +17,7 @@ import drops from '../data/drops'
 import { BsArrowRight, BsChevronDown } from "react-icons/bs";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { CgDollar } from "react-icons/cg";
-import { FaEthereum, FaCheckCircle, FaDiscord, FaTwitter, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn, } from "react-icons/fa";
+import { FaEthereum, FaCheckCircle, FaDiscord, FaTwitter, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn, FaSleigh, } from "react-icons/fa";
 import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
@@ -50,13 +50,14 @@ export default function Home() {
   const [minutes, setHours] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
+  
   const isBrowser = typeof window !== "undefined"
   let etherscanUrl
   let network
   let OS_API_ENDPOINT
   if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
-    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1" : "https://api.opensea.io/api/v1"
+    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://etherscan.io':'https://rinkeby.etherscan.io'
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://api.opensea.io/api/v1":"https://rinkeby-api.opensea.io/api/v1"
   }
 
   const handleClose = () => setShow(false);
