@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 const TOKEN_ABI = require('../abis/Token.json');
 export const TOKEN_CONTRACT_ADDRESS = "0x7cca1e4879a62A4B6173FAF0B865217722a47751" // prod
-//export const TOKEN_CONTRACT_ADDRESS = "0xAbc8c46b6f659789FE0f6A4960053b359Fa06aA6" // dev
+// export const TOKEN_CONTRACT_ADDRESS = "0x8040Eaf450e42b1784809cE9344FB17A7674cFEC" // dev
 
 const getWeb3Instance = () => new Promise((resolve) => {
   const isBrowser = typeof window !== "undefined"
@@ -59,7 +59,7 @@ export const stakeNFTs = async (address, tokenIds) => {
   }
 };
 
-export const unstakeNFTs = async (address, tokenIds) => {
+export const unstakeNFTsV1 = async (address, tokenIds) => {
   const web3Instance = await getWeb3();
   try {
     const nftContract = new web3Instance.eth.Contract(
@@ -96,17 +96,5 @@ export const stakeOf = async (address) => {
 
   return nftContract.methods
     .stakeOf(address)
-    .call();
-}
-
-export const rewardOf = async (address) => {
-  const web3Instance = await getWeb3();
-  const nftContract = new web3Instance.eth.Contract(
-    TOKEN_ABI,
-    TOKEN_CONTRACT_ADDRESS
-  );
-
-  return nftContract.methods
-    .rewardOf(address)
     .call();
 }

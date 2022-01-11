@@ -33,8 +33,6 @@ contract SamotToken is ERC20, Ownable {
     using SafeMath for uint256;
 
     //addresses
-    address constant WALLET1 = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
-    address constant WALLET2 = 0xD9CC8af4E8ac5Cb5e7DdFffD138A58Bac49dAEd5;
     address stakingAddress;
     address[] burnlistAddr;
     address[] claimlistAddr;
@@ -279,12 +277,6 @@ contract SamotToken is ERC20, Ownable {
 
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
-        uint256 wallet1Balance = balance.mul(10).div(100);
-        uint256 wallet2Balance = balance.mul(85).div(100);
-        payable(WALLET1).transfer(wallet1Balance);
-        payable(WALLET2).transfer(wallet2Balance);
-        payable(msg.sender).transfer(
-            balance.sub(wallet1Balance.add(wallet2Balance))
-        );
+        payable(msg.sender).transfer(balance);
     }
 }

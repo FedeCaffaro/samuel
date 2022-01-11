@@ -7,14 +7,17 @@ import { useWallet } from 'use-wallet'
 import { Container, Button, Row, Col, Tab, Nav, Dropdown, ButtonGroup, DropdownButton, Tabs, Modal, Accordion, Card, ToggleButton, Form } from 'react-bootstrap'
 import { BiChevronDown, BiChevronRight, BiRightArrowAlt, BiDotsHorizontalRounded, BiFilter } from "react-icons/bi";
 import { GoLock } from "react-icons/go";
-import { NFT_CONTRACT_ADDRESS, setApproveForAll, isApprovedForAll, mint, mintPrice, maxSupply, totalSupply, maxToMint, saleIsActive } from '../lib/nft'
-import { TOKEN_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, stakeOf, rewardOf } from '../lib/token'
+import { NFT_CONTRACT_ADDRESS, setApproveForAll, isApprovedForAll, mint, mintPrice, maxSupply, maxToMint, saleIsActive } from '../lib/nft'
+
+import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards, claimRewards,calculateTotalStakes } from '../lib/staking'
+import { TOKEN_CONTRACT_ADDRESS, stakeOf,unstakeNFTsV1 } from '../lib/token'
+import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2'
 import Stats from '../components/stats'
 import drops from '../data/drops'
 import { BsArrowRight, BsChevronDown } from "react-icons/bs";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { CgDollar } from "react-icons/cg";
-import { FaEthereum, FaCheckCircle, FaDiscord, FaTwitter, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn, } from "react-icons/fa";
+import { FaEthereum, FaCheckCircle, FaDiscord, FaTwitter, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn, FaSleigh, } from "react-icons/fa";
 import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
@@ -23,6 +26,11 @@ export default function Home() {
   const [unstakedAssets, setUnstakedAssets] = useState([])
   const [stakingRewards, setStakingRewards] = useState(0)
   const [stakedAssets, setStakedAssets] = useState([])
+  const [stakedAssetsV1, setStakedAssetsV1] = useState([])
+  const [stakedAssetsV2, setStakedAssetsV2] = useState([])
+  const [balanceTokens,setBalanceTokens] = useState(0)
+  const [percentageStaked,setPercentageStaked] = useState(0)
+  const [totalStaked,setTotalStaked] = useState(0)
   const [stakes, setStakes] = useState([])
   const [collection, setCollection] = useState({})
   const [checked, setChecked] = useState(false);
@@ -42,13 +50,14 @@ export default function Home() {
   const [minutes, setHours] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
+  
   const isBrowser = typeof window !== "undefined"
   let etherscanUrl
   let network
   let OS_API_ENDPOINT
   if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
-    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1" : "https://api.opensea.io/api/v1"
+    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io':'https://etherscan.io'
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1":"https://api.opensea.io/api/v1"
   }
 
   const handleClose = () => setShow(false);
@@ -95,6 +104,16 @@ export default function Home() {
     }
   }
 
+  const unstakeV1 = async () => {
+    const result = await unstakeNFTsV1(wallet.account, _.map(stakes, 'token_id'))
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
+      loadAssets(drops[0])
+    }
+  }
+
   const selectStake = (asset) => {
     if (stakes.length >= 20) {
       setErrorShow(true)
@@ -109,6 +128,17 @@ export default function Home() {
       }))
     }
   }
+
+  const claimTotalRewards = async () => {
+    const result = await claimRewards(wallet.account)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
+        }
+  }
+
+
 
   const startCountdown = () => {
     let countDownDate = new Date("Nov 20, 2021 19:00:00").getTime();
@@ -138,7 +168,8 @@ export default function Home() {
 
   const loadAssets = async (drop) => {
     let fetchedAssets = [];
-    const stakedIds = await stakeOf(wallet.account)
+    let fetchedAssetsV1 = [];
+    let fetchedAssetsV2 = [];
     const getStakedAssets = async (tokenIds, offset, limit) => {
       if (tokenIds.length > 0) {
         let ids = []
@@ -171,10 +202,84 @@ export default function Home() {
       return fetchedAssets
     }
 
-    const stakedData = await getStakedAssets(stakedIds, 0, 20);
+    const getStakedAssetsV1 = async (tokenIds, offset, limit) => {
+      if (tokenIds.length > 0) {
+        let ids = []
+        let tokenString = ""
+        if (tokenIds.length <= limit) {
+          ids = tokenIds
+        } else if (tokenIds.length > offset + limit) {
+          ids = tokenIds.slice(offset, offset + limit)
+        } else {
+          ids = tokenIds.slice(offset)
+        }
+        _.map(ids, id => {
+          tokenString += `&token_ids=${id}`
+        })
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&asset_contract_address=${drop.contract}${tokenString}`)
+        const data = await response.json()
+        if (data && data.assets && data.assets.length > 0) {
+          _.map(data.assets, asset => {
+            fetchedAssetsV1.push({
+              ...asset,
+              token_id: parseInt(asset.token_id),
+            })
+          })
+          if (offset + limit < tokenIds.length) {
+            await sleep(500)
+            await getStakedAssetsV1(tokenIds, offset + limit, limit);
+          }
+        }
+      }
+      return fetchedAssetsV1
+    }
+    const getStakedAssetsV2 = async (tokenIds, offset, limit) => {
+      if (tokenIds.length > 0) {
+        let ids = []
+        let tokenString = ""
+        if (tokenIds.length <= limit) {
+          ids = tokenIds
+        } else if (tokenIds.length > offset + limit) {
+          ids = tokenIds.slice(offset, offset + limit)
+        } else {
+          ids = tokenIds.slice(offset)
+        }
+        _.map(ids, id => {
+          tokenString += `&token_ids=${id}`
+        })
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&asset_contract_address=${drop.contract}${tokenString}`)
+        const data = await response.json()
+        if (data && data.assets && data.assets.length > 0) {
+          _.map(data.assets, asset => {
+            fetchedAssetsV2.push({
+              ...asset,
+              token_id: parseInt(asset.token_id),
+            })
+          })
+          if (offset + limit < tokenIds.length) {
+            await sleep(500)
+            await getStakedAssetsV2(tokenIds, offset + limit, limit);
+          }
+        }
+      }
+      return fetchedAssetsV2
+    }
+    
+    const stakedIdsV1 = await stakeOf(wallet.account);
+    const stakedIdsV2 = await depositsOf(wallet.account);
+    const stakedData = await getStakedAssets(stakedIdsV1.concat(stakedIdsV2),0,20);
     setStakedAssets(stakedData)
+    
+
+
+    const stakedDataV1 = await getStakedAssetsV1(stakedIdsV1, 0, 20);
+    const stakedDataV2 = await getStakedAssetsV2(stakedIdsV2, 0, 20);
+    setStakedAssetsV1(stakedDataV1)
+    setStakedAssetsV2(stakedDataV2)
 
     fetchedAssets = [];
+    fetchedAssetsV1 = [];
+    fetchedAssetsV2 = [];
     const getUnstakedAssets = async (owner) => {
       const fetchAssets = async (offset, limit) => {
         const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${drop.contract}`)
@@ -204,8 +309,9 @@ export default function Home() {
       }
     }
     setUnstakedAssets(assets)
-    rewardOf(wallet.account).then(setStakingRewards)
-
+    calculateRewards(wallet.account).then(setStakingRewards);
+    balanceOf(wallet.account).then(setBalanceTokens);
+    calculateTotalStakes().then(setPercentageStaked);
   }
 
   useEffect(() => {
@@ -360,7 +466,7 @@ export default function Home() {
                     </DropdownButton>
                     {collection && collection.name == "SAMOT" ? (
                       <div className="token-count">
-                        <span>{unstakedAssets && unstakedAssets.length ? unstakedAssets.length : 0}</span> unstaked | <span>{stakedAssets && stakedAssets.length ? stakedAssets.length : 0}</span> staked
+                        <span>{unstakedAssets && unstakedAssets.length ? unstakedAssets.length : 0}</span> unstaked | <span>{stakedAssets && stakedAssets.length ? stakedAssets.length : 0}</span> staked |  <Button variant="primary" onClick={() => claimTotalRewards()}>Claim Tokens</Button>
                       </div>
                     ) : (
                       <div className="token-count">
@@ -371,7 +477,7 @@ export default function Home() {
                       <div>
                         <Tabs defaultActiveKey="unstaked" className="inner-tabs portfolio" onSelect={(k) => setTab(k)} activeKey={tab}>
                           <Tab eventKey="unstaked" title="Unstaked" className="inner-tab-content">
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} />
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked}/>
                             <div className="nft-list">
                               {unstakedAssets && unstakedAssets.length < 1 && (
                                 <div className="no-nfts">
@@ -426,15 +532,67 @@ export default function Home() {
                               </div>
                             )}
                           </Tab>
-                          <Tab eventKey="staked" title="Staked" className="inner-tab-content" onSelect={(k) => setTab(k)} activeKey={tab}>
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} />
+                          <Tab eventKey="stakedV1" title="Staked (v1)" className="inner-tab-content" onSelect={(k) => setTab(k)} activeKey={tab}>
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssetsV1.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked}/>
                             <div className="nft-list">
-                              {stakedAssets && stakedAssets.length < 1 && (
+                              {stakedAssetsV1 && stakedAssetsV1.length < 1 && (
                                 <div className="no-nfts">
                                   <span>No staked found in your wallet.<br />Make sure you are connected to mainnet.</span>
                                 </div>
                               )}
-                              {stakedAssets && stakedAssets.length > 0 && stakedAssets.map(asset => (
+                              {stakedAssetsV1 && stakedAssetsV1.length > 0 && stakedAssetsV1.map(asset => (
+                                <div className={_.find(stakes, { token_id: asset.token_id }) ? "nft-card locked selected" : "nft-card locked"} key={`staked-${asset.token_id}`}>
+                                  <Dropdown align="right" className="nft-menu" >
+                                    <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
+                                      <span><BiDotsHorizontalRounded /></span>
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu align="right">
+                                      <Dropdown.Item onClick={() => selectStake(asset)}>Unstake NFT</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                  </Dropdown>
+                                  <div className="lockedup"><img onClick={() => select(asset)} src="lock.png" width="120px" /></div>
+                                  <div onClick={() => select(asset)} className="nft-img">
+                                    <img src={asset.image_url} width="300px" />
+                                  </div>
+                                  <div className="nft-details">
+                                    <div className="nft-number">
+                                      <span className="label">token</span>
+                                      {asset.token_id}
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            {staking && stakes && stakes.length > 0 && !transactionUrl && (
+                              <div className="nfts-selected-wrapper">
+                                <div className="selected-nfts">
+                                  {stakes.map(item => (
+                                    <div className="nft" key={`selected-${item.token_id}`}>
+                                      <img src={item.image_url} width="50px" />
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="selected-actions">
+                                  <Button variant="primary" onClick={() => unstakeV1()}>Unstake</Button>
+                                  <Button variant="outline-light" onClick={() => unselectStake()}>Cancel</Button>
+                                </div>
+                              </div>
+                            )}
+                            {transactionUrl && (
+                              <div className="transaction">
+                                <Button target="_blank" variant="primary" size="lg" href={transactionUrl}>View Transaction</Button>
+                              </div>
+                            )}
+                          </Tab>
+                          <Tab eventKey="stakedV2" title="Staked (v2)" className="inner-tab-content" onSelect={(k) => setTab(k)} activeKey={tab}>
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssetsV2.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked}/>
+                            <div className="nft-list">
+                              {stakedAssetsV2 && stakedAssetsV2.length < 1 && (
+                                <div className="no-nfts">
+                                  <span>No staked found in your wallet.<br />Make sure you are connected to mainnet.</span>
+                                </div>
+                              )}
+                              {stakedAssetsV2 && stakedAssetsV2.length > 0 && stakedAssetsV2.map(asset => (
                                 <div className={_.find(stakes, { token_id: asset.token_id }) ? "nft-card locked selected" : "nft-card locked"} key={`staked-${asset.token_id}`}>
                                   <Dropdown align="right" className="nft-menu" >
                                     <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
