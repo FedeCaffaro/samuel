@@ -356,7 +356,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.12.0", "@babel/runtime@^7.16.3":
+"@babel/runtime@^7.12.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.9.2":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.7.tgz#03ff99f64106588c9c403c6ecb8c3bafbbdff1fa"
   integrity sha512-9E9FJowqAsytyOY6LG+1KuueckRL+aQW+mKvXRXnuFGyRAyepJPmEo9vgMfXUA6O9u3IeEdv9MAkppFcaQwogQ==
@@ -1079,6 +1079,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/hoist-non-react-statics@^3.3.0":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+  integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+
 "@types/invariant@^2.2.33":
   version "2.2.34"
   resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.34.tgz#05e4f79f465c2007884374d4795452f995720bbe"
@@ -1120,6 +1128,16 @@
   version "15.7.4"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
+
+"@types/react-redux@^7.1.20":
+  version "7.1.22"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.22.tgz#0eab76a37ef477cc4b53665aeaf29cb60631b72a"
+  integrity sha512-GxIA1kM7ClU73I6wg9IRTVwSO9GS+SAKZKe0Enj+82HMU6aoESFU2HNAdNi3+J53IaOHPiUfT3kSG4L828joDQ==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+    redux "^4.0.0"
 
 "@types/react-transition-group@^4.4.1":
   version "4.4.2"
@@ -1672,6 +1690,13 @@ anymatch@~3.1.1, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+apisauce@^2.0.1:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-2.1.5.tgz#546229f8f145711b3b022065afb0f43bd304ecb3"
+  integrity sha512-bkMlz0ZUnyS8vDigej9UBYo5dne9/bQrkgIiIkGaiDHF6e5OxhYRLJDYu65V/Ox86tmWVwepIntAoTmk4Db0Hg==
+  dependencies:
+    axios "^0.21.4"
+
 aproba@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
@@ -1894,6 +1919,13 @@ axios@^0.18.0:
   dependencies:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
+
+axios@^0.21.4:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -2966,6 +2998,14 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
+
+cerealizr@^1.0.1-alpha:
+  version "1.0.1-alpha"
+  resolved "https://registry.yarnpkg.com/cerealizr/-/cerealizr-1.0.1-alpha.tgz#1121e0e6124f305e52bf46c3b77a3bda90b0e78e"
+  integrity sha512-x22AtS8f8N/OYdsfpptuIC4CuPUiFQa4IieK9U1T27dKZoXvxTtymqhLRwjBGrmVgCEcy8U2Ri+d9hSeClj/gQ==
+  dependencies:
+    lodash.camelcase "^4.3.0"
+    lodash.snakecase "^4.1.1"
 
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.4.2:
   version "2.4.2"
@@ -5118,6 +5158,11 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
+follow-redirects@^1.14.0:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
+  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
+
 for-each@^0.3.3, for-each@~0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/for-each/-/for-each-0.3.3.tgz#69b447e88a0a5d32c3e7084f3f1710034b21376e"
@@ -5663,6 +5708,13 @@ hmac-drbg@^1.0.1:
     hash.js "^1.0.3"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
+
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+  integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
+  dependencies:
+    react-is "^16.7.0"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -6699,6 +6751,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.camelcase@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
+  integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -6708,6 +6765,11 @@ lodash.merge@^4.6.0:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.snakecase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.snakecase/-/lodash.snakecase-4.1.1.tgz#39d714a35357147837aefd64b5dcbb16becd8f8d"
+  integrity sha1-OdcUo1NXFHg3rv1ktdy7Fr7Nj40=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -8288,12 +8350,12 @@ react-icons@^4.2.0:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.2.0.tgz#6dda80c8a8f338ff96a1851424d63083282630d0"
   integrity sha512-rmzEDFt+AVXRzD7zDE21gcxyBizD/3NqjbX6cmViAgdqfJ2UiLer8927/QhhrXQV7dEj/1EGuOTPp7JnLYVJKQ==
 
-react-is@17.0.2:
+react-is@17.0.2, react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-is@^16.3.2, react-is@^16.8.1:
+react-is@^16.3.2, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -8324,6 +8386,18 @@ react-photo-gallery@^8.0.0:
   dependencies:
     prop-types "~15.7.2"
     resize-observer-polyfill "^1.5.0"
+
+react-redux@^7.2.1:
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.6.tgz#49633a24fe552b5f9caf58feb8a138936ddfe9aa"
+  integrity sha512-10RPdsz0UUrRL1NZE0ejTkucnclYSgXp5q+tB5SWx2qeG2ZJQJyymgAhwKy73yiL/13btfB6fPr+rgbMAaZIAQ==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    "@types/react-redux" "^7.1.20"
+    hoist-non-react-statics "^3.3.2"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
 
 react-refresh@0.8.3:
   version "0.8.3"
@@ -8416,6 +8490,23 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+redux-recompose@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/redux-recompose/-/redux-recompose-2.2.0.tgz#6e9f1414de84493225da26016ef4fec0a7e0b7ad"
+  integrity sha512-Iy0H3lbQm4UL26CyDstqtLulpQmnDEhgxRKJQXTTi8LiuCu2B/hSgiaAq+uixXbj/5vKULFXRYTqCW1UEGDeuA==
+
+redux-thunk@^2.3.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
+  integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
+
+redux@^4.0.0, redux@^4.0.5:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.2.tgz#140f35426d99bb4729af760afcf79eaaac407104"
+  integrity sha512-SH8PglcebESbd/shgf6mii6EIoRM0zrQyjcuQ+ojmfxjTtE0z9Y8pa62iA/OJ58qjP6j27uyW4kUF4jl/jd6sw==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 regenerate@^1.2.1:
   version "1.4.2"
@@ -8786,6 +8877,11 @@ scryptsy@^1.2.1:
   integrity sha1-oyJfpLJST4AnAHYeKFW987LZIWM=
   dependencies:
     pbkdf2 "^3.0.3"
+
+seamless-immutable@^7.1.4:
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/seamless-immutable/-/seamless-immutable-7.1.4.tgz#6e9536def083ddc4dea0207d722e0e80d0f372f8"
+  integrity sha512-XiUO1QP4ki4E2PHegiGAlu6r82o5A+6tRh7IkGGTVg/h+UoeX4nFBeCGPOhb4CYjvkqsfm/TUtvOMYC1xmV30A==
 
 secp256k1@^3.0.1, secp256k1@^3.8.0:
   version "3.8.0"
