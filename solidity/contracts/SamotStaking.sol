@@ -103,7 +103,8 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
     ) {
         rate = _rate;
         v1Rate = _v1Rate;
-        v1RatePost = _rate;
+        v1RatePost = _v1Rate;
+
         nftAddress = _nftAddress;
         token = SamotToken(_erc20Address);
         nft = SamotNFT(_nftAddress);
@@ -208,7 +209,7 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return (block.number - _depositBlocks[account][tokenId]);
     }
 
-    //reward claim function
+    //Reward claim function
     function claimRewards(uint256[] memory tokenIds) public whenNotPaused {
         uint256 reward;
         uint256 blockCur = block.number;
@@ -351,7 +352,9 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         return stakedV1.stakeOf(_address).length;
     }
 
+
     function claimV1Rewards() public whenNotPaused {
+
         require(stakingV1IsActive, "Staking V1 is deprecated");
         uint256 blockCur = block.number;
         if (hasClaimedDrop[msg.sender] == false) {
@@ -368,4 +371,5 @@ contract SamotStaking is Ownable, IERC721Receiver, ReentrancyGuard, Pausable {
         uint256 balance = address(this).balance;
         payable(msg.sender).transfer(balance);
     }
+
 }

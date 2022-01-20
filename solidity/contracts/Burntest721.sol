@@ -18,11 +18,15 @@ import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
  */
 
 abstract contract SamotToken {
-    function stakeOf(address _stakeholder)
+    function claim(address _claimer, uint256 _reward) external {}
+
+    function burn(address _from, uint256 _amount) external {}
+
+    function balanceOf(address owner)
         public
         view
         virtual
-        returns (uint256[] memory);
+        returns (uint256 balance);
 }
 
 abstract contract SamotNFT {
@@ -40,7 +44,8 @@ contract Pyramyd is ERC721Tradable {
     uint256 public constant MAX_SUPPLY = 500;
     uint256 public maxToMint = 8;
     uint256 public maxToMintPerNFT = 1;
-    uint256 public mintPrice = 100000000000000000; // 0.1 ETH
+    uint256 public mintPrice = 1000000000000000; // 0.001 ETH
+    uint256 public burningCost = 1000000000000000000; // 1 samot token
     uint256 public mintPricePreSale = 50000000000000000; // 0.05 ETH
     bool public saleIsActive = false;
     bool public preSaleIsActive = true;
@@ -117,9 +122,6 @@ contract Pyramyd is ERC721Tradable {
     }
 
     function mint(uint256 numberOfTokens) public payable {
-        uint256 staked = token.stakeOf(msg.sender).length;
-        uint256 unstaked = nft.balanceOf(msg.sender);
-        uint256 balance = staked.add(unstaked);
         require(saleIsActive, "Sale is not active.");
         require(
             totalSupply().add(numberOfTokens) <= MAX_SUPPLY,
@@ -130,15 +132,6 @@ contract Pyramyd is ERC721Tradable {
             require(
                 mintPricePreSale.mul(numberOfTokens) <= msg.value,
                 "ETH sent is incorrect."
-            );
-            require(
-                balance > 0,
-                "You must own at least one Samot NFT to participate in the pre-sale."
-            );
-            require(
-                balanceOf(msg.sender).add(numberOfTokens) <=
-                    maxToMintPerNFT.mul(balance),
-                "Exceeds pre-sale limit."
             );
         } else {
             require(
@@ -151,6 +144,17 @@ contract Pyramyd is ERC721Tradable {
             );
         }
 
+        for (uint256 i = 0; i < numberOfTokens; i++) {
+            mintTo(msg.sender);
+        }
+    }
+
+    function mintWithTokens(uint256 numberOfTokens) public {
+        require(
+            token.balanceOf(msg.sender) >= burningCost.mul(numberOfTokens),
+            "Not enough samot tokens"
+        );
+        token.burn(msg.sender, burningCost);
         for (uint256 i = 0; i < numberOfTokens; i++) {
             mintTo(msg.sender);
         }

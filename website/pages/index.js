@@ -5,37 +5,27 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable init-declarations */
 /* eslint-disable complexity */
-import React, { useState, useEffect } from 'react';
-import Router from 'next/router';
-import Link from 'next/link';
-import { useWallet } from 'use-wallet';
-import {
-  Container,
-  Button,
-  Row,
-  Col,
-  Tab,
-  Nav,
-  Dropdown,
-  ButtonGroup,
-  DropdownButton,
-  Tabs,
-  Modal
-} from 'react-bootstrap';
-import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import { AiOutlineClose, AiOutlineMenu, AiOutlineDoubleRight } from 'react-icons/ai';
-import {
-  FaEthereum,
-  FaDiscord,
-  FaTwitter,
-  FaLaptopCode,
-  FaImages,
-  FaStar,
-  FaRoad,
-  FaHandshake,
-  FaUsers,
-  FaBullhorn
-} from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import Router from 'next/router'
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useWallet } from 'use-wallet'
+import { Container, Button, Row, Col, Tab, Nav, Dropdown, ButtonGroup, DropdownButton, Tabs, Modal, Accordion, Card, ToggleButton, Form } from 'react-bootstrap'
+import { BiChevronDown, BiChevronRight, BiRightArrowAlt, BiDotsHorizontalRounded, BiFilter } from "react-icons/bi";
+import { GoLock } from "react-icons/go";
+import { NFT_CONTRACT_ADDRESS, setApproveForAll, isApprovedForAll, mint, mintPrice, maxSupply, maxToMint, saleIsActive } from '../lib/nft'
+
+import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards, claimRewards,calculateTotalStakes } from '../lib/staking'
+import { TOKEN_CONTRACT_ADDRESS, stakeOf,unstakeNFTsV1 } from '../lib/token'
+import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2'
+import Stats from '../components/stats'
+import drops from '../data/drops'
+import { BsArrowRight, BsChevronDown } from "react-icons/bs";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { CgDollar } from "react-icons/cg";
+import { FaEthereum, FaCheckCircle, FaDiscord, FaTwitter, FaLaptopCode, FaImages, FaStar, FaRoad, FaHandshake, FaUsers, FaBullhorn, FaSleigh, } from "react-icons/fa";
+import { AiOutlineDoubleRight, AiFillPlusCircle } from "react-icons/ai";
 import _ from 'lodash';
 
 import { setApproveForAll, isApprovedForAll } from '../lib/nft';
@@ -82,16 +72,14 @@ export default function Home() {
   const [minutes, setHours] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  const isBrowser = typeof window !== 'undefined';
-  let etherscanUrl;
-  let OS_API_ENDPOINT;
+  
+  const isBrowser = typeof window !== "undefined"
+  let etherscanUrl
+  let network
+  let OS_API_ENDPOINT
   if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('localhost')
-      ? 'https://rinkeby.etherscan.io'
-      : 'https://etherscan.io';
-    OS_API_ENDPOINT = window.location.hostname.includes('localhost')
-      ? 'https://rinkeby-api.opensea.io/api/v1'
-      : 'https://api.opensea.io/api/v1';
+    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io':'https://etherscan.io'
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1":"https://api.opensea.io/api/v1"
   }
 
   const handleClose = () => setShow(false);
