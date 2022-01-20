@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
-import Router, { useRouter } from 'next/router';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Card, Button, InputGroup, FormControl, Container, Row, Col } from 'react-bootstrap';
-import RangeSlider from 'react-bootstrap-range-slider';
+import { Container, Row, Col } from 'react-bootstrap';
 import { FaInstagram } from 'react-icons/fa';
 import { AiOutlineDoubleLeft } from 'react-icons/ai';
 import Gallery from 'react-photo-gallery';
 import _ from 'lodash';
 
-import drops from '../../data/drops';
+import drops from '../../data/drops.json';
 
 export default function Pyramyd() {
   const [collection, setCollection] = useState({});

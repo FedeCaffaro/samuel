@@ -1,0 +1,77 @@
+@import 'breakpoints';
+
+@import 'animations';
+
+@import 'layout';
+
+@import 'marginsPaddings';
+
+@import 'components';
+
+@import 'variables';
+
+@import 'fonts';
+
+@import 'buttons';
+
+* {
+  font-family: 'Poppins', sans-serif;
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+input,
+a,
+button,
+select,
+textarea {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+
+  display: block;
+
+  color: inherit;
+}
+
+input,
+select,
+textarea,
+button {
+  border: 0;
+  border-radius: 0;
+}
+
+button {
+  cursor: pointer;
+
+  background: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.anchor {
+  position: relative;
+}

@@ -2,6 +2,8 @@ import React from 'react';
 import { UseWalletProvider } from 'use-wallet';
 
 import Head from '../components/head';
+import '../scss/application.scss';
+
 import '../styles/styles.scss';
 
 function App({ Component, pageProps }) {
@@ -10,7 +12,7 @@ function App({ Component, pageProps }) {
       <UseWalletProvider
         chainId={1}
         connectors={{
-          portis: { dAppId: 'samot-club' },
+          portis: { dAppId: 'samot-club' }
         }}
       >
         <Head />

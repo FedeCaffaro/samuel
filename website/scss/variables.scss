@@ -1,0 +1,14 @@
+$transition-duration: 290ms;
+$transition-function: cubic-bezier(0.790, 0.010, 0.375, 0.995);
+$default-border-radius: 7px;
+$max-width-modal-default: 1065px;
+$session-sidebar-width: 300px;
+$session-sidebar-width-md: 300px;
+$drop-shadow-1: drop-shadow(0px 4px 4px rgba(0, 63, 44, 0.1));
+$drop-shadow-2: drop-shadow(4px 0px 8px rgba(0, 63, 44, 0.1));
+$menu-width: calc(min(200px, 30%));
+$navbar-height: 45px;
+$ease-in-out: cubic-bezier(0.38,0.01,0.57,1);
+$ease-in-out-extreme: cubic-bezier(0.7,0.01,0.31,1.02);
+$animation-duration: 400ms;
+$animation-duration-slow: 800ms;
