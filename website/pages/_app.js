@@ -3,6 +3,7 @@ import { UseWalletProvider } from 'use-wallet';
 
 import Head from '../components/head';
 import '../scss/application.scss';
+import '../config/i18n';
 
 import '../styles/styles.scss';
 
