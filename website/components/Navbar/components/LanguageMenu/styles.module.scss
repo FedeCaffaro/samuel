@@ -1,0 +1,28 @@
+@import '../../../../scss/imports.scss';
+
+.menu-container {
+  position: fixed;
+  z-index: 100;
+  bottom: 60px;
+  left: 20px;
+
+  width: 100px;
+
+  border-radius: 5px;
+  background-color: rgba($black-tooltip, 0.5);
+
+  @extend .column,
+  .start,
+  .middle;
+}
+
+.button-container {
+  font-size: 13px;
+
+  padding: 5px 10px;
+
+  @extend .row,
+  .start,
+  .middle,
+  .text-uppercase;
+}

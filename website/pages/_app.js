@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { UseWalletProvider } from 'use-wallet';
 import { Provider } from 'react-redux';
 
@@ -16,7 +16,7 @@ function App({ Component, pageProps }) {
         <UseWalletProvider
           chainId={1}
           connectors={{
-            portis: { dAppId: 'samot-club' }
+            portis: { dAppId: 'samot-club' },
           }}
         >
           <Head />

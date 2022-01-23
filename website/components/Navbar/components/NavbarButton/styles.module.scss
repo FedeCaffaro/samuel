@@ -1,0 +1,25 @@
+@import '../../../../scss/imports.scss';
+
+.menu-container {
+  margin-top: 6px;
+
+  cursor: pointer;
+
+  @extend .row,
+  .start,
+  .middle;
+}
+
+.menu-text {
+  font-size: 12px;
+  font-weight: 500;
+
+  margin-top: 2px;
+  margin-right: 7px;
+
+  @extend .text-uppercase;
+}
+
+.menu-icon {
+  height: 7px;
+}

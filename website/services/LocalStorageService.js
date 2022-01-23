@@ -1,8 +1,8 @@
 const tempStorage = {};
 
-const encodeKey = (key) => window.btoa(key);
+const encodeKey = (key) => window?.btoa(key);
 
-const decodeKey = (key) => window.atob(key);
+const decodeKey = (key) => window?.atob(key);
 
 const getValue = (key) => {
   const encodedKey = encodeKey(key);
@@ -24,7 +24,8 @@ const setValue = (key, value) => {
   const encodedValue = encodeKey(stringValue);
 
   try {
-    window.localStorage.setItem(encodedKey, encodedValue);
+    // eslint-disable-next-line babel/no-unused-expressions
+    window?.localStorage?.setItem(encodedKey, encodedValue);
   } catch (e) {
     tempStorage[encodedKey] = encodedValue;
   }
@@ -44,11 +45,19 @@ const defineProperty = (prop, defaultKey = '', tag = '') => {
   const capitalizedKey = `${prop[0].toUpperCase()}${prop.substring(1)}`;
 
   module.exports[`set${capitalizedKey}`] = (val, key = defaultKey) =>
-    setValue(`@@ZERF:${prop}${tag}${key}`, val);
-  module.exports[`get${capitalizedKey}`] = (key = defaultKey) => getValue(`@@ZERF:${prop}${tag}${key}`);
-  module.exports[`remove${capitalizedKey}`] = (key = defaultKey) => removeValue(`@@ZERF:${prop}${tag}${key}`);
+    setValue(`@@SAMOT:${prop}${tag}${key}`, val);
+  module.exports[`get${capitalizedKey}`] = (key = defaultKey) => getValue(`@@SAMOT:${prop}${tag}${key}`);
+  module.exports[`remove${capitalizedKey}`] = (key = defaultKey) =>
+    removeValue(`@@SAMOT:${prop}${tag}${key}`);
 };
 
 // ------------------------------ LOCAL STORAGE PROPERTIES ------------------------------
 defineProperty('tokenManager');
 defineProperty('loginRedirectUrl');
+
+const APP_KEY = '@@SAMOT';
+
+const languageKey = `${APP_KEY}:language`;
+export const setLanguage = (value) => setValue(languageKey, value);
+export const getLanguage = () => getValue(languageKey);
+export const removeLanguage = () => removeValue(languageKey);

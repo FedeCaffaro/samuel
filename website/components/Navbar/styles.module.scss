@@ -1,0 +1,25 @@
+@import '../../scss/imports.scss';
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  align-items: space-between;
+
+  width: 100vw;
+  height: 100vh;
+  padding: 30px;
+
+  @extend .column,
+  .space-between;
+}
+
+.row-navbar {
+  @extend .row,
+  .space-between;
+}
+
+.logo {
+  height: 25px;
+}

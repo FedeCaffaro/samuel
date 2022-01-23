@@ -14,8 +14,14 @@
 
 @import 'buttons';
 
+@font-face {
+  font-family: 'Oskari';
+
+  src: url(../public/assets/general/oskari.OTF);
+}
+
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Oskari', 'Poppins', sans-serif;
 
   box-sizing: border-box;
   margin: 0;

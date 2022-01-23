@@ -1,5 +1,14 @@
 @import '../../scss/imports';
 
 .text {
-  color: $green-main;
+  font-size: 40px;
+
+  color: $white;
+}
+
+.center {
+  width: 100vw;
+  height: 100vh;
+
+  @extend .center-child;
 }
