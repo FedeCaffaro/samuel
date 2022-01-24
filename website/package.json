@@ -12,8 +12,11 @@
     "@serverless/core": "^1.1.2",
     "@serverless/template": "^1.1.4",
     "all": "^0.0.0",
+    "apisauce": "^2.0.1",
     "bootstrap": "^5.1.1",
+    "classnames": "^2.3.1",
     "electron": "^15.2.0",
+    "i18next": "^19.6.3",
     "lodash": "^4.17.21",
     "next": "11.1.2",
     "react": "17.0.2",
@@ -22,18 +25,17 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
     "react-photo-gallery": "^8.0.0",
-    "sass": "^1.42.1",
-    "use-wallet": "^0.10.0",
-    "web3": "^1.6.0",
-    "i18next": "^19.6.3",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-recompose": "^2.2.0",
     "redux-thunk": "^2.3.0",
-    "apisauce": "^2.0.1"
+    "sass": "^1.42.1",
+    "use-wallet": "^0.10.0",
+    "web3": "^1.6.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "cerealizr": "^1.0.1-alpha",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-babel-module": "^5.1.2",
@@ -43,10 +45,9 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.0.5",
     "prettier-eslint": "^11.0.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "cerealizr": "^1.0.1-alpha",
     "seamless-immutable": "^7.1.4"
   }
 }

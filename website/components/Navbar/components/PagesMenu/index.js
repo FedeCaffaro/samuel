@@ -2,22 +2,11 @@ import React from 'react';
 
 import DropdownMenu from '../DropdownMenu';
 
+import { OPTIONS } from './constants';
+import styles from './styles.module.scss';
+
 function PagesMenu({ isOpen, reference }) {
-  const options = [
-    {
-      label: 'Home',
-      pagePath: '/'
-    },
-    {
-      label: 'Collections',
-      pagePath: '/collections'
-    },
-    {
-      label: "Your NFT'S",
-      pagePath: '/your-nfts'
-    }
-  ];
-  return <DropdownMenu isOpen={isOpen} options={options} reference={reference} />;
+  return <DropdownMenu isOpen={isOpen} options={OPTIONS} reference={reference} className={styles.menu} />;
 }
 
 export default PagesMenu;

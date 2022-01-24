@@ -1,13 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
+import LinkButton from './components/LinkButton';
 
-function DropdownMenu({ isOpen, options, reference }) {
+function DropdownMenu({ isOpen, options, reference, className }) {
   return isOpen ? (
-    <div className={styles['menu-container']} ref={reference}>
+    <div className={cn(styles['menu-container'], className)} ref={reference}>
       {options.map(({ label, onClick, pagePath }) => {
-        const Component = pagePath ? Link : 'button';
+        const Component = pagePath ? LinkButton : 'button';
         return (
           <Component
             type="button"

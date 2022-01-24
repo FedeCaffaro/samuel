@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { UseWalletProvider } from 'use-wallet';
 import { Provider } from 'react-redux';
 
 import '../scss/application.scss';
 import '../config/i18n';
-import '../styles/styles.scss';
 
 import store from '../redux/store';
 import Head from '../components/head';
+import styles from '../styles/styles.module.scss';
 
 function App({ Component, pageProps }) {
   return (
-    <div className="app-wrapper">
+    <div className={styles.container}>
       <Provider store={store}>
         <UseWalletProvider
           chainId={1}
           connectors={{
-            portis: { dAppId: 'samot-club' },
+            portis: { dAppId: 'samot-club' }
           }}
         >
           <Head />
