@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { useClickedOutside } from '../../hooks/useClickedOutside';
 
 import LanguageMenu from './components/LanguageMenu';
 import NavbarButton from './components/NavbarButton';
@@ -10,9 +12,19 @@ function Navbar() {
   const [isOpenLanguageModal, setIsOpenLanguageModal] = useState(false);
 
   const toggleLanguageModal = () => setIsOpenLanguageModal(!isOpenLanguageModal);
+
+  const languagesRef = useRef(null);
+  const clickedOutsideLanguages = useClickedOutside(languagesRef);
+
+  useEffect(() => {
+    if (clickedOutsideLanguages) {
+      setIsOpenLanguageModal(false);
+    }
+  }, [clickedOutsideLanguages]);
+
   return (
     <>
-      <LanguageMenu isOpen={isOpenLanguageModal} />
+      <LanguageMenu isOpen={isOpenLanguageModal} reference={languagesRef} />
       <div className={styles.container}>
         <div className={styles['row-navbar']}>
           <img src={LOGO} className={styles.logo} />
