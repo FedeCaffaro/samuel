@@ -45,7 +45,7 @@ module.exports = {
     __DEV__: true
   },
   rules: {
-    'prettier/prettier': ['error', { printWidth: 110, singleQuote: true, endOfLine: 'auto' }],
+    'prettier/prettier': ['error', { printWidth: 110, singleQuote: true, endOfLine: 'auto', "trailingComma" : "none"}],
 
     // Import
     'import/named': 'error',
