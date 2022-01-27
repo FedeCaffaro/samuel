@@ -6,7 +6,7 @@ import { MENU_OPTIONS } from '../components/Navbar/constants';
 
 export default () => (
   <>
-    <Navbar selected={MENU_OPTIONS.HOME} />
     <Home />
+    <Navbar selected={MENU_OPTIONS.HOME} />
   </>
 );

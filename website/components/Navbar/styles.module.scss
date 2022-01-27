@@ -1,6 +1,9 @@
 @import '../../scss/imports.scss';
 
 .container {
+  @extend .column,
+  .space-between;
+
   position: fixed;
   top: 0;
   left: 0;
@@ -11,13 +14,14 @@
   height: 100vh;
   padding: 30px;
 
-  @extend .column,
-  .space-between;
+  pointer-events: none;
 }
 
 .row-navbar {
   @extend .row,
   .space-between;
+
+  pointer-events: all;
 }
 
 .logo {
