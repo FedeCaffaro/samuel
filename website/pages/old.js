@@ -20,14 +20,13 @@ import {
   ButtonGroup,
   DropdownButton,
   Tabs,
-  Modal,
+  Modal
 } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { AiOutlineClose, AiOutlineMenu, AiOutlineDoubleRight, AiFillPlusCircle } from 'react-icons/ai';
 import { CgDollar } from 'react-icons/cg';
 import {
   FaEthereum,
-  FaCheckCircle,
   FaDiscord,
   FaTwitter,
   FaLaptopCode,
@@ -36,7 +35,7 @@ import {
   FaRoad,
   FaHandshake,
   FaUsers,
-  FaBullhorn,
+  FaBullhorn
 } from 'react-icons/fa';
 import _ from 'lodash';
 
@@ -48,7 +47,7 @@ import {
   mintPrice,
   maxSupply,
   maxToMint,
-  saleIsActive,
+  saleIsActive
 } from '../lib/nft';
 import {
   STAKING_CONTRACT_ADDRESS,
@@ -57,12 +56,12 @@ import {
   depositsOf,
   calculateRewards,
   claimRewards,
-  calculateTotalStakes,
+  calculateTotalStakes
 } from '../lib/staking';
 import { TOKEN_CONTRACT_ADDRESS, stakeOf, unstakeNFTsV1 } from '../lib/token';
 import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2';
 import Stats from '../components/stats';
-import drops from '../data/drops';
+import drops from '../data/drops.json';
 
 // eslint-disable-next-line max-statements
 export default function Home() {
@@ -234,7 +233,7 @@ export default function Home() {
           _.map(data.assets, (asset) => {
             fetchedAssets.push({
               ...asset,
-              token_id: parseInt(asset.token_id),
+              token_id: parseInt(asset.token_id)
             });
           });
           if (offset + limit < tokenIds.length) {
@@ -268,7 +267,7 @@ export default function Home() {
           _.map(data.assets, (asset) => {
             fetchedAssetsV1.push({
               ...asset,
-              token_id: parseInt(asset.token_id),
+              token_id: parseInt(asset.token_id)
             });
           });
           if (offset + limit < tokenIds.length) {
@@ -301,7 +300,7 @@ export default function Home() {
           _.map(data.assets, (asset) => {
             fetchedAssetsV2.push({
               ...asset,
-              token_id: parseInt(asset.token_id),
+              token_id: parseInt(asset.token_id)
             });
           });
           if (offset + limit < tokenIds.length) {
