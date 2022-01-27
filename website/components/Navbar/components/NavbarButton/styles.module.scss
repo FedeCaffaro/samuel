@@ -1,23 +1,22 @@
 @import '../../../../scss/imports.scss';
 
 .menu-container {
-  margin-top: 6px;
-
-  cursor: pointer;
-
   @extend .row,
   .start,
   .middle;
+
+  margin-top: 6px;
+
+  cursor: pointer;
 }
 
 .menu-text {
+  @extend .text-uppercase;
+
   font-size: 12px;
   font-weight: 500;
 
-  margin-top: 2px;
   margin-right: 7px;
-
-  @extend .text-uppercase;
 }
 
 .menu-icon {

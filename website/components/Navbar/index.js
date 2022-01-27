@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useClickedOutside } from '../../hooks/useClickedOutside';
@@ -6,10 +7,10 @@ import LanguageMenu from './components/LanguageMenu';
 import NavbarButton from './components/NavbarButton';
 import PagesMenu from './components/PagesMenu';
 import SocialMediaButtons from './components/SocialMediaButtons';
-import { DROPDOWN_ICON, LOGO, MENU_ICON } from './constants';
+import { DROPDOWN_ICON, LOGO, MENU_ICON, MENU_OPTIONS } from './constants';
 import styles from './styles.module.scss';
 
-function Navbar() {
+function Navbar({ selected: { label: selectedMenuLabel } = MENU_OPTIONS.HOME }) {
   const [isOpenLanguageModal, setIsOpenLanguageModal] = useState(false);
   const [isOpenPagesModal, setIsOpenPagesModal] = useState(false);
 
@@ -37,10 +38,14 @@ function Navbar() {
       <div className={styles.container}>
         <div className={styles['row-navbar']}>
           <img src={LOGO} className={styles.logo} />
-          <NavbarButton text="Home" icon={MENU_ICON} onClick={togglePagesModal} />
+          <NavbarButton text={selectedMenuLabel} icon={MENU_ICON} onClick={togglePagesModal} />
         </div>
         <div className={styles['row-navbar']}>
-          <NavbarButton text="En" icon={DROPDOWN_ICON} onClick={toggleLanguageModal} />
+          <NavbarButton
+            text={i18next.t('Navbar:actualLanguage')}
+            icon={DROPDOWN_ICON}
+            onClick={toggleLanguageModal}
+          />
           <SocialMediaButtons />
         </div>
       </div>
