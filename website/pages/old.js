@@ -73,38 +73,23 @@ export default function Home() {
   const [stakedAssetsV2, setStakedAssetsV2] = useState([]);
   const [balanceTokens, setBalanceTokens] = useState(0);
   const [percentageStaked, setPercentageStaked] = useState(0);
-  const [totalStaked, setTotalStaked] = useState(0);
+
   const [stakes, setStakes] = useState([]);
   const [collection, setCollection] = useState({});
-  const [checked, setChecked] = useState(false);
-  const [stakelist, setStakelist] = useState([]);
+
   const [staking, setStaking] = useState(false);
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
   const [showError, setErrorShow] = useState(false);
   const [error, setError] = useState('');
-  const [didLoadAssets, setDidLoadAssets] = useState(false);
+
   const [transactionUrl, setTransactionUrl] = useState('');
   const [tab, setTab] = useState('unstaked');
   const [isApproved, setIsApproved] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [days, setDays] = useState(0);
-  const [hours, setMinutes] = useState(0);
-  const [minutes, setHours] = useState(0);
-  const [seconds, setSeconds] = useState(0);
 
-  const isBrowser = typeof window !== 'undefined';
-  let etherscanUrl;
-  let network;
-  let OS_API_ENDPOINT;
-  if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('localhost')
-      ? 'https://rinkeby.etherscan.io'
-      : 'https://etherscan.io';
-    OS_API_ENDPOINT = window.location.hostname.includes('localhost')
-      ? 'https://rinkeby-api.opensea.io/api/v1'
-      : 'https://api.opensea.io/api/v1';
-  }
+  const etherscanUrl = process.env.NEXT_PUBLIC_ETHERSCAN_URL;
+  const OS_API_ENDPOINT = process.env.NEXT_PUBLIC_OS_API_ENDPOINT;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -178,18 +163,6 @@ export default function Home() {
     } else {
       setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`);
     }
-  };
-
-  const startCountdown = () => {
-    const countDownDate = new Date('Nov 20, 2021 19:00:00').getTime();
-    setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-      setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
-      setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-      setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-      setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
-    }, 1000);
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -365,7 +338,6 @@ export default function Home() {
     if (wallet && wallet.account) {
       loadAssets(drops[0]);
       isApprovedForAll(drops[0].contract, wallet.account).then(setIsApproved);
-      setDidLoadAssets(true);
     }
   }, [wallet]);
 
@@ -387,10 +359,6 @@ export default function Home() {
       Router.push(`/collection/${drop.symbol}`);
     }
   };
-
-  useEffect(() => {
-    startCountdown();
-  }, []);
 
   return (
     <div className="den-wrapper">
