@@ -3,10 +3,9 @@
 /* eslint-disable no-empty */
 import Web3 from 'web3';
 
-const TOKEN_ABI = require('../abis/Token.json');
+import TOKEN_ABI from '../abis/Token.json';
 
-// export const TOKEN_CONTRACT_ADDRESS = '0x7cca1e4879a62A4B6173FAF0B865217722a47751'; // prod
-export const TOKEN_CONTRACT_ADDRESS = '0x8040Eaf450e42b1784809cE9344FB17A7674cFEC'; // dev
+export const TOKEN_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS;
 
 const getWeb3Instance = () =>
   new Promise((resolve) => {
@@ -28,7 +27,6 @@ const getWeb3Instance = () =>
         // Acccounts always exposed
         resolve(currentWeb3);
       } else {
-        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
       }
     }
   });
@@ -46,13 +44,10 @@ export const stakeNFTs = async (address, tokenIds) => {
       from: address
     });
 
-    console.log(`Staked ${tokenIds.length} NFTs. Transaction: `);
-    console.log(result.transactionHash);
     return {
       transactionHash: result.transactionHash
     };
   } catch (error) {
-    console.log(error);
     const reason = error.message.split(':');
     return {
       error: reason.length ? reason[1] : 'Minting error.'
@@ -68,13 +63,10 @@ export const unstakeNFTsV1 = async (address, tokenIds) => {
       from: address
     });
 
-    console.log(`Unstaked ${tokenIds.length} NFTs. Transaction: `);
-    console.log(result.transactionHash);
     return {
       transactionHash: result.transactionHash
     };
   } catch (error) {
-    console.log(error);
     const reason = error.message.split(':');
     return {
       error: reason.length ? reason[1] : 'Minting error.'
@@ -83,7 +75,6 @@ export const unstakeNFTsV1 = async (address, tokenIds) => {
 };
 
 export const stakeOf = async (address) => {
-  console.log(address);
   const web3Instance = await getWeb3();
   const nftContract = new web3Instance.eth.Contract(TOKEN_ABI, TOKEN_CONTRACT_ADDRESS);
 
