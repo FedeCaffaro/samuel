@@ -10,16 +10,15 @@ import { mapWallet } from '../utils/wallet';
 export const useConnectWallet = () => {
   const dispatch = useDispatch();
   const wallet = useWallet();
-  const [localWallet, setLocalWallet] = useState(null);
-  //   const localWallet = getWallet();
 
   const onConnectWallet = () => {
     wallet.connect();
   };
 
   useEffect(() => {
-    if (window) {
-      setLocalWallet(getWallet());
+    const localWallet = getWallet();
+    if (localWallet) {
+      dispatch(actions.setWallet(localWallet));
     }
   }, []);
 
@@ -29,18 +28,6 @@ export const useConnectWallet = () => {
       location.reload();
     }
   }, [wallet]);
-
-  useEffect(() => {
-    if (localWallet) {
-      dispatch(actions.setWallet(localWallet));
-    }
-  }, [localWallet]);
-
-  //   useEffect(() => {
-  //     if (wallet?.account) {
-  //       dispatch(actions.setWallet(wallet));
-  //     }
-  //   }, [wallet]);
 
   return { onConnectWallet };
 };
