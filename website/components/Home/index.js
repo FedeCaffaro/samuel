@@ -1,17 +1,15 @@
 import React from 'react';
 import i18next from 'i18next';
-import { useWallet } from 'use-wallet';
+import { useSelector } from 'react-redux';
 
 import { useGetAssetsData } from '../../hooks/UseLoadAssets';
+import { useConnectWallet } from '../../hooks/useConnectWallet';
 
 import styles from './styles.module.scss';
 
 function Home() {
-  const wallet = useWallet();
-
-  const onConnectWallet = () => {
-    wallet.connect();
-  };
+  const { onConnectWallet } = useConnectWallet();
+  const wallet = useSelector((state) => state.settings.wallet);
 
   const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, percentageStaked } =
     useGetAssetsData(wallet);
@@ -19,7 +17,7 @@ function Home() {
   return (
     <div className={styles.center}>
       <span className={styles.text}>{i18next.t('Home:helloWorld')}</span>
-      {wallet && wallet.account ? (
+      {wallet && wallet?.account ? (
         <>
           <span className={styles.text}>stakingRewards: {stakingRewards}</span>
           <span className={styles.text}>stakedTokens: {[...stakedIdsV1, ...stakedIdsV2].length}</span>

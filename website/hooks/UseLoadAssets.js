@@ -12,7 +12,7 @@ export const useGetAssetsData = (wallet) => {
   const [stakedIdsV2, setStakedIdsV2] = useState([]);
 
   useEffect(() => {
-    if (wallet.account) {
+    if (wallet?.account) {
       const getters = [
         {
           getter: calculateRewards,
@@ -37,12 +37,13 @@ export const useGetAssetsData = (wallet) => {
       ];
 
       getters.forEach(({ getter, setter }) => {
-        getter(wallet.account)
+        getter(wallet?.account)
           .then(setter)
+          // eslint-disable-next-line no-console
           .catch((error) => console.error(`error in ${getter.name}`, error));
       });
     }
-  }, [wallet.account]);
+  }, [wallet?.account]);
 
   return {
     stakingRewards,

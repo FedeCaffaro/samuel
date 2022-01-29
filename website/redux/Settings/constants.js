@@ -1,3 +1,4 @@
 export const TARGETS = {
-  SETTINGS: 'settings'
+  SETTINGS: 'settings',
+  WALLET: 'wallet'
 };
