@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import i18next from 'i18next';
 import { useWallet } from 'use-wallet';
 

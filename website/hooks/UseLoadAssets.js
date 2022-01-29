@@ -1,28 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import {
-  balanceOf,
-  calculateRewards,
-  calculateTotalStakes,
-  depositsOf,
-  getStakedAssets,
-  stakeOf
-} from '../utils/staking';
-
-// TODO: REMOVE COMMENT
-// NEEDED VALUES
-/*
-  stakingRewards
-  stakedAssets
-  stakedAssetsV1
-  stakedAssetsV2
-  balanceTokens
-  percentageStaked
-
-  unstakedAssets
-  stakes
-*/
+import { balanceOf, calculateRewards, calculateTotalStakes, depositsOf, stakeOf } from '../utils/staking';
 
 export const useGetAssetsData = (wallet) => {
   const [stakingRewards, setStakingRewards] = useState(0);
@@ -33,28 +11,38 @@ export const useGetAssetsData = (wallet) => {
   const [stakedIdsV1, setStakedIdsV1] = useState([]);
   const [stakedIdsV2, setStakedIdsV2] = useState([]);
 
-  if (wallet) {
-    // stakingRewards
-    calculateRewards(wallet.account)
-      .then((value) => setStakingRewards(value))
-      .catch((error) => console.error('error in calculateRewards', error));
+  useEffect(() => {
+    if (wallet.account) {
+      const getters = [
+        {
+          getter: calculateRewards,
+          setter: setStakingRewards
+        },
+        {
+          getter: balanceOf,
+          setter: setBalanceTokens
+        },
+        {
+          getter: calculateTotalStakes,
+          setter: setPercentageStaked
+        },
+        {
+          getter: stakeOf,
+          setter: setStakedIdsV1
+        },
+        {
+          getter: depositsOf,
+          setter: setStakedIdsV2
+        }
+      ];
 
-    stakeOf(wallet.account)
-      .then(setStakedIdsV1)
-      .catch((error) => console.error('error in stakeOf', error));
-
-    depositsOf(wallet.account)
-      .then(setStakedIdsV2)
-      .catch((error) => console.error('error in depositsOf', error));
-
-    balanceOf(wallet.account)
-      .then(setBalanceTokens)
-      .catch((error) => console.error('error in balanceOf', error));
-
-    calculateTotalStakes()
-      .then(setPercentageStaked)
-      .catch((error) => console.error('error in calculateTotalStakes', error));
-  }
+      getters.forEach(({ getter, setter }) => {
+        getter(wallet.account)
+          .then(setter)
+          .catch((error) => console.error(`error in ${getter.name}`, error));
+      });
+    }
+  }, [wallet.account]);
 
   return {
     stakingRewards,
