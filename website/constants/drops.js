@@ -1,0 +1,64 @@
+export const DROPS = [
+  {
+    symbol: 'SAMOT',
+    name: 'SAMOT',
+    imageUrl: 'logo.png',
+    description:
+      'An NFT Club that introduces the amazing Latin American artistic style. From diverse artists, the first collection comes from the creator himself. Welcome to Samot´s World and enjoy the ride.',
+    contract: '0x83C26562cE37959b870240B9c06b3e7fd72Edd8c',
+    infoUrl: 'https://samot.art',
+    datetime: '10/24 @ 6PM UTC',
+    type: 'active',
+    ready: true
+  },
+  {
+    symbol: 'PYRMD',
+    name: 'PYRAMYD',
+    imageUrl: 'pyramyd-logo.png',
+    description:
+      'PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.',
+    html: '<p>PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.</p><p>During the month of September, he forced himself to live in his studio for 30 days. Determined to create one painting a day, PYRAMYD emerged from that extreme experience with a breathtaking series of unique pieces that make up the backbone for his NFT collection. This is PYRAMYD x Samot Club.</p>',
+    contract: '0xB68E12f3BcCb852BC9343E892fAE704c8294dC2F',
+    infoUrl: 'https://opensea.io/collection/pyramyd/',
+    datetime: '11/14 @ 6PM UTC',
+    type: 'previous',
+    ready: true
+  },
+  {
+    symbol: 'TOMI',
+    name: 'TOMI POMO',
+    imageUrl: 'tomi_logo.png',
+    description:
+      'Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.',
+    contract: '0x75eC2563A0a19B7c8DA5B660C8e9E15A8E44482B',
+    infoUrl: 'https://opensea.io/collection/linda-nene',
+    datetime: '12/17/21 ',
+    type: 'active',
+    ready: false
+  },
+  {
+    symbol: 'SAM',
+    name: 'SAM ELGRECO',
+    imageUrl: 'sam_logo.png',
+    description:
+      'Sam Elgreco was born in Sao Paulo, Brazil, in 1986. After a few years he moves to Buenos Aires to study fine arts and design, and that’s where the idea of painting in public spaces becomes a constant.',
+    contract: '',
+    infoUrl: 'https://opensea.io/collection/samelgrecoxsoldelrio',
+    datetime: '12/14/21',
+    type: 'active',
+    ready: false
+  },
+  {
+    symbol: 'DYLAN',
+    name: 'DYLAN LERNER',
+    imageUrl: 'dylan_logo.jpeg',
+    description:
+      "Throw the name around a couple of places: Cannes Film Festival, Berlin's underground scene, or even among vintage Rolling Stones managers. Big chances are someone has worked with him.",
+    contract: '',
+    datetime: 'TBD',
+    type: 'upcoming',
+    ready: false
+  }
+];
+
+export const SAMOT_DROPS = DROPS.find((drop) => drop.symbol === 'SAMOT');

@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 import drops from '../../data/drops.json';
 
-export default function Pyramyd() {
+function Pyramyd() {
   const [collection, setCollection] = useState({});
   const router = useRouter();
   const { symbol } = router.query;
@@ -79,3 +79,5 @@ export default function Pyramyd() {
     </Container>
   );
 }
+
+export default Pyramyd;

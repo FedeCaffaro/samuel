@@ -27,7 +27,7 @@ import {
 import { stakeOf } from '../../lib/token';
 import drops from '../../data/drops';
 
-export default function Home() {
+ function Home() {
   const router = useRouter();
   const wallet = useWallet();
   const { contract } = router.query;
@@ -235,3 +235,5 @@ export default function Home() {
     </Container>
   );
 }
+
+export default Home;

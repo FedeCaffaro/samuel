@@ -23,8 +23,7 @@ import {
   Modal
 } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import { AiOutlineClose, AiOutlineMenu, AiOutlineDoubleRight, AiFillPlusCircle } from 'react-icons/ai';
-import { CgDollar } from 'react-icons/cg';
+import { AiOutlineClose, AiOutlineMenu, AiOutlineDoubleRight } from 'react-icons/ai';
 import {
   FaEthereum,
   FaDiscord,
@@ -39,18 +38,8 @@ import {
 } from 'react-icons/fa';
 import _ from 'lodash';
 
+import { setApproveForAll, isApprovedForAll } from '../lib/nft';
 import {
-  NFT_CONTRACT_ADDRESS,
-  setApproveForAll,
-  isApprovedForAll,
-  mint,
-  mintPrice,
-  maxSupply,
-  maxToMint,
-  saleIsActive
-} from '../lib/nft';
-import {
-  STAKING_CONTRACT_ADDRESS,
   stakeNFTs,
   unstakeNFTs,
   depositsOf,
@@ -58,13 +47,13 @@ import {
   claimRewards,
   calculateTotalStakes
 } from '../lib/staking';
-import { TOKEN_CONTRACT_ADDRESS, stakeOf, unstakeNFTsV1 } from '../lib/token';
-import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2';
+import { stakeOf, unstakeNFTsV1 } from '../lib/token';
+import { balanceOf } from '../lib/tokenv2';
 import Stats from '../components/stats';
 import drops from '../data/drops.json';
 
 // eslint-disable-next-line max-statements
-export default function Home() {
+function Home() {
   const wallet = useWallet();
   const [unstakedAssets, setUnstakedAssets] = useState([]);
   const [stakingRewards, setStakingRewards] = useState(0);
@@ -73,8 +62,8 @@ export default function Home() {
   const [stakedAssetsV2, setStakedAssetsV2] = useState([]);
   const [balanceTokens, setBalanceTokens] = useState(0);
   const [percentageStaked, setPercentageStaked] = useState(0);
-
   const [stakes, setStakes] = useState([]);
+
   const [collection, setCollection] = useState({});
 
   const [staking, setStaking] = useState(false);
@@ -888,7 +877,7 @@ export default function Home() {
                         <Container>
                           {drops &&
                             _.filter(drops, { type: 'upcoming' }).map((drop) => (
-                              <Row className="vertical-center drop-row">
+                              <Row key={drops} className="vertical-center drop-row">
                                 <Col sm={12} md={2} lg={2} xl={2}>
                                   <img src={drop.imageUrl} width="150px" />
                                 </Col>
@@ -919,7 +908,7 @@ export default function Home() {
                           <Container>
                             {drops &&
                               _.filter(drops, { type: 'previous' }).map((drop) => (
-                                <Row className="vertical-center drop-row">
+                                <Row key={drops} className="vertical-center drop-row">
                                   <Col sm={12} md={2} lg={2} xl={2}>
                                     <img src={drop.imageUrl} width="150px" />
                                   </Col>
@@ -1219,3 +1208,4 @@ export default function Home() {
     </div>
   );
 }
+export default Home;

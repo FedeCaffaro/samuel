@@ -10,7 +10,6 @@ const combineReducers = wrapCombineReducers(CR);
 
 // Add reducers here
 const reducers = combineReducers({
-  // eslint-disable-next-line prettier/prettier
   settings
 });
 
