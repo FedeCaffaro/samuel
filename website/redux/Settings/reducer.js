@@ -1,8 +1,6 @@
 import Immutable from 'seamless-immutable';
 import { createReducer, completeState, completeReducer } from 'redux-recompose';
 
-import { getWallet } from '../../services/LocalStorageService';
-
 import { actions } from './actions';
 import { TARGETS } from './constants';
 

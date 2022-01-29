@@ -15,32 +15,32 @@ export const useConnectWallet = () => {
 
   const onConnectWallet = () => {
     wallet.connect();
-    console.log('wallet', wallet);
   };
 
-  //   useEffect(() => {
-  //     if (window) {
-  //       setLocalWallet(mapWallet(getWallet()));
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (wallet?.account && !!window) {
-  //       setWallet({ account: wallet.account });
-  //     }
-  //   }, [wallet]);
-
-  //   useEffect(() => {
-  //     if (localWallet) {
-  //       dispatch(actions.setWallet(localWallet));
-  //     }
-  //   }, [localWallet]);
+  useEffect(() => {
+    if (window) {
+      setLocalWallet(getWallet());
+    }
+  }, []);
 
   useEffect(() => {
-    if (wallet?.account) {
-      dispatch(actions.setWallet(wallet));
+    if (wallet?.account && !!window) {
+      setWallet(mapWallet(wallet));
+      location.reload();
     }
   }, [wallet]);
+
+  useEffect(() => {
+    if (localWallet) {
+      dispatch(actions.setWallet(localWallet));
+    }
+  }, [localWallet]);
+
+  //   useEffect(() => {
+  //     if (wallet?.account) {
+  //       dispatch(actions.setWallet(wallet));
+  //     }
+  //   }, [wallet]);
 
   return { onConnectWallet };
 };

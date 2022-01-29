@@ -62,7 +62,7 @@ export const setLanguage = (value) => setValue(languageKey, value);
 export const getLanguage = () => getValue(languageKey);
 export const removeLanguage = () => removeValue(languageKey);
 
-// const walletKey = `${APP_KEY}:language`;
-// export const setWallet = (value) => setValue(walletKey, value);
-// export const getWallet = () => getValue(walletKey);
-// export const removeWallet = () => removeValue(walletKey);
+const walletKey = `${APP_KEY}:wallet`;
+export const setWallet = (value) => setValue(walletKey, value);
+export const getWallet = () => getValue(walletKey);
+export const removeWallet = () => removeValue(walletKey);
