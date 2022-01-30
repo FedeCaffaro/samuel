@@ -2,11 +2,11 @@ import React from 'react';
 
 import Collections from '../components/Collections';
 import Navbar from '../components/Navbar';
-import { MENU_OPTIONS } from '../components/Navbar/constants';
+import { ROUTES } from '../constants/routes';
 
 const CollectionsPage = () => (
   <>
-    <Navbar selected={MENU_OPTIONS.COLLECTIONS} />
+    <Navbar selected={ROUTES.COLLECTIONS} />
     <Collections />
   </>
 );

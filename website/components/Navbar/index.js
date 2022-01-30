@@ -1,16 +1,18 @@
 import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { ROUTES } from '../../constants/routes';
 import { useClickedOutside } from '../../hooks/useClickedOutside';
 
 import LanguageMenu from './components/LanguageMenu';
 import NavbarButton from './components/NavbarButton';
 import PagesMenu from './components/PagesMenu';
 import SocialMediaButtons from './components/SocialMediaButtons';
-import { DROPDOWN_ICON, LOGO, MENU_ICON, MENU_OPTIONS } from './constants';
+import { DROPDOWN_ICON, LOGO, MENU_ICON } from './constants';
 import styles from './styles.module.scss';
 
-function Navbar({ selected: { label: selectedMenuLabel } = MENU_OPTIONS.HOME }) {
+function Navbar({ selected: { label: selectedMenuLabel } = ROUTES.HOME }) {
   const [isOpenLanguageModal, setIsOpenLanguageModal] = useState(false);
   const [isOpenPagesModal, setIsOpenPagesModal] = useState(false);
 

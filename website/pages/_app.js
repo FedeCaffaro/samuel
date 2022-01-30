@@ -8,6 +8,7 @@ import '../config/i18n';
 import store from '../redux/store';
 import Head from '../components/head';
 import styles from '../styles/styles.module.scss';
+import GeneralHooks from '../components/GeneralHooks';
 // TODO: remove this line
 // import '../styles/styles-old.scss';
 
@@ -21,6 +22,7 @@ function App({ Component, pageProps }) {
             portis: { dAppId: 'samot-club' }
           }}
         >
+          <GeneralHooks />
           <Head />
           <div className="main-wrapper">
             <Component {...pageProps} />

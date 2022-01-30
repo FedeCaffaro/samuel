@@ -2,11 +2,11 @@ import React from 'react';
 
 import MyNfts from '../components/MyNfts';
 import Navbar from '../components/Navbar';
-import { MENU_OPTIONS } from '../components/Navbar/constants';
+import { ROUTES } from '../constants/routes';
 
 const MyNftsPage = () => (
   <>
-    <Navbar selected={MENU_OPTIONS.COLLECTIONS} />
+    <Navbar selected={ROUTES.MY_NFT} />
     <MyNfts />
   </>
 );

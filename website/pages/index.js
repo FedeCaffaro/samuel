@@ -2,12 +2,12 @@ import React from 'react';
 
 import Home from '../components/Home';
 import Navbar from '../components/Navbar';
-import { MENU_OPTIONS } from '../components/Navbar/constants';
+import { ROUTES } from '../constants/routes';
 
 const HomePage = () => (
   <>
     <Home />
-    <Navbar selected={MENU_OPTIONS.HOME} />
+    <Navbar selected={ROUTES.HOME} />
   </>
 );
 
