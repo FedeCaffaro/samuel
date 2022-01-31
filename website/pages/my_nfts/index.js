@@ -1,8 +1,8 @@
 import React from 'react';
 
-import MyNfts from '../components/MyNfts';
-import Navbar from '../components/Navbar';
-import { ROUTES } from '../constants/routes';
+import MyNfts from '../../components/MyNfts';
+import Navbar from '../../components/Navbar';
+import { ROUTES } from '../../constants/routes';
 
 const MyNftsPage = () => (
   <>

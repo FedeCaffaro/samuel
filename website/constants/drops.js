@@ -2,6 +2,8 @@ export const DROPS = [
   {
     symbol: 'SAMOT',
     name: 'SAMOT',
+    href: '/collections/samot',
+    slug: 'samot-club',
     imageUrl: 'logo.png',
     description:
       'An NFT Club that introduces the amazing Latin American artistic style. From diverse artists, the first collection comes from the creator himself. Welcome to Samot´s World and enjoy the ride.',
@@ -14,6 +16,8 @@ export const DROPS = [
   {
     symbol: 'PYRMD',
     name: 'PYRAMYD',
+    href: '/collections/pyramid',
+    slug: 'pyramid',
     imageUrl: 'pyramyd-logo.png',
     description:
       'PYRAMYD is a young, prolific artist from the City of Buenos Aires. His work, materialized by mixing various techniques and resources, has focused on the creation of unique universes where physical, digital and ethereal blend as one.',
@@ -27,6 +31,8 @@ export const DROPS = [
   {
     symbol: 'TOMI',
     name: 'TOMI POMO',
+    href: '/collections/tomi_pomo',
+    slug: 'linda-nene',
     imageUrl: 'tomi_logo.png',
     description:
       'Tomi Pomo is an Argentine art director, visual artist, tattooist and designer. He has built a reputation as one of the most prestigious tattoo artists in Buenos Aires, leaving traces of his masterful lines in several top tier studios in the capital, such as the niche Local Support.',
@@ -39,6 +45,8 @@ export const DROPS = [
   {
     symbol: 'SAM',
     name: 'SAM ELGRECO',
+    href: '/collections/sam_elgreco',
+    slug: 'samelgrecoxsoldelrio',
     imageUrl: 'sam_logo.png',
     description:
       'Sam Elgreco was born in Sao Paulo, Brazil, in 1986. After a few years he moves to Buenos Aires to study fine arts and design, and that’s where the idea of painting in public spaces becomes a constant.',
@@ -51,6 +59,7 @@ export const DROPS = [
   {
     symbol: 'DYLAN',
     name: 'DYLAN LERNER',
+    href: '/collections/dylan_lerner',
     imageUrl: 'dylan_logo.jpeg',
     description:
       "Throw the name around a couple of places: Cannes Film Festival, Berlin's underground scene, or even among vintage Rolling Stones managers. Big chances are someone has worked with him.",

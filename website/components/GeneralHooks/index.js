@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import { getWallet } from '../../services/LocalStorageService';
 import actions from '../../redux/Settings/actions';
@@ -8,6 +9,7 @@ import { getActualRoute } from '../../utils/routes';
 
 function GeneralHooks() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // Set wallet state from local storage
   useEffect(() => {
@@ -27,7 +29,7 @@ function GeneralHooks() {
 
   useEffect(() => {
     if (actualRoute?.isWalletNeeded && !wallet) {
-      window.location.href = window.location.origin + ROUTES.HOME.pagePath;
+      router.push(ROUTES.HOME.pagePath);
     }
   }, [actualRoute, wallet]);
 

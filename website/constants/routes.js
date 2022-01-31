@@ -13,6 +13,10 @@ export const ROUTES = {
     label: i18next.t('Navbar:myNfts'),
     pagePath: '/my_nfts',
     isWalletNeeded: true
+  },
+  COLLECTION: {
+    label: i18next.t('Navbar:collections'),
+    pagePath: '/collections/:collection'
   }
 };
 

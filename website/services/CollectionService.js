@@ -1,3 +1,3 @@
 import api from '../config/api';
 
-export const getSamotCollection = () => api.get('/collection/samot-club');
+export const getCollection = (collectionSlug) => api.get(`/collection/${collectionSlug}`);

@@ -1,4 +1,5 @@
 export const TARGETS = {
   SETTINGS: 'settings',
-  WALLET: 'wallet'
+  WALLET: 'wallet',
+  CURRENT_COLLECTION: 'currentCollection'
 };

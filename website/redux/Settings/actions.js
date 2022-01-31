@@ -1,21 +1,24 @@
 import { createTypes, completeTypes } from 'redux-recompose';
 
-import * as SettingsService from '../../services/CollectionService';
+import * as CollectionService from '../../services/CollectionService';
+import { mapCollectionFromService } from '../../utils/collections';
 
 import { TARGETS } from './constants';
 
-export const actions = createTypes(completeTypes(['GET_SETTINGS', 'SET_WALLET']), '@@SETTINGS');
+export const actions = createTypes(completeTypes(['SET_WALLET', 'GET_COLLECTION']), '@@SETTINGS');
 
 export const actionCreators = {
-  getSettings: () => ({
-    type: actions.GET_SETTINGS,
-    target: TARGETS.SETTINGS,
-    service: SettingsService.getSamotCollection
-  }),
   setWallet: (wallet) => ({
     type: actions.SET_WALLET,
     target: TARGETS.WALLET,
     payload: wallet
+  }),
+  getCollection: (collectionSlug) => ({
+    type: actions.GET_COLLECTION,
+    target: TARGETS.CURRENT_COLLECTION,
+    payload: collectionSlug,
+    service: CollectionService.getCollection,
+    successSelector: ({ data }) => mapCollectionFromService(data.collection)
   })
 };
 
