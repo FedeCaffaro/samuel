@@ -7,14 +7,5 @@ export const mapCollectionFromService = ({ name, imageUrl, bannerImageUrl, stats
   stats
 });
 
-export const isValidCollectionPath = (collectionPath) => {
-  const validPaths = DROPS.map(({ href }) => href);
-  console.log(
-    'validPaths',
-    validPaths,
-    collectionPath,
-    typeof collectionPath,
-    validPaths.includes(collectionPath)
-  );
-  return validPaths.includes(collectionPath);
-};
+export const isValidCollectionPath = (collectionPath) =>
+  DROPS.map(({ href }) => href).includes(collectionPath);

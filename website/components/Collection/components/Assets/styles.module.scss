@@ -1,0 +1,25 @@
+@import '../../../../scss/imports';
+
+.container {
+  @extend .column,
+  .start,
+  .middle;
+
+  margin-right: 20px;
+  margin-bottom: 60px;
+  padding: 20px;
+
+  border-radius: 10px;
+  background-color: rgba($white, 0.1);
+}
+
+.asset {
+  height: 300px;
+}
+
+.text {
+  font-size: 20px;
+  line-height: 45px;
+
+  color: $white;
+}

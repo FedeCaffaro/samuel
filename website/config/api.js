@@ -15,7 +15,7 @@ export const createApiWithURL = (baseURL) =>
   });
 
 const api = create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://api.opensea.io/api/v1',
+  baseURL: process.env.NEXT_PUBLIC_OPEN_SEA_API,
   timeout: 15000
 });
 
