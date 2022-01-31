@@ -24,7 +24,6 @@ function Collection({ collection }) {
   }, [currentCollection?.name]);
 
   useEffect(() => {
-    console.log(collection?.slug);
     dispatch(
       // eslint-disable-next-line camelcase
       actions.getAssets({ collection: collection?.slug, limit: 50 })
