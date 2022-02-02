@@ -1,4 +1,5 @@
 service: samot-api
+frameworkVersion: '2'
 provider:
   stage: ${opt:stage, 'dev'}
   name: aws
