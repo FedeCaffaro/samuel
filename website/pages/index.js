@@ -55,8 +55,8 @@ export default function Home() {
   let network
   let OS_API_ENDPOINT
   if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://etherscan.io' : 'https://rinkeby.etherscan.io'
-    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://api.opensea.io/api/v1":"https://rinkeby-api.opensea.io/api/v1"
+    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io':'https://etherscan.io' 
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1":"https://api.opensea.io/api/v1"
   }
 
   const handleClose = () => setShow(false);
