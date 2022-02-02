@@ -56,8 +56,8 @@ export default function Home() {
   let network
   let OS_API_ENDPOINT
   if (isBrowser) {
-    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io':'https://etherscan.io'
-    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://rinkeby-api.opensea.io/api/v1":"https://api.opensea.io/api/v1"
+    etherscanUrl = window.location.hostname.includes('localhost') ? 'https://etherscan.io' : 'https://rinkeby.etherscan.io'
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost') ? "https://api.opensea.io/api/v1":"https://rinkeby-api.opensea.io/api/v1"
   }
 
   const handleClose = () => setShow(false);
@@ -282,7 +282,7 @@ export default function Home() {
     fetchedAssetsV2 = [];
     const getUnstakedAssets = async (owner) => {
       const fetchAssets = async (offset, limit) => {
-        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${drop.contract}`)
+        const response = await fetch(`${OS_API_ENDPOINT}/assets?order_direction=asc&limit=${limit}&owner=${owner}&asset_contract_address=${drop.contract}`)
         const data = await response.json()
         if (data && data.assets && data.assets.length > 0) {
           for (let asset of data.assets) {
