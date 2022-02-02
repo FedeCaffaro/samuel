@@ -8,9 +8,8 @@ import { Container, Button, Row, Col, Tab, Nav, Dropdown, ButtonGroup, DropdownB
 import { BiChevronDown, BiChevronRight, BiRightArrowAlt, BiDotsHorizontalRounded, BiFilter } from "react-icons/bi";
 import { GoLock } from "react-icons/go";
 import { NFT_CONTRACT_ADDRESS, setApproveForAll, isApprovedForAll, mint, mintPrice, maxSupply, maxToMint, saleIsActive } from '../lib/nft'
-
-import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards, claimRewards,calculateTotalStakes } from '../lib/staking'
-import { TOKEN_CONTRACT_ADDRESS, stakeOf,unstakeNFTsV1 } from '../lib/token'
+import { STAKING_CONTRACT_ADDRESS, stakeNFTs, unstakeNFTs, depositsOf, calculateRewards, claimRewards, calculateTotalStakes } from '../lib/staking'
+import { TOKEN_CONTRACT_ADDRESS, stakeOf, unstakeNFTsV1 } from '../lib/token'
 import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2'
 import Stats from '../components/stats'
 import drops from '../data/drops'
@@ -28,9 +27,9 @@ export default function Home() {
   const [stakedAssets, setStakedAssets] = useState([])
   const [stakedAssetsV1, setStakedAssetsV1] = useState([])
   const [stakedAssetsV2, setStakedAssetsV2] = useState([])
-  const [balanceTokens,setBalanceTokens] = useState(0)
-  const [percentageStaked,setPercentageStaked] = useState(0)
-  const [totalStaked,setTotalStaked] = useState(0)
+  const [balanceTokens, setBalanceTokens] = useState(0)
+  const [percentageStaked, setPercentageStaked] = useState(0)
+  const [totalStaked, setTotalStaked] = useState(0)
   const [stakes, setStakes] = useState([])
   const [collection, setCollection] = useState({})
   const [checked, setChecked] = useState(false);
@@ -50,7 +49,7 @@ export default function Home() {
   const [minutes, setHours] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
-  
+
   const isBrowser = typeof window !== "undefined"
   let etherscanUrl
   let network
@@ -135,7 +134,7 @@ export default function Home() {
       setError(result.error)
     } else {
       setTransactionUrl(`${etherscanUrl}/tx/${result.transactionHash}`)
-        }
+    }
   }
 
 
@@ -264,12 +263,12 @@ export default function Home() {
       }
       return fetchedAssetsV2
     }
-    
+
     const stakedIdsV1 = await stakeOf(wallet.account);
     const stakedIdsV2 = await depositsOf(wallet.account);
-    const stakedData = await getStakedAssets(stakedIdsV1.concat(stakedIdsV2),0,20);
+    const stakedData = await getStakedAssets(stakedIdsV1.concat(stakedIdsV2), 0, 20);
     setStakedAssets(stakedData)
-    
+
 
 
     const stakedDataV1 = await getStakedAssetsV1(stakedIdsV1, 0, 20);
@@ -477,7 +476,7 @@ export default function Home() {
                       <div>
                         <Tabs defaultActiveKey="unstaked" className="inner-tabs portfolio" onSelect={(k) => setTab(k)} activeKey={tab}>
                           <Tab eventKey="unstaked" title="Unstaked" className="inner-tab-content">
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked}/>
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssets.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked} />
                             <div className="nft-list">
                               {unstakedAssets && unstakedAssets.length < 1 && (
                                 <div className="no-nfts">
@@ -533,7 +532,7 @@ export default function Home() {
                             )}
                           </Tab>
                           <Tab eventKey="stakedV1" title="Staked (v1)" className="inner-tab-content" onSelect={(k) => setTab(k)} activeKey={tab}>
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssetsV1.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked}/>
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssetsV1.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked} />
                             <div className="nft-list">
                               {stakedAssetsV1 && stakedAssetsV1.length < 1 && (
                                 <div className="no-nfts">
@@ -585,7 +584,7 @@ export default function Home() {
                             )}
                           </Tab>
                           <Tab eventKey="stakedV2" title="Staked (v2)" className="inner-tab-content" onSelect={(k) => setTab(k)} activeKey={tab}>
-                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssetsV2.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked}/>
+                            <Stats stakingRewards={stakingRewards} stakesCount={stakedAssetsV2.length} balanceTokens={balanceTokens} percentageStaked={percentageStaked} />
                             <div className="nft-list">
                               {stakedAssetsV2 && stakedAssetsV2.length < 1 && (
                                 <div className="no-nfts">
