@@ -8,8 +8,8 @@ provider:
   runtime: nodejs12.x
   environment:
     ENV: ${opt:stage, 'dev'}
-    MNEMONIC: ${ssm:mnemonic~true}
-    INFURIA_KEY: ${ssm:infuria~true}
+    MNEMONIC: ${ssm:mnemonic}
+    INFURIA_KEY: ${ssm:infuria}
     NETWORK_URL: ${self:custom.NETWORK_URL.${self:provider.stage}}
     REVEAL: true
   iamRoleStatements:
