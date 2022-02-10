@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { ROUTES } from '../../constants/routes';
 import { useClickedOutside } from '../../hooks/useClickedOutside';

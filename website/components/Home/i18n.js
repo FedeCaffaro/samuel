@@ -1,16 +1,22 @@
 import i18n from 'i18next';
 
 i18n.addResources('en', 'Home', {
-  helloWorld: 'Hello World!',
+  welcome: 'Welcome',
+  welcomeBack: 'Welcome back',
+  goToPortfolio: 'See my portfolio',
   connectWallet: 'Connect Wallet'
 });
 
 i18n.addResources('es', 'Home', {
-  helloWorld: 'Hola Mundo!',
+  welcome: 'Bienvenido',
+  welcomeBack: 'Bienvenido de nuevo',
+  goToPortfolio: 'Ver mi portafolio',
   connectWallet: 'Conectar Wallet'
 });
 
 i18n.addResources('pr', 'Home', {
-  helloWorld: 'Olá Mundo!',
-  connectWallet: 'Conectar Carteira'
+  welcome: 'Bem-vindo',
+  welcomeBack: 'Bem-vindo de novo',
+  goToPortfolio: 'Ver meu portfólio',
+  connectWallet: 'Conectar Wallet'
 });

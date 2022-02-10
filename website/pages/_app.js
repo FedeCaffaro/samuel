@@ -10,7 +10,7 @@ import Head from '../components/head';
 import styles from '../styles/styles.module.scss';
 import GeneralHooks from '../components/GeneralHooks';
 // TODO: remove this line
-// import '../styles/styles-old.scss';
+import '../styles/styles-old.scss';
 
 function App({ Component, pageProps }) {
   return (

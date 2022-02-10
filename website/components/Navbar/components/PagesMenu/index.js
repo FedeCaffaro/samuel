@@ -9,7 +9,9 @@ import styles from './styles.module.scss';
 function PagesMenu({ isOpen, reference }) {
   const wallet = useSelector((state) => state.settings.wallet);
 
-  const OPTIONS = MENU_OPTIONS_LIST.filter(({ isWalletNeeded }) => !isWalletNeeded || wallet?.account);
+  const OPTIONS = MENU_OPTIONS_LIST.filter(
+    ({ showInNavbar, isWalletNeeded }) => showInNavbar && (!isWalletNeeded || wallet?.account)
+  );
 
   return <DropdownMenu isOpen={isOpen} options={OPTIONS} reference={reference} className={styles.menu} />;
 }
