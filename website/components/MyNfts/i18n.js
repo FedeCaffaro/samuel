@@ -6,7 +6,10 @@ i18n.addResources('en', 'MyNfts', {
   stakedTokens: 'Staked tokens: ',
   balanceTokens: 'Balance tokens: ',
   percentageStaked: 'Percentage staked: ',
-  claimRewards: 'Claim rewards'
+  claimRewards: 'Claim rewards',
+  claimingRewards: 'Claiming rewards...',
+  claimSuccess: 'Claimed rewards successfully! Transaction hash: {{link}}',
+  claimError: 'Claiming rewards failed. Reason: {{reason}}'
 });
 
 i18n.addResources('es', 'MyNfts', {
@@ -15,7 +18,10 @@ i18n.addResources('es', 'MyNfts', {
   stakedTokens: "NFT's Stakeados",
   balanceTokens: 'Balance de Tokens',
   percentageStaked: 'Porcentaje Stakeado',
-  claimRewards: 'Recompensas'
+  claimRewards: 'Obtener recompensas',
+  claimingRewards: 'Obteniendo recompensas...',
+  claimSuccess: 'Recompensas recibidas con éxito! Transacción hash: {{link}}',
+  claimError: 'Fallo al obtener recompensas. Razón: {{reason}}'
 });
 
 i18n.addResources('pr', 'MyNfts', {
@@ -24,5 +30,8 @@ i18n.addResources('pr', 'MyNfts', {
   stakedTokens: "NFT's Staked",
   balanceTokens: 'Balance de Tokens',
   percentageStaked: 'Porcentagem Staked',
-  claimRewards: 'Recompensas'
+  claimRewards: 'Recompensas',
+  claimingRewards: 'Recompensas...',
+  claimSuccess: 'Recompensas recebidas com sucesso! Transação hash: {{link}}',
+  claimError: 'Falha ao obter recompensas. Razão: {{reason}}'
 });

@@ -1,29 +1,26 @@
 import i18next from 'i18next';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { useGetAssetsData } from '../../hooks/UseLoadAssets';
 import { claimRewards } from '../../utils/staking';
 
-import { ETHERSCAN_URL } from './constants';
 import styles from './styles.module.scss';
+import { mapResultError, mapResultSuccess } from './utils';
 
 function MyNfts() {
   const wallet = useSelector((state) => state.settings.wallet);
 
-  const claimTotalRewards = () =>
-    claimRewards(wallet.account)
-      .then((result) => {
-        toast.success(`${ETHERSCAN_URL}/tx/${result.transactionHash}`);
-      })
-      .catch((error) => {
-        const reason = error.message.split(':');
-        toast.error(reason.length ? reason[1] : 'Error.');
-      });
-
   const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, percentageStaked } =
     useGetAssetsData(wallet);
+
+  const claimTotalRewards = () =>
+    toast.promise(claimRewards(wallet.account), {
+      pending: i18next.t('MyNfts:claimingRewards'),
+      success: { render: mapResultSuccess },
+      error: { render: mapResultError }
+    });
 
   return (
     <div className={styles.center}>
