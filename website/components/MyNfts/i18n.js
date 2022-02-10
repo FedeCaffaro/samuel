@@ -5,7 +5,8 @@ i18n.addResources('en', 'MyNfts', {
   stakingRewards: 'Staking rewards: ',
   stakedTokens: 'Staked tokens: ',
   balanceTokens: 'Balance tokens: ',
-  percentageStaked: 'Percentage staked: '
+  percentageStaked: 'Percentage staked: ',
+  claimRewards: 'Claim rewards'
 });
 
 i18n.addResources('es', 'MyNfts', {
@@ -13,7 +14,8 @@ i18n.addResources('es', 'MyNfts', {
   stakingRewards: 'Recompensas de Staking',
   stakedTokens: "NFT's Stakeados",
   balanceTokens: 'Balance de Tokens',
-  percentageStaked: 'Porcentaje Stakeado'
+  percentageStaked: 'Porcentaje Stakeado',
+  claimRewards: 'Recompensas'
 });
 
 i18n.addResources('pr', 'MyNfts', {
@@ -21,5 +23,6 @@ i18n.addResources('pr', 'MyNfts', {
   stakingRewards: 'Recompensas de Staking',
   stakedTokens: "NFT's Staked",
   balanceTokens: 'Balance de Tokens',
-  percentageStaked: 'Porcentagem Staked'
+  percentageStaked: 'Porcentagem Staked',
+  claimRewards: 'Recompensas'
 });

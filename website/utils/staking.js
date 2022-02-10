@@ -76,3 +76,11 @@ export const calculateTotalStakes = async () => {
 
   return (((parseInt(totalStakesV1) + parseInt(totalStakesV2)) / totalMinted) * 100).toFixed(0);
 };
+
+export const claimRewards = async (address) => {
+  const web3Instance = await getWeb3Instance();
+  const nftContract = new web3Instance.eth.Contract(STAKING_ABI, STAKING_CONTRACT_ADDRESS);
+  return nftContract.methods.claimTotalRewards().send({
+    from: address
+  });
+};
