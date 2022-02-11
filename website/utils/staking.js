@@ -78,6 +78,7 @@ export const calculateTotalStakes = async () => {
 };
 
 export const claimRewards = async (address) => {
+  console.log('claimRewards', address);
   const web3Instance = await getWeb3Instance();
   const nftContract = new web3Instance.eth.Contract(STAKING_ABI, STAKING_CONTRACT_ADDRESS);
   return nftContract.methods.claimTotalRewards().send({

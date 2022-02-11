@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import actions from '../../redux/Settings/actions';
+import Asset from '../Assets';
 
-import Asset from './components/Assets';
 import styles from './styles.module.scss';
 
 function Collection({ collection }) {

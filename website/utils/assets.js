@@ -1,8 +1,9 @@
-const mapAssetFromService = ({ name, imageUrl, owner, lastSale }) => ({
+const mapAssetFromService = ({ name, imageUrl, owner, lastSale, tokenId }) => ({
   name,
   imageUrl,
   owner,
-  lastSale
+  lastSale,
+  tokenId
 });
 
 export const mapAssetsFromService = (assets) => assets.map(mapAssetFromService);
