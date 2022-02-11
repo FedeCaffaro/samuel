@@ -51,7 +51,7 @@ export default function Pyramyd() {
 						    <li>{collection.publicSale}</li>
 						</ul>
 
-						<Button onClick={() => Router.push(`/mint/${collection.contract}`)} variant="outline-light" className="btn-xl">Mint</Button>
+						{/*<Button onClick={() => Router.push(`/mint/${collection.contract}`)} variant="outline-light" className="btn-xl">Mint</Button>*/}
 
 				 	</Col>
 				 	<Col sm={12} md={6} lg={6} xl={6}>

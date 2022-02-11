@@ -26,7 +26,11 @@ abstract contract SamotToken {
 }
 
 abstract contract SamotNFT {
-    function balanceOf(address owner) public virtual view returns (uint256 balance);
+    function balanceOf(address owner)
+        public
+        view
+        virtual
+        returns (uint256 balance);
 }
 
 contract Pyramyd is ERC721Tradable {
@@ -132,7 +136,8 @@ contract Pyramyd is ERC721Tradable {
                 "You must own at least one Samot NFT to participate in the pre-sale."
             );
             require(
-                balanceOf(msg.sender).add(numberOfTokens) <= maxToMintPerNFT.mul(balance),
+                balanceOf(msg.sender).add(numberOfTokens) <=
+                    maxToMintPerNFT.mul(balance),
                 "Exceeds pre-sale limit."
             );
         } else {

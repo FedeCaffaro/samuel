@@ -6,7 +6,6 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
 import "openzeppelin-solidity/contracts/access/Ownable.sol";
 import "openzeppelin-solidity/contracts/utils/Context.sol";
-import "openzeppelin-solidity/contracts/token/ERC721/utils/ERC721Holder.sol";
 
 // ██╗    ██╗██╗  ██╗ ██████╗     ██╗███████╗    ▄▄███▄▄· █████╗ ███╗   ███╗ ██████╗ ████████╗    ██████╗
 // ██║    ██║██║  ██║██╔═══██╗    ██║██╔════╝    ██╔════╝██╔══██╗████╗ ████║██╔═══██╗╚══██╔══╝    ╚════██╗
@@ -17,7 +16,7 @@ import "openzeppelin-solidity/contracts/token/ERC721/utils/ERC721Holder.sol";
 
 /**
  * @title Samot Token
- * SamotToken - a contract for the Samot Token & Samot NFT Staking
+ * SamotToken - a contract for the Samot Token
  */
 
 abstract contract SamotNFT {
@@ -28,55 +27,160 @@ abstract contract SamotNFT {
         view
         virtual
         returns (uint256 balance);
-
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) public virtual;
-
-    function isApprovedForAll(address owner, address operator)
-        external
-        view
-        virtual
-        returns (bool);
 }
 
-contract SamotToken is ERC20, ERC721Holder, Ownable {
+contract SamotToken is ERC20, Ownable {
     using SafeMath for uint256;
-    address constant WALLET1 = 0xffe5CBCDdF2bd1b4Dc3c00455d4cdCcf20F77587;
-    address constant WALLET2 = 0xD9CC8af4E8ac5Cb5e7DdFffD138A58Bac49dAEd5;
+
+    //addresses
+    address stakingAddress;
+    address[] burnlistAddr;
+    address[] claimlistAddr;
+
+    //uint256
     uint256 public maxToMintPerNFT = 100;
     uint256 public maxToMint = 50000;
-    uint256 public maxSupply = 6000000;
-    uint256 public epochStartTime = block.timestamp;
-    bool public preSaleIsActive = true;
-    bool public saleIsActive = false;
-    uint256 public stakingReward = 10;
+    uint256 public maxSupply = 5000000;
     uint256 public mintPrice = 200000000000000;
-    address[] internal stakeholders;
-    uint256[] internal stakedtokens;
-    uint256 initialSupply = 1000000;
+    uint256 multiplier = 2;
+
+    //bools
+    bool public preSaleIsActive = false;
+    bool public saleIsActive = false;
+
+    //contracts
     SamotNFT nft;
-    
 
-    event Claimed(address _from, uint256 _tokenId);
+    //mappings
+    mapping(address => bool) public burnlist;
+    mapping(address => bool) public claimlist;
 
-    constructor(string memory _name, string memory _symbol)
-        ERC20(_name, _symbol)
+    //constructor
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        address _nftAddress
+    ) ERC20(_name, _symbol) {
+        nft = SamotNFT(_nftAddress);
+    }
+
+    //modifiers
+    modifier onlyBurnersOrOwner() {
+        require(
+            isBurnlisted(msg.sender) || owner() == _msgSender(),
+            "Only callable by Burner Contract or Owner"
+        );
+        _;
+    }
+
+    modifier onlyClaimersOrOwner() {
+        require(
+            isClaimlisted(msg.sender) || owner() == _msgSender(),
+            "Only callable by Claimer Contract or Owner"
+        );
+        _;
+    }
+
+    //Burnlist logic
+    function addAddressToBurnlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
     {
-        _mint(msg.sender, initialSupply.mul(10**18));
+        require(!isBurnlisted(addr), "Already burnlisted");
+        burnlist[addr] = true;
+        success = true;
     }
 
-    struct Stakes {
-        uint256[] tokens;
-        uint256[] timestamps;
-        bool exists;
+    function addAddressesToBurnlist(address[] memory addrs)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        burnlistAddr = addrs;
+        for (uint256 i = 0; i < burnlistAddr.length; i++) {
+            addAddressToBurnlist(burnlistAddr[i]);
+        }
+        success = true;
     }
 
-    mapping(address => Stakes) internal stakes;
-    mapping(address => uint256) internal rewards;
+    function isBurnlisted(address addr)
+        public
+        view
+        returns (bool isBurnListed)
+    {
+        return burnlist[addr];
+    }
 
+    function removeAddressFromBurnlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(isBurnlisted(addr), "Not burnlisted");
+        burnlist[addr] = false;
+        success = true;
+    }
+
+    //Claimlist logic
+    function addAddressToClaimlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(!isClaimlisted(addr), "Already claimlisted");
+        claimlist[addr] = true;
+        success = true;
+    }
+
+    function addAddressesToClaimlist(address[] memory addrs)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        claimlistAddr = addrs;
+        for (uint256 i = 0; i < claimlistAddr.length; i++) {
+            addAddressToClaimlist(claimlistAddr[i]);
+        }
+        success = true;
+    }
+
+    function isClaimlisted(address addr)
+        public
+        view
+        returns (bool isClaimListed)
+    {
+        return claimlist[addr];
+    }
+
+    function removeAddressFromClaimlist(address addr)
+        public
+        onlyOwner
+        returns (bool success)
+    {
+        require(isClaimlisted(addr), "Not claimlisted");
+        claimlist[addr] = false;
+        success = true;
+    }
+
+    // Burn function
+    function burn(address _from, uint256 _amount) external onlyBurnersOrOwner {
+        _burn(_from, _amount);
+    }
+
+    // Claim function
+    function claim(address _claimer, uint256 _reward)
+        external
+        onlyClaimersOrOwner
+    {
+        require(
+            ((totalSupply().add(_reward)).div(10**18)) <= maxSupply,
+            "Exceeds token limit."
+        );
+        _mint(_claimer, _reward);
+    }
+
+    // Set functions
     function flipSaleState() public onlyOwner {
         saleIsActive = !saleIsActive;
     }
@@ -85,12 +189,12 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         preSaleIsActive = !preSaleIsActive;
     }
 
-    function setNFTContract(address _contract) external onlyOwner {
-        nft = SamotNFT(_contract);
+    function setStakingContract(address _stakingAddress) external onlyOwner {
+        stakingAddress = _stakingAddress;
     }
 
-    function setReward(uint256 _reward) external onlyOwner {
-        stakingReward = _reward;
+    function setNFTContract(address _nftAddress) external onlyOwner {
+        nft = SamotNFT(_nftAddress);
     }
 
     function setMintPrice(uint256 _price) external onlyOwner {
@@ -109,25 +213,34 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
         maxToMintPerNFT = _maxToMint;
     }
 
+    function setMultiplier(uint256 _multiplier) external onlyOwner {
+        multiplier = _multiplier;
+    }
+
+    // Get price function
     function getPrice() public view returns (uint256) {
         uint256 currentSupply = totalSupply().div(10**18);
         require(currentSupply <= maxSupply, "Sold out.");
-        if (currentSupply >= 5000000) {
-            return mintPrice.mul(2**4);
-        } else if (currentSupply >= 4000000) {
-            return mintPrice.mul(2**3);
+        if (currentSupply >= 4000000) {
+            return mintPrice.mul(multiplier**3);
         } else if (currentSupply >= 3000000) {
-            return mintPrice.mul(2**2);
+            return mintPrice.mul(multiplier**2);
         } else if (currentSupply >= 2000000) {
-            return mintPrice.mul(2);
+            return mintPrice.mul(multiplier);
         } else {
             return mintPrice;
         }
     }
 
+    // Minting function
     function mint(uint256 numberOfTokens) public payable {
+        uint256 currentSupply = totalSupply().div(10**18);
         require(saleIsActive, "Sale is not active.");
         require(numberOfTokens > 0, "numberOfTokens cannot be 0");
+        require(
+            currentSupply.add(numberOfTokens) <= maxSupply,
+            "Exceeds token limit."
+        );
         uint256 balance = balanceOf(msg.sender).div(10**18);
         if (preSaleIsActive) {
             require(
@@ -154,200 +267,16 @@ contract SamotToken is ERC20, ERC721Holder, Ownable {
                 "ETH sent is incorrect."
             );
             require(
-                numberOfTokens <=
-                    maxToMint,
+                numberOfTokens <= maxToMint,
                 "Exceeds limit for public sale."
             );
-            require(
-                balance <= maxToMint,
-                "Exceeds limit for public sale."
-            );
+            require(balance <= maxToMint, "Exceeds limit for public sale.");
         }
         _mint(msg.sender, numberOfTokens.mul(10**18));
     }
 
-    function isClaimable(uint256 _tokenId) internal view returns (bool) {
-        for (uint256 s = 0; s < stakes[msg.sender].tokens.length; s += 1) {
-            if (_tokenId == stakes[msg.sender].tokens[s]) return true;
-        }
-        return false;
-    }
-
-    function isStaked(uint256 _tokenId) internal view returns (bool, uint256) {
-        for (uint256 s = 0; s < stakedtokens.length; s += 1) {
-            if (_tokenId == stakedtokens[s]) return (true, s);
-        }
-        return (false, 0);
-    }
-
-    function isStakeholder(address _address)
-        internal
-        view
-        returns (bool, uint256)
-    {
-        for (uint256 s = 0; s < stakeholders.length; s += 1) {
-            if (_address == stakeholders[s]) return (true, s);
-        }
-        return (false, 0);
-    }
-
-    function addStakeholder(address _stakeholder) internal {
-        (bool _isStakeholder, ) = isStakeholder(_stakeholder);
-        if (!_isStakeholder) {
-            stakeholders.push(_stakeholder);
-            stakes[_stakeholder].exists = true;
-        }
-    }
-
-    function removeStakeholder(address _stakeholder) internal {
-        (bool _isStakeholder, uint256 s) = isStakeholder(_stakeholder);
-        if (_isStakeholder) {
-            stakeholders[s] = stakeholders[stakeholders.length - 1];
-            stakeholders.pop();
-            delete stakes[_stakeholder];
-        }
-    }
-
-    function addStake(address _stakeholder, uint256 _tokenId) internal {
-        (bool _isStaked, ) = isStaked(_tokenId);
-        if (!_isStaked) {
-            stakedtokens.push(_tokenId);
-            stakes[_stakeholder].tokens.push(_tokenId);
-            stakes[_stakeholder].timestamps.push(block.timestamp);
-        }
-    }
-
-    function removeStake(address _stakeholder, uint256 _tokenId) internal {
-        (bool _isStaked, uint256 s) = isStaked(_tokenId);
-        if (_isStaked) {
-            stakedtokens[s] = stakedtokens[stakedtokens.length - 1];
-            stakedtokens.pop();
-            for (
-                uint256 i = 0;
-                i < stakes[_stakeholder].tokens.length;
-                i += 1
-            ) {
-                if (_tokenId == stakes[_stakeholder].tokens[i]) {
-                    stakes[_stakeholder].tokens[i] = stakes[_stakeholder]
-                        .tokens[stakes[_stakeholder].tokens.length - 1];
-                    stakes[_stakeholder].tokens.pop();
-                    stakes[_stakeholder].timestamps[i] = stakes[_stakeholder]
-                        .timestamps[stakes[_stakeholder].timestamps.length - 1];
-                    stakes[_stakeholder].timestamps.pop();
-                }
-            }
-        }
-    }
-
-    function stakeNFTs(uint256[] memory tokenIds) public {
-        if (!stakes[msg.sender].exists) addStakeholder(msg.sender);
-        for (uint256 i = 0; i < tokenIds.length; i++) {
-            require(
-                nft.ownerOf(tokenIds[i]) == msg.sender,
-                "You do not own this NFT."
-            );
-            require(
-                nft.isApprovedForAll(msg.sender, address(this)),
-                "This contract is not approved to transfer your NFT."
-            );
-            addStake(msg.sender, tokenIds[i]);
-            nft.safeTransferFrom(msg.sender, address(this), tokenIds[i]);
-        }
-    }
-
-    function unstakeNFTs(uint256[] memory tokenIds) public {
-        for (uint256 i = 0; i < tokenIds.length; i++) {
-            require(
-                stakes[msg.sender].tokens.length > 0,
-                "You don't have any NFTs staked."
-            );
-            require(
-                isClaimable(tokenIds[i]) == true,
-                "You do not own this NFT."
-            );
-            removeStake(msg.sender, tokenIds[i]);
-            nft.safeTransferFrom(address(this), msg.sender, tokenIds[i]);
-            emit Claimed(msg.sender, tokenIds[i]);
-        }
-        if (stakes[msg.sender].tokens.length == 0)
-            removeStakeholder(msg.sender);
-    }
-
-    function stakeOf(address _stakeholder)
-        public
-        view
-        returns (uint256[] memory)
-    {
-        return stakes[_stakeholder].tokens;
-    }
-
-    function stakeTimestampsOf(address _stakeholder)
-        public
-        view
-        returns (uint256[] memory)
-    {
-        return stakes[_stakeholder].timestamps;
-    }
-
-    function totalStakes() public view returns (uint256) {
-        uint256 _totalStakes = 0;
-        for (uint256 s = 0; s < stakeholders.length; s += 1) {
-            _totalStakes = _totalStakes.add(
-                stakes[stakeholders[s]].tokens.length
-            );
-        }
-        return _totalStakes;
-    }
-
-    function rewardOf(address _stakeholder) public view returns (uint256) {
-        return rewards[_stakeholder];
-    }
-
-    function totalRewards() public view returns (uint256) {
-        uint256 _totalRewards = 0;
-        for (uint256 s = 0; s < stakeholders.length; s += 1) {
-            _totalRewards = _totalRewards.add(rewards[stakeholders[s]]);
-        }
-        return _totalRewards;
-    }
-
-    function calculateReward(address _stakeholder)
-        public
-        view
-        returns (uint256)
-    {
-        uint256 staked = 0;
-        for (uint256 t = 0; t < stakes[_stakeholder].timestamps.length; t += 1) {
-            if (stakes[_stakeholder].timestamps[t] <= epochStartTime) {
-                staked = staked.add(1);
-            }
-        }
-        return stakingReward.mul(staked);
-    }
-
-    function distributeRewards() public onlyOwner {
-        for (uint256 s = 0; s < stakeholders.length; s += 1) {
-            address stakeholder = stakeholders[s];
-            uint256 reward = calculateReward(stakeholder);
-            rewards[stakeholder] = rewards[stakeholder].add(reward);
-        }
-        epochStartTime = block.timestamp;
-    }
-
-    function withdrawReward() public {
-        uint256 reward = rewards[msg.sender];
-        rewards[msg.sender] = 0;
-        _mint(msg.sender, reward.mul(10**18));
-    }
-
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
-        uint256 wallet1Balance = balance.mul(10).div(100);
-        uint256 wallet2Balance = balance.mul(85).div(100);
-        payable(WALLET1).transfer(wallet1Balance);
-        payable(WALLET2).transfer(wallet2Balance);
-        payable(msg.sender).transfer(
-            balance.sub(wallet1Balance.add(wallet2Balance))
-        );
+        payable(msg.sender).transfer(balance);
     }
 }

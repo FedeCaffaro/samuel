@@ -82,7 +82,8 @@ export default function Home() {
 	const mintNFTs = async () => {
       setError(null)
       setLoading(true)
-      const result = await mint(collection.contract, wallet.account, numberOfTokens, price)
+      const mintPrice = preSaleActive ? pricePreSale : price
+      const result = await mint(collection.contract, wallet.account, numberOfTokens, mintPrice)
       if (result.error) {
       	setNumberOfTokens(1)
         setError(result.error)

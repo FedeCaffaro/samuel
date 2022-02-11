@@ -9,7 +9,7 @@ const NETWORK_URL=process.env.NETWORK_URL
 // add new projects here
 const CONTRACT_ADDRESSES = [
   {name: 'samotclub', contract: '0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d'},
-  {name: 'pyramyd', contract: '0x7467e6e48AF4C3D71978A6af34ca2116384DceC2'},
+  {name: 'pyramyd', contract: '0xB68E12f3BcCb852BC9343E892fAE704c8294dC2F'},
 ]
 
 const CONTRACT_ABI = [
