@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
+import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import cn from 'classnames';
@@ -44,11 +44,11 @@ function MyNfts() {
           asset_contract_address: SAMOT_DROPS.contract,
           limit: 50,
           offset: 0,
-          owner: wallet?.account
+          ...tabSelected.getQueryParams(wallet?.account, [...stakedIdsV1, ...stakedIdsV2])
         })
       );
     }
-  }, [wallet]);
+  }, [wallet, tabSelected, stakedIdsV1, stakedIdsV2]);
 
   return (
     <div className={styles['center-content']}>
