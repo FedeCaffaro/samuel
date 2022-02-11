@@ -35,7 +35,6 @@ export const useGetAssetsData = (wallet) => {
   ];
 
   const getAll = (account) =>
-    console.log('GET_ALL') ||
     getters.forEach(({ getter, setter }) => {
       getter(account)
         .then(setter)
