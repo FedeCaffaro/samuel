@@ -59,6 +59,12 @@
   }
 }
 
+.stake {
+  @extend .claim;
+
+  margin: 0;
+}
+
 .assets {
   @extend .row,
   .space-between,

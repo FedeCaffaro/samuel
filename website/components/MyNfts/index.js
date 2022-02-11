@@ -6,13 +6,20 @@ import { toast } from 'react-toastify';
 import cn from 'classnames';
 
 import { useGetAssetsData } from '../../hooks/UseLoadAssets';
-import { claimRewards } from '../../utils/staking';
+import { claimRewards, stakeNFTs } from '../../utils/staking';
 import actions from '../../redux/Settings/actions';
 import { SAMOT_DROPS } from '../../constants/drops';
 import Asset from '../Assets';
 
 import styles from './styles.module.scss';
-import { mapResultError, mapResultSuccess } from './utils';
+import {
+  claimErrorRender,
+  claimSuccessRender,
+  mapResultError,
+  mapResultSuccess,
+  stakingErrorRender,
+  stakingSuccessRender
+} from './utils';
 import { TABS } from './constants';
 
 function MyNfts() {
@@ -33,8 +40,15 @@ function MyNfts() {
   const claimTotalRewards = () =>
     toast.promise(claimRewards(wallet?.account), {
       pending: i18next.t('MyNfts:claimingRewards'),
-      success: { render: mapResultSuccess },
-      error: { render: mapResultError }
+      success: { render: claimSuccessRender },
+      error: { render: claimErrorRender }
+    });
+
+  const stake = () =>
+    toast.promise(stakeNFTs(wallet.account, selecteds), {
+      pending: i18next.t('MyNfts:stakingNfts'),
+      success: { render: stakingSuccessRender },
+      error: { render: stakingErrorRender }
     });
 
   useEffect(() => {
@@ -93,6 +107,12 @@ function MyNfts() {
           </button>
         ))}
       </div>
+
+      {!!selecteds.length && (
+        <button type="button" className={styles.claim} onClick={stake}>
+          {i18next.t('MyNfts:stake', { count: selecteds.length })}
+        </button>
+      )}
 
       <div className={styles.assets}>
         {currentAssets?.map((asset) => (
