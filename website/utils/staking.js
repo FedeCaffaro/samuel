@@ -92,3 +92,20 @@ export const stakeNFTs = async (address, tokenIds) => {
     from: address
   });
 };
+
+export const unstakeNFTs = async (address, tokenIds) => {
+  const web3Instance = await getWeb3Instance();
+  const nftContract = new web3Instance.eth.Contract(STAKING_ABI, STAKING_CONTRACT_ADDRESS);
+  return nftContract.methods.unstake(tokenIds).send({
+    from: address
+  });
+};
+
+export const unstakeNFTsV1 = async (address, tokenIds) => {
+  const web3Instance = await getWeb3Instance();
+
+  const nftContract = new web3Instance.eth.Contract(TOKEN_ABI, TOKEN_CONTRACT_ADDRESS);
+  return nftContract.methods.unstakeNFTs(tokenIds).send({
+    from: address
+  });
+};

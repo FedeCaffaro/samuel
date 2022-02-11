@@ -23,3 +23,13 @@ export const stakingErrorRender = (error) => {
     reason: reason?.length ? reason[1] : 'Mint error.'
   });
 };
+
+export const unstakingSuccessRender = ({ transactionHash }) =>
+  i18next.t('MyNfts:unstakingSuccess', { link: getTransactionLink(transactionHash) });
+
+export const unstakingErrorRender = (error) => {
+  const reason = error?.message?.split(':');
+  return i18next.t('MyNfts:unstakingError', {
+    reason: reason?.length ? reason[1] : 'Mint error.'
+  });
+};

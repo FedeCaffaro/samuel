@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import cn from 'classnames';
 
 import { useGetAssetsData } from '../../hooks/UseLoadAssets';
-import { claimRewards, stakeNFTs } from '../../utils/staking';
+import { claimRewards, stakeNFTs, unstakeNFTs, unstakeNFTsV1 } from '../../utils/staking';
 import actions from '../../redux/Settings/actions';
 import { SAMOT_DROPS } from '../../constants/drops';
 import Asset from '../Assets';
@@ -15,10 +15,10 @@ import styles from './styles.module.scss';
 import {
   claimErrorRender,
   claimSuccessRender,
-  mapResultError,
-  mapResultSuccess,
   stakingErrorRender,
-  stakingSuccessRender
+  stakingSuccessRender,
+  unstakingErrorRender,
+  unstakingSuccessRender
 } from './utils';
 import { TABS } from './constants';
 
@@ -28,6 +28,7 @@ function MyNfts() {
   const [selecteds, setSelecteds] = useState([]);
   const [tabSelected, setTabSelected] = useState(TABS.STAKED);
 
+  // TODO: Add max 20 limit
   const onSelectAsset = (asset) => () =>
     selecteds.includes(asset.tokenId)
       ? setSelecteds(selecteds.filter((id) => id !== asset.tokenId))
@@ -51,6 +52,42 @@ function MyNfts() {
       error: { render: stakingErrorRender }
     });
 
+  const unstake = () => {
+    const selectedsV1 = selecteds?.filter((id) => stakedIdsV1?.includes(id));
+    const selectedsV2 = selecteds?.filter((id) => stakedIdsV2?.includes(id));
+
+    if (selectedsV1 && selectedsV1.length) {
+      toast.promise(unstakeNFTsV1(wallet.account, selectedsV1), {
+        pending: i18next.t('MyNfts:unstakingNfts'),
+        success: { render: unstakingSuccessRender },
+        error: { render: unstakingErrorRender }
+      });
+    }
+    if (selectedsV2 && selectedsV2.length) {
+      toast.promise(unstakeNFTs(wallet.account, selectedsV2), {
+        pending: i18next.t('MyNfts:unstakingNfts'),
+        success: { render: unstakingSuccessRender },
+        error: { render: unstakingErrorRender }
+      });
+    }
+  };
+
+  const buttonProps = {
+    [TABS.STAKED.key]: {
+      onClick: unstake,
+      label: i18next.t('MyNfts:unstake', { count: selecteds.length })
+    },
+    [TABS.UNSTAKED.key]: {
+      onClick: stake,
+      label: i18next.t('MyNfts:stake', { count: selecteds.length })
+    }
+  };
+
+  const { label: buttonLabel, onClick: buttonOnClick } = useMemo(
+    () => buttonProps[tabSelected.key],
+    [tabSelected, selecteds, stakedIdsV1, stakedIdsV2]
+  );
+
   useEffect(() => {
     if (wallet?.account) {
       dispatch(
@@ -63,6 +100,10 @@ function MyNfts() {
       );
     }
   }, [wallet, tabSelected, stakedIdsV1, stakedIdsV2]);
+
+  useEffect(() => {
+    setSelecteds([]);
+  }, [tabSelected]);
 
   return (
     <div className={styles['center-content']}>
@@ -109,8 +150,8 @@ function MyNfts() {
       </div>
 
       {!!selecteds.length && (
-        <button type="button" className={styles.claim} onClick={stake}>
-          {i18next.t('MyNfts:stake', { count: selecteds.length })}
+        <button type="button" className={styles.claim} onClick={buttonOnClick}>
+          {buttonLabel}
         </button>
       )}
 
