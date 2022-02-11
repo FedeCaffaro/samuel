@@ -10,6 +10,7 @@ import { mint, mintPrice, mintPricePreSale, maxSupply, totalSupply, maxToMint, m
 import { stakeOf } from '../../lib/token'
 import { useWallet } from 'use-wallet'
 import _ from 'lodash'
+import { isAndroid, isIOS } from "react-device-detect";
 import drops from '../../data/drops'
 
 export default function Home() {
@@ -31,15 +32,20 @@ export default function Home() {
 	const [transactionUrl, setTransactionUrl] = useState("")
 	const [message, setMessage] = useState("")
 	const [nftsOwned, setNFTsOwned] = useState(0)
+	const [isMobile, setIsMobile] = useState(false);
 
 	const isBrowser = typeof window !== "undefined"
 	let etherscanUrl
 	let network
+	let metamaskDeepLinkUrl = 'https://metamask.app.link/dapp/dev-mint.samot.club'
 	if (isBrowser) {
 	  etherscanUrl = window.location.hostname.includes('dev') ||
 	  	window.location.hostname.includes('localhost') ? 'https://rinkeby.etherscan.io' : 'https://etherscan.io'
 	  network = window.location.hostname.includes('dev') ||
 	  	window.location.hostname.includes('localhost') ? 'test' : 'main'
+    metamaskDeepLinkUrl = window.location.hostname.includes('dev') ||
+      window.location.hostname.includes('cloudfront') ||
+      window.location.hostname.includes('localhost') ? 'https://metamask.app.link/dapp/dev-mint.samot.club' : 'https://metamask.app.link/dapp/mint.samot.club'
 	}
 
 	const connect = () => {
@@ -49,6 +55,12 @@ export default function Home() {
 	const disconnect = () => {
 	  wallet.reset()
 	}
+
+	useEffect(() => {
+    if (isAndroid || isIOS) {
+			setIsMobile(true);
+    } 
+  }, []);
 
 	const increment = () => {
 		if (preSaleActive) {
@@ -188,7 +200,13 @@ export default function Home() {
 						    )}
 						</div>
 					): (
-						<p>Minting is not available.</p>
+						<div>
+							{isMobile && saleActive ? (
+								<Button size="lg" variant="primary" href={metamaskDeepLinkUrl}>Connect</Button>
+							) : (
+								<p>Minting is not available.</p>
+							)}
+						</div>
 					)}
 				</div>
 			)}
