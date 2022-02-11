@@ -35,20 +35,27 @@ function MyNfts() {
       : setSelecteds([...selecteds, asset.tokenId]);
   const isSelected = (asset) => selecteds.includes(asset.tokenId);
 
-  const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, percentageStaked } =
+  const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, percentageStaked, getAllData } =
     useGetAssetsData(wallet);
+
+  const renderAndGetData = (aFunction) => (result) => {
+    getAllData();
+    return aFunction(result);
+  };
 
   const claimTotalRewards = () =>
     toast.promise(claimRewards(wallet?.account), {
       pending: i18next.t('MyNfts:claimingRewards'),
-      success: { render: claimSuccessRender },
+      success: {
+        render: renderAndGetData(claimSuccessRender)
+      },
       error: { render: claimErrorRender }
     });
 
   const stake = () =>
     toast.promise(stakeNFTs(wallet.account, selecteds), {
       pending: i18next.t('MyNfts:stakingNfts'),
-      success: { render: stakingSuccessRender },
+      success: { render: renderAndGetData(stakingSuccessRender) },
       error: { render: stakingErrorRender }
     });
 
@@ -59,14 +66,14 @@ function MyNfts() {
     if (selectedsV1 && selectedsV1.length) {
       toast.promise(unstakeNFTsV1(wallet.account, selectedsV1), {
         pending: i18next.t('MyNfts:unstakingNfts'),
-        success: { render: unstakingSuccessRender },
+        success: { render: renderAndGetData(unstakingSuccessRender) },
         error: { render: unstakingErrorRender }
       });
     }
     if (selectedsV2 && selectedsV2.length) {
       toast.promise(unstakeNFTs(wallet.account, selectedsV2), {
         pending: i18next.t('MyNfts:unstakingNfts'),
-        success: { render: unstakingSuccessRender },
+        success: { render: renderAndGetData(unstakingSuccessRender) },
         error: { render: unstakingErrorRender }
       });
     }
