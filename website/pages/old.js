@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable eqeqeq */
 /* eslint-disable camelcase */
@@ -7,6 +8,8 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
+import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useWallet } from 'use-wallet';
 import {
@@ -20,12 +23,26 @@ import {
   ButtonGroup,
   DropdownButton,
   Tabs,
-  Modal
+  Modal,
+  Accordion,
+  Card,
+  ToggleButton,
+  Form
 } from 'react-bootstrap';
-import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import { AiOutlineClose, AiOutlineMenu, AiOutlineDoubleRight } from 'react-icons/ai';
+import {
+  BiChevronDown,
+  BiChevronRight,
+  BiRightArrowAlt,
+  BiDotsHorizontalRounded,
+  BiFilter
+} from 'react-icons/bi';
+import { GoLock } from 'react-icons/go';
+import { BsArrowRight, BsChevronDown } from 'react-icons/bs';
+import { AiOutlineClose, AiOutlineMenu, AiOutlineDoubleRight, AiFillPlusCircle } from 'react-icons/ai';
+import { CgDollar } from 'react-icons/cg';
 import {
   FaEthereum,
+  FaCheckCircle,
   FaDiscord,
   FaTwitter,
   FaLaptopCode,
@@ -34,12 +51,23 @@ import {
   FaRoad,
   FaHandshake,
   FaUsers,
-  FaBullhorn
+  FaBullhorn,
+  FaSleigh
 } from 'react-icons/fa';
 import _ from 'lodash';
 
-import { setApproveForAll, isApprovedForAll } from '../lib/nft';
 import {
+  NFT_CONTRACT_ADDRESS,
+  setApproveForAll,
+  isApprovedForAll,
+  mint,
+  mintPrice,
+  maxSupply,
+  maxToMint,
+  saleIsActive
+} from '../lib/nft';
+import {
+  STAKING_CONTRACT_ADDRESS,
   stakeNFTs,
   unstakeNFTs,
   depositsOf,
@@ -47,10 +75,10 @@ import {
   claimRewards,
   calculateTotalStakes
 } from '../lib/staking';
-import { stakeOf, unstakeNFTsV1 } from '../lib/token';
-import { balanceOf } from '../lib/tokenv2';
+import { TOKEN_CONTRACT_ADDRESS, stakeOf, unstakeNFTsV1 } from '../lib/token';
+import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2';
 import Stats from '../components/stats';
-import drops from '../data/drops.json';
+import drops from '../data/drops';
 
 // eslint-disable-next-line max-statements
 function Home() {
@@ -62,23 +90,38 @@ function Home() {
   const [stakedAssetsV2, setStakedAssetsV2] = useState([]);
   const [balanceTokens, setBalanceTokens] = useState(0);
   const [percentageStaked, setPercentageStaked] = useState(0);
+  const [totalStaked, setTotalStaked] = useState(0);
   const [stakes, setStakes] = useState([]);
-
   const [collection, setCollection] = useState({});
-
+  const [checked, setChecked] = useState(false);
+  const [stakelist, setStakelist] = useState([]);
   const [staking, setStaking] = useState(false);
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
   const [showError, setErrorShow] = useState(false);
   const [error, setError] = useState('');
-
+  const [didLoadAssets, setDidLoadAssets] = useState(false);
   const [transactionUrl, setTransactionUrl] = useState('');
   const [tab, setTab] = useState('unstaked');
   const [isApproved, setIsApproved] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [days, setDays] = useState(0);
+  const [hours, setMinutes] = useState(0);
+  const [minutes, setHours] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
-  const etherscanUrl = process.env.NEXT_PUBLIC_ETHERSCAN_URL;
-  const OS_API_ENDPOINT = process.env.NEXT_PUBLIC_OS_API_ENDPOINT;
+  const isBrowser = typeof window !== 'undefined';
+  let etherscanUrl;
+  let network;
+  let OS_API_ENDPOINT;
+  if (isBrowser) {
+    etherscanUrl = window.location.hostname.includes('localhost')
+      ? 'https://rinkeby.etherscan.io'
+      : 'https://etherscan.io';
+    OS_API_ENDPOINT = window.location.hostname.includes('localhost')
+      ? 'https://rinkeby-api.opensea.io/api/v1'
+      : 'https://api.opensea.io/api/v1';
+  }
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -154,8 +197,19 @@ function Home() {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const unselectStake = (_asset) => {
+  const startCountdown = () => {
+    const countDownDate = new Date('Nov 20, 2021 19:00:00').getTime();
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+      setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
+      setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
+    }, 1000);
+  };
+
+  const unselectStake = (asset) => {
     setStaking(false);
     setStakes([]);
   };
@@ -290,7 +344,7 @@ function Home() {
     const getUnstakedAssets = async (owner) => {
       const fetchAssets = async (offset, limit) => {
         const response = await fetch(
-          `${OS_API_ENDPOINT}/assets?order_direction=asc&offset=${offset}&limit=${limit}&owner=${owner}&asset_contract_address=${drop.contract}`
+          `${OS_API_ENDPOINT}/assets?order_direction=asc&limit=${limit}&owner=${owner}&asset_contract_address=${drop.contract}`
         );
         const data = await response.json();
         if (data && data.assets && data.assets.length > 0) {
@@ -327,6 +381,7 @@ function Home() {
     if (wallet && wallet.account) {
       loadAssets(drops[0]);
       isApprovedForAll(drops[0].contract, wallet.account).then(setIsApproved);
+      setDidLoadAssets(true);
     }
   }, [wallet]);
 
@@ -348,6 +403,10 @@ function Home() {
       Router.push(`/collection/${drop.symbol}`);
     }
   };
+
+  useEffect(() => {
+    startCountdown();
+  }, []);
 
   return (
     <div className="den-wrapper">
@@ -853,7 +912,7 @@ function Home() {
                         <Container>
                           {drops &&
                             _.filter(drops, { type: 'active' }).map((drop) => (
-                              <Row className="vertical-center drop-row" key={`key-${drop.imageUrl}-drop`}>
+                              <Row className="vertical-center drop-row">
                                 <Col sm={12} md={2} lg={2} xl={2}>
                                   <img src={drop.imageUrl} width="150px" />
                                 </Col>
@@ -877,7 +936,7 @@ function Home() {
                         <Container>
                           {drops &&
                             _.filter(drops, { type: 'upcoming' }).map((drop) => (
-                              <Row key={drops} className="vertical-center drop-row">
+                              <Row className="vertical-center drop-row">
                                 <Col sm={12} md={2} lg={2} xl={2}>
                                   <img src={drop.imageUrl} width="150px" />
                                 </Col>
@@ -908,7 +967,7 @@ function Home() {
                           <Container>
                             {drops &&
                               _.filter(drops, { type: 'previous' }).map((drop) => (
-                                <Row key={drops} className="vertical-center drop-row">
+                                <Row className="vertical-center drop-row">
                                   <Col sm={12} md={2} lg={2} xl={2}>
                                     <img src={drop.imageUrl} width="150px" />
                                   </Col>
