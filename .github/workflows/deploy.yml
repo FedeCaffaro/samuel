@@ -63,12 +63,13 @@ jobs:
       - name: Deploy Dev
         if: endsWith(github.ref, '/development')
         run: |
+          npm install -g serverless@2.72.2
           cd nextjs && aws s3 sync s3://samot-nextjs-deployment/dev .serverless --delete
-          npx serverless --env=dev
+          serverless --env=dev
           aws s3 sync .serverless s3://samot-nextjs-deployment/dev --delete
 
           cd ../website && aws s3 sync s3://samot-nextjs-deployment/dev/website .serverless --delete
-          npx serverless --env=dev
+          serverless --env=dev
           aws s3 sync .serverless s3://samot-nextjs-deployment/dev/website --delete
 
           npm install serverless -g
@@ -78,12 +79,13 @@ jobs:
       - name: Deploy Prod
         if: endsWith(github.ref, '/main')
         run: |
+          npm install -g serverless@2.72.2
           cd nextjs && aws s3 sync s3://samot-nextjs-deployment/prod .serverless --delete
-          npx serverless --env=prod
+          serverless --env=prod
           aws s3 sync .serverless s3://samot-nextjs-deployment/prod --delete
 
           cd ../website && aws s3 sync s3://samot-nextjs-deployment/prod/website .serverless --delete
-          npx serverless --env=prod
+          serverless --env=prod
           aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website --delete
           
           npm install serverless -g
