@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 import { ROUTES } from '../../constants/routes';
 
 export const LOGO = '/assets/general/logo-samot.png';

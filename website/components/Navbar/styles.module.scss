@@ -11,17 +11,27 @@
   align-items: space-between;
 
   width: 100vw;
-  height: 100vh;
-  padding: 30px;
-
-  pointer-events: none;
+  padding: 40px 60px 0;
 }
 
 .row-navbar {
   @extend .row,
-  .space-between;
+  .space-between,
+  .middle;
 
   pointer-events: all;
+}
+
+.left-container {
+  @extend .row,
+  .start,
+  .middle;
+
+  pointer-events: all;
+
+  & > * {
+    margin-right: 50px;
+  }
 }
 
 .logo {
