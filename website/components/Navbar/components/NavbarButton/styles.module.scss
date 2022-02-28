@@ -6,6 +6,19 @@
   .middle;
 
   cursor: pointer;
+  transition: all 0.3s ease;
+
+  & > * {
+    &:hover {
+      color: $samot-yellow;
+    }
+  }
+
+  &.owner > * {
+    &:hover {
+      color: $samot-blue;
+    }
+  }
 }
 
 .menu-text {
@@ -15,6 +28,8 @@
   font-weight: 500;
 
   margin-right: 7px;
+
+  transition: all 0.3s ease;
 }
 
 .menu-icon {

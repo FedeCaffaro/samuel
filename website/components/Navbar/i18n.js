@@ -7,7 +7,9 @@ i18n.addResources('en', 'Navbar', {
   myNfts: "My NFT's",
   whitepaper: 'Whitepaper',
   roadmap: 'Roadmap',
-  community: 'Community'
+  community: 'Community',
+  connectWallet: 'Connect Wallet',
+  ownersDashboard: 'Owners Dashboard'
 });
 
 i18n.addResources('es', 'Navbar', {
@@ -17,7 +19,10 @@ i18n.addResources('es', 'Navbar', {
   myNfts: "Mis NFT's",
   whitepaper: 'Whitepaper',
   roadmap: 'Roadmap',
-  community: 'Comunidad'
+  community: 'Comunidad',
+  connectWallet: 'Conectar Wallet',
+  ownersDashboard: 'Dashboard Propietarios',
+  ownersDashboard: 'Dashboard de Propietarios'
 });
 
 i18n.addResources('pr', 'Navbar', {
@@ -27,5 +32,7 @@ i18n.addResources('pr', 'Navbar', {
   myNfts: "Meus NFT's",
   whitepaper: 'Whitepaper',
   roadmap: 'Roadmap',
-  community: 'Comunidade'
+  community: 'Comunidade',
+  connectWallet: 'Conectar Carteira',
+  ownersDashboard: 'Dashboard de Proprietários'
 });
