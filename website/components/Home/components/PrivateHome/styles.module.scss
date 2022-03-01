@@ -1,0 +1,45 @@
+@import '../../../../scss/imports';
+
+.container {
+  width: 700px;
+  max-width: 700px;
+}
+
+.text-full {
+  font-family: 'Founders', 'Poppins', sans-serif !important;
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 74.4%;
+
+  text-transform: uppercase;
+
+  color: $samot-blue;;
+}
+
+.first-line {
+  @extend .column,
+  .start;
+
+  width: fit-content;
+}
+
+.graff-container {
+  @extend .row,
+  .end;
+
+  position: relative;
+
+  align-self: end;
+
+  width: 100%;
+  height: 0;
+}
+
+.graff {
+  font-family: 'Samot', 'Poppins', sans-serif !important;
+  font-size: 60px;
+
+  position: absolute;
+
+  margin-top: -30px;
+}
