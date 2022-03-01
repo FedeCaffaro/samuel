@@ -67,7 +67,7 @@ function Navbar({ showLogo = true }) {
             text={i18next.t(`Navbar:${isConnected ? 'ownersDashboard' : 'connectWallet'}`)}
             icon={LINK_ICON}
             onClick={isConnected ? null : onConnectWallet}
-            link={isConnected ? ROUTES.MY_NFT.pagePath : null}
+            link={isConnected ? ROUTES.DASHBOARD.pagePath : null}
             iconClassName={styles['link-icon']}
             isOwner={isConnected}
           />

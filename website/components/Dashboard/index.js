@@ -22,7 +22,7 @@ import {
 } from './utils';
 import { TABS } from './constants';
 
-function MyNfts() {
+function Dashboard() {
   const { currentAssets, wallet } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const [selecteds, setSelecteds] = useState([]);
@@ -45,7 +45,7 @@ function MyNfts() {
 
   const claimTotalRewards = () =>
     toast.promise(claimRewards(wallet?.account), {
-      pending: i18next.t('MyNfts:claimingRewards'),
+      pending: i18next.t('Dashboard:claimingRewards'),
       success: {
         render: renderAndGetData(claimSuccessRender)
       },
@@ -54,7 +54,7 @@ function MyNfts() {
 
   const stake = () =>
     toast.promise(stakeNFTs(wallet.account, selecteds), {
-      pending: i18next.t('MyNfts:stakingNfts'),
+      pending: i18next.t('Dashboard:stakingNfts'),
       success: { render: renderAndGetData(stakingSuccessRender) },
       error: { render: stakingErrorRender }
     });
@@ -65,14 +65,14 @@ function MyNfts() {
 
     if (selectedsV1 && selectedsV1.length) {
       toast.promise(unstakeNFTsV1(wallet.account, selectedsV1), {
-        pending: i18next.t('MyNfts:unstakingNfts'),
+        pending: i18next.t('Dashboard:unstakingNfts'),
         success: { render: renderAndGetData(unstakingSuccessRender) },
         error: { render: unstakingErrorRender }
       });
     }
     if (selectedsV2 && selectedsV2.length) {
       toast.promise(unstakeNFTs(wallet.account, selectedsV2), {
-        pending: i18next.t('MyNfts:unstakingNfts'),
+        pending: i18next.t('Dashboard:unstakingNfts'),
         success: { render: renderAndGetData(unstakingSuccessRender) },
         error: { render: unstakingErrorRender }
       });
@@ -82,11 +82,11 @@ function MyNfts() {
   const buttonProps = {
     [TABS.STAKED.key]: {
       onClick: unstake,
-      label: i18next.t('MyNfts:unstake', { count: selecteds.length })
+      label: i18next.t('Dashboard:unstake', { count: selecteds.length })
     },
     [TABS.UNSTAKED.key]: {
       onClick: stake,
-      label: i18next.t('MyNfts:stake', { count: selecteds.length })
+      label: i18next.t('Dashboard:stake', { count: selecteds.length })
     }
   };
 
@@ -114,32 +114,21 @@ function MyNfts() {
 
   return (
     <div className={styles['center-content']}>
-      <span className={styles.text}>{i18next.t('MyNfts:title')}</span>
-
-      <div className={styles['data-container']}>
-        <span className={styles['small-text']}>
-          {i18next.t('MyNfts:stakingRewards')}
-          {stakingRewards}
-        </span>
-        <span className={styles['small-text']}>
-          {i18next.t('MyNfts:stakedTokens')}
-          {[...stakedIdsV1, ...stakedIdsV2].length}
-        </span>
-        <span className={styles['small-text']}>
-          {i18next.t('MyNfts:balanceTokens')}
-          {balanceTokens}
-        </span>
-        <span className={styles['small-text']}>
-          {i18next.t('MyNfts:percentageStaked')}
-          {percentageStaked}
-        </span>
+      <div className={styles['title-line']}>
+        <span className={styles['title-blue']}>{i18next.t('Dashboard:title')}</span>
+        <div className={styles['graff-container-start']}>
+          <span className={styles['graff-top']}>{i18next.t('Dashboard:owners')}</span>
+        </div>
+        <div className={styles['graff-container-end']}>
+          <span className={styles['graff-bottom']}>{i18next.t('Dashboard:dashboard')}</span>
+        </div>
       </div>
 
-      <button type="button" className={styles.claim} onClick={claimTotalRewards}>
-        {i18next.t('MyNfts:claimRewards')}
-      </button>
-
       <div className={styles.divider} />
+
+      <button type="button" className={styles.claim} onClick={claimTotalRewards}>
+        {i18next.t('Dashboard:claimRewards')}
+      </button>
 
       <div className={styles.tabs}>
         {Object.values(TABS).map(({ label, key }) => (
@@ -176,4 +165,4 @@ function MyNfts() {
   );
 }
 
-export default MyNfts;
+export default Dashboard;

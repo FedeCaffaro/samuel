@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 
-i18n.addResources('en', 'MyNfts', {
-  title: "My NFT's",
+i18n.addResources('en', 'Dashboard', {
+  title: 'Owner Dashboard',
   stakingRewards: 'Staking rewards: ',
   stakedTokens: 'Staked tokens: ',
   balanceTokens: 'Balance tokens: ',
@@ -20,8 +20,8 @@ i18n.addResources('en', 'MyNfts', {
   unstakingError: 'Unstaking failed. Reason: {{reason}}'
 });
 
-i18n.addResources('es', 'MyNfts', {
-  title: "Mis NFT's",
+i18n.addResources('es', 'Dashboard', {
+  title: 'Dashboard de owner',
   stakingRewards: 'Recompensas de Staking',
   stakedTokens: "NFT's Stakeados",
   balanceTokens: 'Balance de Tokens',
@@ -40,8 +40,8 @@ i18n.addResources('es', 'MyNfts', {
   unstakingError: 'Fallo al desestakear. Razón: {{reason}}'
 });
 
-i18n.addResources('pr', 'MyNfts', {
-  title: "Meus NFT's",
+i18n.addResources('pr', 'Dashboard', {
+  title: 'Dashboard do Owner',
   stakingRewards: 'Recompensas de Staking',
   stakedTokens: "NFT's Staked",
   balanceTokens: 'Balance de Tokens',

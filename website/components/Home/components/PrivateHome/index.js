@@ -15,8 +15,6 @@ import styles from './styles.module.scss';
 
 function PrivateHome() {
   const dispatch = useDispatch();
-
-  // TODO: getName
   const { wallet, currentAssets } = useSelector((state) => state.settings);
   const name = currentAssets?.[0]?.owner?.user || 'holder';
   const { stakedIdsV1, stakedIdsV2, balanceTokens } = useGetAssetsData(wallet);
@@ -51,7 +49,7 @@ function PrivateHome() {
         balance={balanceTokens}
         className={styles.stats}
       />
-      <Link href={ROUTES.MY_NFT.pagePath}>
+      <Link href={ROUTES.DASHBOARD.pagePath}>
         <button className={styles['button-dashboard']} type="button">
           {i18next.t('Home:goToDashboard')}
         </button>

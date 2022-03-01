@@ -3,19 +3,16 @@ import i18next from 'i18next';
 export const ROUTES = {
   HOME: {
     label: i18next.t('Navbar:home'),
-    pagePath: '/',
-    showInNavbar: true
+    pagePath: '/'
   },
   COLLECTIONS: {
     label: i18next.t('Navbar:collections'),
-    pagePath: '/collections',
-    showInNavbar: true
+    pagePath: '/collections'
   },
-  MY_NFT: {
-    label: i18next.t('Navbar:myNfts'),
-    pagePath: '/my_nfts',
-    isWalletNeeded: true,
-    showInNavbar: true
+  DASHBOARD: {
+    label: i18next.t('Navbar:dashboard'),
+    pagePath: '/dashboard',
+    isWalletNeeded: true
   },
   COLLECTION: {
     label: i18next.t('Navbar:collections'),
