@@ -1,14 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Home from '../components/Home';
 import Navbar from '../components/Navbar';
-import { ROUTES } from '../constants/routes';
 
-const HomePage = () => (
-  <>
-    <Home />
-    <Navbar selected={ROUTES.HOME} />
-  </>
-);
+const HomePage = () => {
+  const wallet = useSelector((state) => state.settings.wallet);
+
+  return (
+    <>
+      <Home />
+      <Navbar showLogo={!!wallet?.account} />
+    </>
+  );
+};
 
 export default HomePage;

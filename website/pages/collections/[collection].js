@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import Navbar from '../../components/Navbar';
@@ -21,7 +21,7 @@ function CollectionPage() {
 
   return (
     <>
-      <Navbar selected={ROUTES.COLECTION} />
+      <Navbar />
       <Collection collection={collection} />
     </>
   );

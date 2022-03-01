@@ -12,7 +12,7 @@ function NavbarButton({ text, icon, link, onClick = () => {}, iconClassName, isO
   return (
     <div
       className={cn(styles['menu-container'], {
-        [styles.owner]: isOwner || true
+        [styles.owner]: isOwner
       })}
       onClick={handleClick}
     >

@@ -14,7 +14,7 @@ import { DROPDOWN_ICON, LINK_ICON, LOGO, MENU_ICON } from './constants';
 import styles from './styles.module.scss';
 import { getNavbarItems } from './utils';
 
-function Navbar() {
+function Navbar({ showLogo = true }) {
   const { onConnectWallet } = useConnectWallet();
   const wallet = useSelector((state) => state.settings.wallet);
   const isConnected = !!wallet?.account;
@@ -50,7 +50,7 @@ function Navbar() {
       <div className={styles.container}>
         <div className={styles['row-navbar']}>
           <div className={styles['left-container']}>
-            <img src={LOGO} className={styles.logo} />
+            {showLogo && <img src={LOGO} className={styles.logo} />}
             {navbarItems.map(({ label, ...props }) => (
               <NavbarButton key={label} text={label} isOwner={isConnected} {...props} />
             ))}
