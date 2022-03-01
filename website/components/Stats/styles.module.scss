@@ -1,0 +1,39 @@
+@import '../../scss/imports';
+
+.container {
+  @extend .row,
+  .start,
+  .middle;
+
+  width: 100%;
+}
+
+.element {
+  @extend .column,
+  .start;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 75.9%;
+
+  text-transform: uppercase;
+}
+
+.value {
+  font-family: 'Founders', 'Poppins', sans-serif !important;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 75.9%;
+
+  text-transform: uppercase;
+}
+
+.divider {
+  width: 1px;
+  height: 34px;
+  margin: 0 36px;
+
+  background-color: $white;
+}
