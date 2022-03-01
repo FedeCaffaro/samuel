@@ -8,9 +8,8 @@ import { useConnectWallet } from '../../hooks/useConnectWallet';
 
 import LanguageMenu from './components/LanguageMenu';
 import NavbarButton from './components/NavbarButton';
-import PagesMenu from './components/PagesMenu';
-import SocialMediaButtons from './components/SocialMediaButtons';
-import { DROPDOWN_ICON, LINK_ICON, LOGO, MENU_ICON } from './constants';
+import CommunityMenu from './components/CommunityMenu';
+import { LINK_ICON, LOGO } from './constants';
 import styles from './styles.module.scss';
 import { getNavbarItems } from './utils';
 
@@ -20,35 +19,38 @@ function Navbar({ showLogo = true }) {
   const isConnected = !!wallet?.account;
 
   const [isOpenLanguageModal, setIsOpenLanguageModal] = useState(false);
-  const [isOpenPagesModal, setIsOpenPagesModal] = useState(false);
+  const [isOpenCommunityModal, setIsOpenCommunityModal] = useState(false);
 
   const toggleLanguageModal = () => setIsOpenLanguageModal(!isOpenLanguageModal);
-  const togglePagesModal = () => setIsOpenPagesModal(!isOpenPagesModal);
+  const toggleCommunityModal = () => setIsOpenCommunityModal(!isOpenCommunityModal);
 
-  const navbarItems = getNavbarItems(
-    () => toggleLanguageModal(),
-    () => console.log('pages')
-  );
+  const navbarItems = getNavbarItems(toggleLanguageModal, toggleCommunityModal);
 
   const languagesRef = useRef(null);
   const clickedOutsideLanguages = useClickedOutside(languagesRef);
-  const pagesRef = useRef(null);
-  const clickedOutsidePages = useClickedOutside(pagesRef);
+  const communityRef = useRef(null);
+  const clickedOutsideCommunity = useClickedOutside(communityRef);
 
   useEffect(() => {
     if (clickedOutsideLanguages) {
       setIsOpenLanguageModal(false);
     }
-    if (clickedOutsidePages) {
-      setIsOpenPagesModal(false);
+    if (clickedOutsideCommunity) {
+      setIsOpenCommunityModal(false);
     }
-  }, [clickedOutsideLanguages, clickedOutsidePages]);
+  }, [clickedOutsideLanguages, clickedOutsideCommunity]);
 
   return (
     <>
       <LanguageMenu
         isOpen={isOpenLanguageModal}
         reference={languagesRef}
+        isOwner={isConnected}
+        showingLogo={showLogo}
+      />
+      <CommunityMenu
+        isOpen={isOpenCommunityModal}
+        reference={communityRef}
         isOwner={isConnected}
         showingLogo={showLogo}
       />
@@ -72,29 +74,6 @@ function Navbar({ showLogo = true }) {
       </div>
     </>
   );
-
-  // TODO: REMOVE
-  // return (
-  //   <>
-  //     <LanguageMenu isOpen={isOpenLanguageModal} reference={languagesRef} />
-  //     <PagesMenu isOpen={isOpenPagesModal} reference={pagesRef} />
-  //     <div className={styles.container}>
-  //       <div className={styles['row-navbar']}>
-  //         <img src={LOGO} className={styles.logo} />
-  //         <NavbarButton text={selectedMenuLabel} icon={MENU_ICON} onClick={togglePagesModal} />
-  //       </div>
-
-  //       <div className={styles['row-navbar']}>
-  //         <NavbarButton
-  //           text={i18next.t('Navbar:actualLanguage')}
-  //           icon={DROPDOWN_ICON}
-  //           onClick={toggleLanguageModal}
-  //         />
-  //         <SocialMediaButtons />
-  //       </div>
-  //     </div>
-  //   </>
-  // );
 }
 
 export default Navbar;
