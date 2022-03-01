@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
 import PublicHome from './components/PublicHome';
@@ -10,7 +11,11 @@ function Home() {
 
   return (
     <div className={styles.center}>
-      <div className={styles.nft}>
+      <div
+        className={cn(styles.nft, {
+          [styles.owner]: !!wallet?.account
+        })}
+      >
         <div className={styles.content}>{wallet && wallet?.account ? <PrivateHome /> : <PublicHome />}</div>
       </div>
     </div>

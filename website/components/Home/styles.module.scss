@@ -25,6 +25,10 @@
   background-repeat: no-repeat;
   background-position: 85% bottom;
   background-size: auto 120%;
+
+  &.owner {
+    background-image: url('../../public/assets/home/x-ray-black.png');
+  }
 }
 
 .content {
