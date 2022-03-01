@@ -2,11 +2,13 @@ import i18n from 'i18next';
 
 i18n.addResources('en', 'Dashboard', {
   title: 'Owner Dashboard',
+  owner: 'Owner',
+  dashboard: 'Dashboard',
   stakingRewards: 'Staking rewards: ',
   stakedTokens: 'Staked tokens: ',
   balanceTokens: 'Balance tokens: ',
   percentageStaked: 'Percentage staked: ',
-  claimRewards: 'Claim rewards',
+  claimRewards: 'Claim {{rewards}} $SAMOT',
   claimingRewards: 'Claiming rewards...',
   claimSuccess: 'Claimed rewards successfully! Transaction hash: {{link}}',
   claimError: 'Claiming rewards failed. Reason: {{reason}}',
@@ -21,12 +23,14 @@ i18n.addResources('en', 'Dashboard', {
 });
 
 i18n.addResources('es', 'Dashboard', {
-  title: 'Dashboard de owner',
+  title: 'Owner Dashboard',
+  owner: 'Owner',
+  dashboard: 'Dashboard',
   stakingRewards: 'Recompensas de Staking',
   stakedTokens: "NFT's Stakeados",
   balanceTokens: 'Balance de Tokens',
   percentageStaked: 'Porcentaje Stakeado',
-  claimRewards: 'Obtener recompensas',
+  claimRewards: 'Obtener {{rewards}} $SAMOT',
   claimingRewards: 'Obteniendo recompensas...',
   claimSuccess: 'Recompensas recibidas con éxito! Transacción hash: {{link}}',
   claimError: 'Fallo al obtener recompensas. Razón: {{reason}}',
@@ -41,12 +45,14 @@ i18n.addResources('es', 'Dashboard', {
 });
 
 i18n.addResources('pr', 'Dashboard', {
-  title: 'Dashboard do Owner',
+  title: 'Owner Dashboard',
+  owner: 'Owner',
+  dashboard: 'Dashboard',
   stakingRewards: 'Recompensas de Staking',
   stakedTokens: "NFT's Staked",
   balanceTokens: 'Balance de Tokens',
   percentageStaked: 'Porcentagem Staked',
-  claimRewards: 'Recompensas',
+  claimRewards: 'Obter {{rewards}} $SAMOT',
   claimingRewards: 'Recompensas...',
   claimSuccess: 'Recompensas recebidas com sucesso! Transação hash: {{link}}',
   claimError: 'Falha ao obter recompensas. Razão: {{reason}}',

@@ -16,3 +16,8 @@ export const getTokenIdsAsParams = (_, tokenIds) => ({
 export const getOwnerAsParams = (address) => ({
   owner: address
 });
+
+export const mapAssetsToOwnerData = (assets) => ({
+  countAssets: assets.length,
+  name: assets[0]?.owner?.user || 'holder'
+});

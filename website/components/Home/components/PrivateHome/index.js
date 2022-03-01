@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Stats from '../../../Stats';
 import { ROUTES } from '../../../../constants/routes';
 import { useGetAssetsData } from '../../../../hooks/UseLoadAssets';
-import { getOwnerAsParams } from '../../../../utils/assets';
 import { SAMOT_DROPS } from '../../../../constants/drops';
 import actions from '../../../../redux/Settings/actions';
 
@@ -15,20 +14,19 @@ import styles from './styles.module.scss';
 
 function PrivateHome() {
   const dispatch = useDispatch();
-  const { wallet, currentAssets } = useSelector((state) => state.settings);
-  const name = currentAssets?.[0]?.owner?.user || 'holder';
+  const { wallet, currentOwner } = useSelector((state) => state.settings);
+
+  const name = currentOwner?.name;
   const { stakedIdsV1, stakedIdsV2, balanceTokens } = useGetAssetsData(wallet);
 
-  const owned = currentAssets?.length + [...stakedIdsV1, ...stakedIdsV2]?.length;
+  const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
 
   useEffect(() => {
     if (wallet?.account) {
       dispatch(
-        actions.getAssets({
+        actions.getOwnerData({
           asset_contract_address: SAMOT_DROPS.contract,
-          limit: 50,
-          offset: 0,
-          ...getOwnerAsParams(wallet?.account)
+          owner: wallet?.account
         })
       );
     }

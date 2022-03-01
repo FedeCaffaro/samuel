@@ -12,7 +12,7 @@ const initialState = {
 const completedState = completeState(initialState);
 
 const reducerDescription = {
-  primaryActions: [actions.SET_WALLET, actions.GET_COLLECTION, actions.GET_ASSETS],
+  primaryActions: [actions.SET_WALLET, actions.GET_COLLECTION, actions.GET_ASSETS, actions.GET_OWNER_DATA],
   override: {
     [actions.SET_WALLET]: (state, action) => ({ ...state, [action.target]: action.payload })
   }

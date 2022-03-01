@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
-function Stats({ owned, staked, balance, className }) {
+function Stats({ owned, staked, balance, className, big }) {
   const elements = [
     {
       title: i18next.t('Stats:owned'),
@@ -24,10 +24,28 @@ function Stats({ owned, staked, balance, className }) {
       {elements.map(({ title, value }, index) => (
         <>
           <div className={styles.element} key={title}>
-            <span className={styles.title}>{title}</span>
-            <span className={styles.value}>{value}</span>
+            <span
+              className={cn(styles.title, {
+                [styles.big]: big
+              })}
+            >
+              {title}
+            </span>
+            <span
+              className={cn(styles.value, {
+                [styles.big]: big
+              })}
+            >
+              {value}
+            </span>
           </div>
-          {index !== elements.length - 1 && <div className={styles.divider} />}
+          {index !== elements.length - 1 && (
+            <div
+              className={cn(styles.divider, {
+                [styles.big]: big
+              })}
+            />
+          )}
         </>
       ))}
     </div>

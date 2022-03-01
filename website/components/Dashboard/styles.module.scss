@@ -9,7 +9,7 @@
 
 .title-blue {
   font-family: 'Founders', 'Poppins', sans-serif !important;
-  font-size: 150px;
+  font-size: 156px;
   font-weight: bold;
   line-height: 74.4%;
 
@@ -61,6 +61,10 @@
   margin-top: -120px;
 }
 
+.stats-container {
+  margin-top: 50px;
+}
+
 .small-text {
   font-size: 20px;
 
@@ -90,27 +94,43 @@
   background-color: rgba($white, 0.15);
 }
 
+.button-container {
+  @extend .row,
+  .center,
+  .middle;
+}
+
+.arrows-left {
+  width: 93.7px;
+  height: 56.68px;
+  margin-right: 25px;
+}
+
+.arrows-right {
+  width: 93.7px;
+  height: 56.68px;
+  margin-left: 25px;
+
+  transform: rotate(180deg);
+}
+
 .claim {
-  @extend .text-uppercase;
+  @extend .center-child;
 
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 500;
 
-  height: 40px;
-  margin-top: 50px;
-  padding: 0 20px;
+  height: 53px;
+  padding: 0 40px;
 
-  cursor: pointer;
-  transition: all 1s ease-in-out;
-  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
 
-  border: 1px solid #FFF;
-  background: linear-gradient(92.35deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.6) 117.7%);
+  border-radius: 2px;
+  background-color: $samot-blue;
 
   &:hover {
-    transition: all 1s ease-in-out;
-
-    background: linear-gradient(92.35deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 117.7%);
+    background-color: rgba($samot-blue, 0.8);
   }
 }
 
@@ -133,10 +153,14 @@
 
 .divider {
   width: 100%;
-  height: 1px;
+  max-width: 950px;
+  height: 2px;
   margin: 30px 0;
 
-  background-color: rgba($white, 0.15);
+  background-image: url('../../public/assets/general/divider.png');
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 100% 100%;
 }
 
 .tabs {

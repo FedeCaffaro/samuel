@@ -10,6 +10,8 @@ import { claimRewards, stakeNFTs, unstakeNFTs, unstakeNFTsV1 } from '../../utils
 import actions from '../../redux/Settings/actions';
 import { SAMOT_DROPS } from '../../constants/drops';
 import Asset from '../Assets';
+import Stats from '../Stats';
+import { ARROW_IMG } from '../../constants/images-paths';
 
 import styles from './styles.module.scss';
 import {
@@ -23,7 +25,7 @@ import {
 import { TABS } from './constants';
 
 function Dashboard() {
-  const { currentAssets, wallet } = useSelector((state) => state.settings);
+  const { currentAssets, currentOwner, wallet } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const [selecteds, setSelecteds] = useState([]);
   const [tabSelected, setTabSelected] = useState(TABS.STAKED);
@@ -35,8 +37,8 @@ function Dashboard() {
       : setSelecteds([...selecteds, asset.tokenId]);
   const isSelected = (asset) => selecteds.includes(asset.tokenId);
 
-  const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, percentageStaked, getAllData } =
-    useGetAssetsData(wallet);
+  const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, getAllData } = useGetAssetsData(wallet);
+  const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
 
   const renderAndGetData = (aFunction) => (result) => {
     getAllData();
@@ -109,6 +111,17 @@ function Dashboard() {
   }, [wallet, tabSelected, stakedIdsV1, stakedIdsV2]);
 
   useEffect(() => {
+    if (wallet?.account) {
+      dispatch(
+        actions.getOwnerData({
+          asset_contract_address: SAMOT_DROPS.contract,
+          owner: wallet?.account
+        })
+      );
+    }
+  }, [wallet, stakedIdsV1, stakedIdsV2]);
+
+  useEffect(() => {
     setSelecteds([]);
   }, [tabSelected]);
 
@@ -124,11 +137,27 @@ function Dashboard() {
         </div>
       </div>
 
+      <div className={styles['stats-container']}>
+        <Stats
+          owned={owned}
+          staked={[...stakedIdsV1, ...stakedIdsV2].length}
+          balance={balanceTokens}
+          className={styles.stats}
+          big
+        />
+      </div>
+
       <div className={styles.divider} />
 
-      <button type="button" className={styles.claim} onClick={claimTotalRewards}>
-        {i18next.t('Dashboard:claimRewards')}
-      </button>
+      <div className={styles['button-container']}>
+        <img src={ARROW_IMG} className={styles['arrows-left']} />
+        <button type="button" className={styles.claim} onClick={claimTotalRewards}>
+          {i18next.t('Dashboard:claimRewards', { rewards: stakingRewards })}
+        </button>
+        <img src={ARROW_IMG} className={styles['arrows-right']} />
+      </div>
+
+      <div className={styles.divider} />
 
       <div className={styles.tabs}>
         {Object.values(TABS).map(({ label, key }) => (
