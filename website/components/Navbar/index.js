@@ -5,11 +5,12 @@ import { useSelector } from 'react-redux';
 import { ROUTES } from '../../constants/routes';
 import { useClickedOutside } from '../../hooks/useClickedOutside';
 import { useConnectWallet } from '../../hooks/useConnectWallet';
+import { LOGO } from '../../constants/images-paths';
 
 import LanguageMenu from './components/LanguageMenu';
 import NavbarButton from './components/NavbarButton';
 import CommunityMenu from './components/CommunityMenu';
-import { LINK_ICON, LOGO } from './constants';
+import { LINK_ICON } from './constants';
 import styles from './styles.module.scss';
 import { getNavbarItems } from './utils';
 
