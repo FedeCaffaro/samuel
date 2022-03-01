@@ -1,8 +1,14 @@
 @import '../../../../scss/imports.scss';
 
 .menu {
-  bottom: 60px;
-  left: 20px;
+  top: 68px;
+  left: 460px;
 
-  width: 100px;
+  width: 130px;
+}
+
+.menu-left {
+  @extend .menu;
+
+  left: 580px;
 }

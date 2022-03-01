@@ -6,13 +6,21 @@ import DropdownMenu from '../DropdownMenu';
 import { LANGUAGES } from './constants';
 import styles from './styles.module.scss';
 
-function LanguageMenu({ isOpen, reference }) {
+function LanguageMenu({ isOpen, reference, isOwner, showingLogo }) {
   const options = LANGUAGES.map(({ label, value }) => ({
     label,
     onClick: handleChangeLanguage(value)
   }));
 
-  return <DropdownMenu isOpen={isOpen} options={options} reference={reference} className={styles.menu} />;
+  return (
+    <DropdownMenu
+      isOpen={isOpen}
+      options={options}
+      reference={reference}
+      isOwner={isOwner}
+      className={showingLogo ? styles['menu-left'] : styles.menu}
+    />
+  );
 }
 
 export default LanguageMenu;

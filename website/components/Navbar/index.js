@@ -46,7 +46,12 @@ function Navbar({ showLogo = true }) {
 
   return (
     <>
-      <LanguageMenu isOpen={isOpenLanguageModal} reference={languagesRef} />
+      <LanguageMenu
+        isOpen={isOpenLanguageModal}
+        reference={languagesRef}
+        isOwner={isConnected}
+        showingLogo={showLogo}
+      />
       <div className={styles.container}>
         <div className={styles['row-navbar']}>
           <div className={styles['left-container']}>
