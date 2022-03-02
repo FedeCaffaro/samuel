@@ -20,7 +20,15 @@ import { SAMOT_DROPS } from '../../../../constants/drops';
 
 import styles from './styles.module.scss';
 
-function StakingTabs({ renderAndGetData, stakedIdsV1, stakedIdsV2, unstakedCount }) {
+function StakingTabs({
+  renderAndGetData,
+  stakedIdsV1,
+  stakedIdsV2,
+  unstakedCount,
+  tabsLoading,
+  startTabsLoading,
+  stopTabsLoading
+}) {
   const dispatch = useDispatch();
   const { currentAssets, currentAssetsLoading, wallet } = useSelector((state) => state.settings);
   const [selecteds, setSelecteds] = useState([]);
@@ -33,29 +41,35 @@ function StakingTabs({ renderAndGetData, stakedIdsV1, stakedIdsV2, unstakedCount
       : setSelecteds([...selecteds, asset.tokenId]);
   const isSelected = (asset) => selecteds.includes(asset.tokenId);
 
-  const stake = () =>
-    toast.promise(stakeNFTs(wallet.account, selecteds), {
+  const stake = () => {
+    startTabsLoading();
+    const selectedsToUse = selecteds;
+    setSelecteds([]);
+    toast.promise(stakeNFTs(wallet.account, selectedsToUse), {
       pending: i18next.t('Dashboard:stakingNfts'),
-      success: { render: renderAndGetData(stakingSuccessRender) },
-      error: { render: stakingErrorRender }
+      success: { render: renderAndGetData(stakingSuccessRender, stopTabsLoading) },
+      error: { render: renderAndGetData(stakingErrorRender, stopTabsLoading) }
     });
+  };
 
   const unstake = () => {
+    startTabsLoading();
     const selectedsV1 = selecteds?.filter((id) => stakedIdsV1?.includes(id));
     const selectedsV2 = selecteds?.filter((id) => stakedIdsV2?.includes(id));
+    setSelecteds([]);
 
     if (selectedsV1 && selectedsV1.length) {
       toast.promise(unstakeNFTsV1(wallet.account, selectedsV1), {
         pending: i18next.t('Dashboard:unstakingNfts'),
-        success: { render: renderAndGetData(unstakingSuccessRender) },
-        error: { render: unstakingErrorRender }
+        success: { render: renderAndGetData(unstakingSuccessRender, stopTabsLoading) },
+        error: { render: renderAndGetData(unstakingErrorRender, stopTabsLoading) }
       });
     }
     if (selectedsV2 && selectedsV2.length) {
       toast.promise(unstakeNFTs(wallet.account, selectedsV2), {
         pending: i18next.t('Dashboard:unstakingNfts'),
-        success: { render: renderAndGetData(unstakingSuccessRender) },
-        error: { render: unstakingErrorRender }
+        success: { render: renderAndGetData(unstakingSuccessRender, stopTabsLoading) },
+        error: { render: renderAndGetData(unstakingErrorRender, stopTabsLoading) }
       });
     }
   };
@@ -123,7 +137,11 @@ function StakingTabs({ renderAndGetData, stakedIdsV1, stakedIdsV2, unstakedCount
         )}
       </div>
 
-      <LoadingWrapper loading={currentAssetsLoading} className={styles.loading} withInitialLoading>
+      <LoadingWrapper
+        loading={currentAssetsLoading || tabsLoading}
+        className={styles.loading}
+        withInitialLoading
+      >
         <div className={styles.assets}>
           {currentAssets?.map((asset) => (
             <Asset

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -17,15 +17,19 @@ import StakingTabs from './components/StakingTabs';
 
 function Dashboard() {
   const { currentOwner, wallet } = useSelector((state) => state.settings);
+  const [tabsLoading, setTabsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, getAllData } = useGetAssetsData(wallet);
   const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
 
-  const renderAndGetData = (aFunction) => (result) => {
-    getAllData();
-    return aFunction(result?.data);
-  };
+  const renderAndGetData =
+    (aFunction, callBefore = () => {}) =>
+    (result) => {
+      callBefore();
+      getAllData();
+      return aFunction(result?.data);
+    };
 
   const claimTotalRewards = () =>
     toast.promise(claimRewards(wallet?.account), {
@@ -82,6 +86,9 @@ function Dashboard() {
       <div className={styles.divider2} />
 
       <StakingTabs
+        tabsLoading={tabsLoading}
+        startTabsLoading={() => setTabsLoading(true)}
+        stopTabsLoading={() => setTabsLoading(false)}
         renderAndGetData={renderAndGetData}
         stakedIdsV1={stakedIdsV1}
         stakedIdsV2={stakedIdsV2}
