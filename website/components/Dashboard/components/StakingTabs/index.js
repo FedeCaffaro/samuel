@@ -14,6 +14,7 @@ import {
 } from '../../utils';
 import { stakeNFTs, unstakeNFTs, unstakeNFTsV1 } from '../../../../utils/staking';
 import Asset from '../../../Assets';
+import LoadingWrapper from '../../../LoadingWrapper';
 import actions from '../../../../redux/Settings/actions';
 import { SAMOT_DROPS } from '../../../../constants/drops';
 
@@ -21,7 +22,7 @@ import styles from './styles.module.scss';
 
 function StakingTabs({ renderAndGetData, stakedIdsV1, stakedIdsV2, unstakedCount }) {
   const dispatch = useDispatch();
-  const { currentAssets, wallet } = useSelector((state) => state.settings);
+  const { currentAssets, currentAssetsLoading, wallet } = useSelector((state) => state.settings);
   const [selecteds, setSelecteds] = useState([]);
   const [tabSelected, setTabSelected] = useState(TABS.STAKED);
 
@@ -111,22 +112,29 @@ function StakingTabs({ renderAndGetData, stakedIdsV1, stakedIdsV2, unstakedCount
         </div>
 
         {!!selecteds.length && (
-          <button type="button" className={styles['tab-button']} onClick={buttonOnClick}>
+          <button
+            type="button"
+            className={styles['tab-button']}
+            onClick={buttonOnClick}
+            disabled={currentAssetsLoading}
+          >
             {buttonLabel}
           </button>
         )}
       </div>
 
-      <div className={styles.assets}>
-        {currentAssets?.map((asset) => (
-          <Asset
-            {...asset}
-            key={asset?.tokenId}
-            selected={isSelected(asset)}
-            onClick={onSelectAsset(asset)}
-          />
-        ))}
-      </div>
+      <LoadingWrapper loading={currentAssetsLoading} className={styles.loading} withInitialLoading>
+        <div className={styles.assets}>
+          {currentAssets?.map((asset) => (
+            <Asset
+              {...asset}
+              key={asset?.tokenId}
+              selected={isSelected(asset)}
+              onClick={onSelectAsset(asset)}
+            />
+          ))}
+        </div>
+      </LoadingWrapper>
     </>
   );
 }

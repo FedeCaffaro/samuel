@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100px;
+}
+
+.loading-text {
+  font-family: 'Samot', 'Poppins', sans-serif !important;
+  font-size: 100px;
+
+  animation: loading 3s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}

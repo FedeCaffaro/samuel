@@ -24,7 +24,7 @@ function Dashboard() {
 
   const renderAndGetData = (aFunction) => (result) => {
     getAllData();
-    return aFunction(result);
+    return aFunction(result?.data);
   };
 
   const claimTotalRewards = () =>

@@ -10,18 +10,19 @@ i18n.addResources('en', 'Dashboard', {
   percentageStaked: 'Percentage staked: ',
   claimRewards: 'Claim {{rewards}} $SAMOT',
   claimingRewards: 'Claiming rewards...',
-  claimSuccess: 'Claimed rewards successfully! Transaction hash: {{link}}',
+  claimSuccess: 'Claimed rewards successfully!',
   claimError: 'Claiming rewards failed. Reason: {{reason}}',
   stake: 'Stake {{count}} tokens',
   unstake: 'Unstake {{count}} tokens',
   stakingNfts: 'Staking...',
-  stakingSuccess: 'Staked successfully! Transaction hash: {{link}}',
+  stakingSuccess: 'Staked successfully!',
   stakingError: 'Staking failed. Reason: {{reason}}',
   unstakingNfts: 'Unstaking...',
-  unstakingSuccess: 'Unstaked successfully! Transaction hash: {{link}}',
+  unstakingSuccess: 'Unstaked successfully!',
   unstakingError: 'Unstaking failed. Reason: {{reason}}',
   staked: 'Staked ({{count}})',
-  unstaked: 'Unstaked ({{count}})'
+  unstaked: 'Unstaked ({{count}})',
+  seeTransaction: 'Click to see transaction.'
 });
 
 i18n.addResources('es', 'Dashboard', {
@@ -34,18 +35,19 @@ i18n.addResources('es', 'Dashboard', {
   percentageStaked: 'Porcentaje Stakeado',
   claimRewards: 'Obtener {{rewards}} $SAMOT',
   claimingRewards: 'Obteniendo recompensas...',
-  claimSuccess: 'Recompensas recibidas con éxito! Transacción hash: {{link}}',
+  claimSuccess: 'Recompensas recibidas con éxito!',
   claimError: 'Fallo al obtener recompensas. Razón: {{reason}}',
   stake: 'Stakear {{count}} tokens',
   unstake: 'Desestakear {{count}} tokens',
   stakingNfts: 'Staking...',
-  stakingSuccess: 'Stakeado con éxito! Transacción hash: {{link}}',
+  stakingSuccess: 'Stakeado con éxito!',
   stakingError: 'Fallo al stakear. Razón: {{reason}}',
   unstakingNfts: 'Desestakeando...',
-  unstakingSuccess: 'Desestakeado con éxito! Transacción hash: {{link}}',
+  unstakingSuccess: 'Desestakeado con éxito!',
   unstakingError: 'Fallo al desestakear. Razón: {{reason}}',
   staked: 'Stakeado ({{count}})',
-  unstaked: 'Desestakeado ({{count}})'
+  unstaked: 'Desestakeado ({{count}})',
+  seeTransaction: 'Haga clic para ver la transacción.'
 });
 
 i18n.addResources('pr', 'Dashboard', {
@@ -58,16 +60,17 @@ i18n.addResources('pr', 'Dashboard', {
   percentageStaked: 'Porcentagem Staked',
   claimRewards: 'Obter {{rewards}} $SAMOT',
   claimingRewards: 'Recompensas...',
-  claimSuccess: 'Recompensas recebidas com sucesso! Transação hash: {{link}}',
+  claimSuccess: 'Recompensas recebidas com sucesso!',
   claimError: 'Falha ao obter recompensas. Razão: {{reason}}',
   stake: 'Stakear {{count}} tokens',
   unstake: 'Desestakear {{count}} tokens',
   stakingNfts: 'Staking...',
-  stakingSuccess: 'Stakeado com sucesso! Transação hash: {{link}}',
+  stakingSuccess: 'Stakeado com sucesso!',
   stakingError: 'Falha ao stakear. Razão: {{reason}}',
   unstakingNfts: 'Desestakeando...',
-  unstakingSuccess: 'Desestakeado com sucesso! Transação hash: {{link}}',
+  unstakingSuccess: 'Desestakeado com sucesso!',
   unstakingError: 'Falha ao desestakear. Razão: {{reason}}',
   staked: 'Stakeado ({{count}})',
-  unstaked: 'Desestakeado ({{count}})'
+  unstaked: 'Desestakeado ({{count}})',
+  seeTransaction: 'Clique para ver a transação.'
 });
