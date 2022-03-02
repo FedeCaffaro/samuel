@@ -4,3 +4,10 @@
   color: $white;
   background-color: $black;
 }
+
+.loading-container {
+  overflow: hidden;
+
+  width: 100vw;
+  height: 100vh;
+}
