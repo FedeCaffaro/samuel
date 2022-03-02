@@ -19,7 +19,9 @@ i18n.addResources('en', 'Dashboard', {
   stakingError: 'Staking failed. Reason: {{reason}}',
   unstakingNfts: 'Unstaking...',
   unstakingSuccess: 'Unstaked successfully! Transaction hash: {{link}}',
-  unstakingError: 'Unstaking failed. Reason: {{reason}}'
+  unstakingError: 'Unstaking failed. Reason: {{reason}}',
+  staked: 'Staked ({{count}})',
+  unstaked: 'Unstaked ({{count}})'
 });
 
 i18n.addResources('es', 'Dashboard', {
@@ -41,7 +43,9 @@ i18n.addResources('es', 'Dashboard', {
   stakingError: 'Fallo al stakear. Razón: {{reason}}',
   unstakingNfts: 'Desestakeando...',
   unstakingSuccess: 'Desestakeado con éxito! Transacción hash: {{link}}',
-  unstakingError: 'Fallo al desestakear. Razón: {{reason}}'
+  unstakingError: 'Fallo al desestakear. Razón: {{reason}}',
+  staked: 'Stakeado ({{count}})',
+  unstaked: 'Desestakeado ({{count}})'
 });
 
 i18n.addResources('pr', 'Dashboard', {
@@ -63,5 +67,7 @@ i18n.addResources('pr', 'Dashboard', {
   stakingError: 'Falha ao stakear. Razão: {{reason}}',
   unstakingNfts: 'Desestakeando...',
   unstakingSuccess: 'Desestakeado com sucesso! Transação hash: {{link}}',
-  unstakingError: 'Falha ao desestakear. Razão: {{reason}}'
+  unstakingError: 'Falha ao desestakear. Razão: {{reason}}',
+  staked: 'Stakeado ({{count}})',
+  unstaked: 'Desestakeado ({{count}})'
 });

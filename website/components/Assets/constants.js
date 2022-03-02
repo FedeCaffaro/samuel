@@ -1,3 +1,5 @@
+export const CHECK = '/assets/dashboard/check.png';
+
 export const DEFAULT_ASSETS = [
   'https://lh3.googleusercontent.com/MwUOl3mVvJvCx92cRxETG8EH1up4zbW4tdeyJNP7x3V0x1bPkA72fcm5sgRwmyJWNFJxy87pkwecAVUJA1unJHnGJMiHt5PDwgyo4A=w600',
   'https://lh3.googleusercontent.com/lsbpKGyTx_pa2NvOIfKDw13ikRnFrsGSWbLfI8Oc7jeMg4-O0rqeAbgRTB3-hDq4HAFyRJERPsME5hjWYqAp8z0DjWboL-pU-xKKqw=w600',
