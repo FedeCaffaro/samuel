@@ -94,9 +94,6 @@ jobs:
         echo "NEXT_PUBLIC_ETHERSCAN_URL_PROD"=$NEXT_PUBLIC_ETHERSCAN_URL_PROD >> .env
         echo "NEXT_PUBLIC_OS_API_ENDPOINT_PROD"=$NEXT_PUBLIC_OS_API_ENDPOINT_PROD >> .env
         echo "NEXT_PUBLIC_OPEN_SEA_API_PROD"=$NEXT_PUBLIC_OPEN_SEA_API_PROD >> .env
-        
-        
-      
 
       # Install project dependencies
       - name: Install Dependencies
