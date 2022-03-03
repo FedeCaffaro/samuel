@@ -16,7 +16,9 @@ function Home() {
           [styles.owner]: !!wallet?.account
         })}
       >
-        <div className={styles.content}>{wallet && wallet?.account ? <PrivateHome /> : <PublicHome />}</div>
+        <div className={styles['extra-gradient']}>
+          <div className={styles.content}>{wallet && wallet?.account ? <PrivateHome /> : <PublicHome />}</div>
+        </div>
       </div>
     </div>
   );
