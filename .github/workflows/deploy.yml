@@ -142,4 +142,3 @@ jobs:
           
           npm install serverless -g
           cd ../serverless && npm install && serverless deploy --stage prod
-
