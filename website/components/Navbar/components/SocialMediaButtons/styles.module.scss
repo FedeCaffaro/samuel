@@ -1,0 +1,18 @@
+@import '../../../../scss/imports.scss';
+
+.icons-container {
+  height: 26px;
+
+  @extend .row,
+  .start,
+  .middle;
+}
+
+.icon-link {
+  height: 14px;
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}

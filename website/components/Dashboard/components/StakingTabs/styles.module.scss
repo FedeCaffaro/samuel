@@ -1,0 +1,71 @@
+@import '../../../../scss/imports';
+
+.top-row {
+  @extend .row,
+  .space-between,
+  .middle;
+
+  width: 100%;
+  max-width: 950px;
+}
+
+.tabs {
+  @extend .row,
+  .center,
+  .middle;
+}
+
+.tab {
+  @extend .text-uppercase;
+
+  font-family: 'Founders', 'Poppins', sans-serif !important;
+  font-size: 30px;
+  font-weight: bold;
+
+  margin-right: 12px;
+
+  transition: all 0.3s ease-in-out;
+
+  color: rgba($white, 0.6);
+
+  &.selected,
+  &:hover {
+    color: $white;
+  }
+}
+
+.tab-button {
+  @extend .center-child;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  height: 28px;
+  padding: 0 10px;
+
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  border-radius: 1px;
+  background-color: $samot-blue;
+
+  &:hover {
+    background-color: rgba($samot-blue, 0.8);
+  }
+}
+
+.assets {
+  @extend .row,
+  .start,
+  .top;
+
+  flex-wrap: wrap;
+
+  max-width: 950px;
+  margin: 10px -1.7%;
+}
+
+.loading {
+  height: 300px;
+}

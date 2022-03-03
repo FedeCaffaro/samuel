@@ -1,0 +1,37 @@
+@import '../../../../scss/imports';
+
+.mint-button {
+  @extend .center-child;
+
+  width: 251px;
+  height: 103px;
+  margin-top: 40px;
+
+  transition: all 200ms ease-in-out;
+
+  background-image: url('../../../../public/assets/home/circle-button.png');
+
+  &:hover {
+    transform: scale(1.06);
+
+    & > .mint {
+      transform: scale(1.03)  rotate(11deg);
+    }
+  }
+}
+
+.mint {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 24px;
+
+  transition: all 200ms ease-in-out;
+  transform: rotate(9.61deg);
+  text-transform: uppercase;
+
+  color: $samot-yellow;
+}
+
+.logo {
+  height: 165px;
+}

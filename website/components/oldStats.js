@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const Header = (props) => {
-  const { stakesCount, stakingRewards, balanceTokens, percentageStaked,stakesCount1,stakesCount2} = props
+  const { stakesCount, stakingRewards, balanceTokens, percentageStaked, stakesCount1, stakesCount2 } = props;
   return (
-	  <div className="stats">
+    <div className="stats">
       <div className="stat">
         <div className="stat-number">{stakesCount}</div>
         <div className="stat-label">staked nfts</div>
@@ -21,7 +21,7 @@ const Header = (props) => {
         <div className="stat-label"> % Staked </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

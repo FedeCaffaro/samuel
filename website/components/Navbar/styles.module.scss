@@ -1,0 +1,43 @@
+@import '../../scss/imports.scss';
+
+.container {
+  @extend .column,
+  .space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  align-items: space-between;
+
+  width: 100vw;
+  padding: 40px 60px 0;
+}
+
+.row-navbar {
+  @extend .row,
+  .space-between,
+  .middle;
+
+  pointer-events: all;
+}
+
+.left-container {
+  @extend .row,
+  .start,
+  .middle;
+
+  pointer-events: all;
+
+  & > * {
+    margin-right: 50px;
+  }
+}
+
+.logo {
+  height: 30px;
+}
+
+.link-icon {
+  height: 11px;
+}

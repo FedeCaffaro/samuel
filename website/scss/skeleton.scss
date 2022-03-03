@@ -1,0 +1,5 @@
+$skeleton-dark: $athens-gray;
+$skeleton-light: $whisper;
+$skeleton-animation-speed: 5s;
+$skeleton-gradient: linear-gradient(90deg, $skeleton-dark 0%, $skeleton-dark 40%, $skeleton-light 50%, $skeleton-dark 60%, $skeleton-dark 100%);
+$skeleton-disappear-speed: 1000ms;

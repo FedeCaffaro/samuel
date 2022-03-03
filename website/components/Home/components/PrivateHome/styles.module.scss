@@ -1,0 +1,83 @@
+@import '../../../../scss/imports';
+
+.container {
+  width: 500px;
+  max-width: 500px;
+}
+
+.text-full {
+  font-family: 'Founders', 'Poppins', sans-serif !important;
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 74.4%;
+
+  overflow: hidden;
+
+  max-width: 500px;
+
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+
+  color: $samot-blue;
+}
+
+.first-line {
+  @extend .column,
+  .start;
+
+  width: fit-content;
+}
+
+.graff-container {
+  @extend .row,
+  .end;
+
+  position: relative;
+
+  align-self: end;
+
+  width: 100%;
+  height: 0;
+}
+
+.graff {
+  font-family: 'Samot', 'Poppins', sans-serif !important;
+  font-size: 60px;
+
+  position: absolute;
+
+  max-width: 500px;
+  margin-top: -30px;
+
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+}
+
+.stats {
+  margin-top: 35px;
+}
+
+.button-dashboard {
+  @extend .center-child;
+
+  font-size: 30px;
+  font-weight: 500;
+
+  left: 214px;
+
+  width: 327px;
+  height: 53px;
+  margin-top: 66px;
+
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+
+  border-radius: 2px;
+  background-color: $samot-blue;
+
+  &:hover {
+    background-color: rgba($samot-blue, 0.8);
+  }
+}
