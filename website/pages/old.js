@@ -77,7 +77,7 @@ import {
 } from '../lib/staking';
 import { TOKEN_CONTRACT_ADDRESS, stakeOf, unstakeNFTsV1 } from '../lib/token';
 import { TOKENV2_CONTRACT_ADDRESS, balanceOf } from '../lib/tokenv2';
-import Stats from '../components/stats';
+import Stats from '../components/Stats';
 import drops from '../data/drops';
 
 // eslint-disable-next-line max-statements
