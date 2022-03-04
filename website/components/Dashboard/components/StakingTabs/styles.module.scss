@@ -28,6 +28,12 @@
 
   color: rgba($white, 0.6);
 
+  @include sm {
+    font-size: 26px;
+
+    margin-right: 8px;
+  }
+
   &.selected,
   &:hover {
     color: $white;
