@@ -1,0 +1,45 @@
+@import '../../../../scss/imports.scss';
+
+.fixed-container {
+  @extend .column,
+  .start,
+  .top;
+
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: $black;
+}
+
+.close-container {
+  @extend .row,
+  .end,
+  .middle;
+
+  width: 100%;
+  padding: 35px;
+}
+
+.close-icon {
+  height: 20px;
+}
+
+.content {
+  @extend .column,
+  .space-around,
+  .center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.items {
+  @extend .row,
+  .center,
+  .middle;
+}
