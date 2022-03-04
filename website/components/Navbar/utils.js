@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+
 import { ROUTES } from '../../constants/routes';
 
 import { DROPDOWN_ICON, LINK_ICON } from './constants';
@@ -34,9 +35,24 @@ export const getBurguerMenuItems = (onConnectWallet, isConnected) => [
     link: '/roadmap'
   },
   {
-    label: i18next.t(`Navbar:${isConnected ? 'ownersDashboard' : 'connectWallet'}`),
+    label: i18next.t(isConnected ? 'Navbar:ownersDashboard' : 'Navbar:connectWallet'),
     onClick: isConnected ? null : onConnectWallet,
     link: isConnected ? ROUTES.DASHBOARD.pagePath : null,
     icon: LINK_ICON
+  }
+];
+
+export const getLanguageOptions = () => [
+  {
+    label: 'es',
+    value: 'es'
+  },
+  {
+    label: 'en',
+    value: 'en'
+  },
+  {
+    label: 'pr',
+    value: 'pr'
   }
 ];

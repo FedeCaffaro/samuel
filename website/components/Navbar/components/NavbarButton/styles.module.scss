@@ -32,8 +32,16 @@
   margin-right: 7px;
 
   transition: all 0.3s ease;
+
+  &.big {
+    font-size: 30px;
+  }
 }
 
 .menu-icon {
   height: 8px;
+
+  &.big {
+    height: 17px;
+  }
 }

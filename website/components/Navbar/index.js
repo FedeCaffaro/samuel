@@ -58,7 +58,12 @@ function Navbar({ showLogo = true }) {
         isOwner={isConnected}
         showingLogo={showLogo}
       />
-      <BurgerMenu isOpen={isOpenBurgerMenu} />
+      <BurgerMenu
+        isOpen={isOpenBurgerMenu}
+        isOwner={isConnected}
+        handleClose={() => setIsOpenBurgerMenu(false)}
+        onConnectWallet={onConnectWallet}
+      />
       <div className={styles.container}>
         <div className={styles['row-navbar']}>
           <div className={styles['left-container']}>
