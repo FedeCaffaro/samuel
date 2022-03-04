@@ -35,6 +35,10 @@
 
   &.big {
     font-size: 30px;
+
+    @include xxs {
+      font-size: 24px;
+    }
   }
 }
 
