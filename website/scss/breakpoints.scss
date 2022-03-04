@@ -6,6 +6,7 @@ $breakpoint-lg: 930px;
 $breakpoint-xl: 1260px;
 $breakpoint-xxl: 1440px;
 $breakpoint-xxxl: 1920px;
+
 @mixin xxs {
   @media (max-width: #{$breakpoint-xxs}) {
     @content;

@@ -19,6 +19,7 @@ function Stats({ owned, staked, balance, className, big }) {
       value: i18next.t('Stats:balanceValue', { balance })
     }
   ];
+
   return (
     <div className={cn(styles.container, className)}>
       {elements.map(({ title, value }, index) => (

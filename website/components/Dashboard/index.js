@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import i18next from 'i18next';
