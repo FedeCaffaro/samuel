@@ -1,24 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
+/* eslint-disable camelcase */
+import { useEffect, useState } from 'react';
 
+import { SAMOT_DROPS } from '../constants/drops';
 import { getAssets } from '../services/CollectionService';
 import { mapAssetsToOwnerData } from '../utils/assets';
 
-export const useGetOwnerData = (payload) => {
-  const fullPayload = useMemo(
-    () => ({
-      limit: 50,
-      offset: 0,
-      ...payload
-    }),
-    [payload]
-  );
-
+export const useGetOwnerData = (account) => {
   const [ownerData, setOwnerData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('useGetOwnerData', account);
     setLoading(true);
-    getAssets(fullPayload)
+    getAssets({
+      limit: 50,
+      offset: 0,
+      asset_contract_address: SAMOT_DROPS.contract,
+      owner: account
+    })
       .then(({ data }) => {
         setOwnerData(mapAssetsToOwnerData(data.assets));
         setLoading(false);
@@ -26,9 +25,7 @@ export const useGetOwnerData = (payload) => {
       .catch(() => {
         setLoading(false);
       });
-  }, [fullPayload]);
+  }, [account]);
 
   return [ownerData, loading];
 };
-
-export default useGetOwnerData;

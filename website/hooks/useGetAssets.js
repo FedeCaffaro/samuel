@@ -24,6 +24,7 @@ export const useGetAssets = (payload) => {
         setLoading(false);
       })
       .catch(() => {
+        setAssets([]);
         setLoading(false);
       });
   }, [fullPayload]);
