@@ -20,16 +20,16 @@ function WalletBottom({ mobile }) {
     dispatch(actions.setWallet(null));
   };
 
-  return (
+  return account ? (
     <div
       className={cn(styles.container, {
         [styles.mobile]: mobile
       })}
     >
-      <span className={styles.wallet}>Wallet: ...{account.substr(-8)} </span>
+      <span className={styles.wallet}>Wallet: ...{account?.substr(-8)} </span>
       <img className={styles.close} src={CLOSE_ICON} onClick={onClose} />
     </div>
-  );
+  ) : null;
 }
 
 export default WalletBottom;

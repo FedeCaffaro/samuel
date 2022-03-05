@@ -12,6 +12,8 @@
   height: 36px;
   padding: 0 20px;
 
+  animation: appear 0.5s ease-in-out;
+
   border-radius: 4px 4px 0 0;
   background-color: $samot-blue;
 
@@ -41,6 +43,16 @@
         padding: 10px 20px;
       }
     }
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
