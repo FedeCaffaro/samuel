@@ -21,21 +21,21 @@ export const actionCreators = {
     type: actions.GET_COLLECTION,
     target: TARGETS.CURRENT_COLLECTION,
     payload: collectionSlug,
-    service: CollectionService.getCollection,
+    // service: CollectionService.getCollection,
     successSelector: ({ data }) => mapCollectionFromService(data.collection)
   }),
   getAssets: (payload) => ({
     type: actions.GET_ASSETS,
     target: TARGETS.CURRENT_ASSETS,
     payload,
-    service: CollectionService.getAssets,
+    // service: CollectionService.getAssets,
     successSelector: ({ data }) => mapAssetsFromService(data.assets)
   }),
   getOwnerData: (payload) => ({
     type: actions.GET_OWNER_DATA,
     target: TARGETS.CURRENT_OWNER,
     payload: { limit: 50, offset: 0, ...payload },
-    service: CollectionService.getAssets,
+    // service: CollectionService.getAssets,
     successSelector: ({ data }) => mapAssetsToOwnerData(data.assets)
   })
 };
