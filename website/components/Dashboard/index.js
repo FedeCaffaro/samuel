@@ -10,7 +10,7 @@ import { claimRewards } from '../../utils/staking';
 import { SAMOT_DROPS } from '../../constants/drops';
 import Stats from '../Stats';
 import { ARROW_IMG } from '../../constants/images-paths';
-import useGetOwnerData from '../../hooks/useGetOwnerData';
+import { useGetOwnerData } from '../../hooks/useGetOwnerData';
 
 import styles from './styles.module.scss';
 import { claimErrorRender, claimSuccessRender } from './utils';
@@ -22,10 +22,7 @@ function Dashboard() {
 
   const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, getAllData } = useGetAssetsData(wallet);
 
-  const [currentOwner] = useGetOwnerData({
-    asset_contract_address: SAMOT_DROPS.contract,
-    owner: wallet?.account
-  });
+  const [currentOwner] = useGetOwnerData(wallet?.account);
 
   const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
 
