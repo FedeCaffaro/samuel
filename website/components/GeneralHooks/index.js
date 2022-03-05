@@ -44,8 +44,6 @@ function GeneralHooks() {
 
   // Check if is owner
   useEffect(() => {
-    // Check if is owner
-    console.log('wallet', wallet?.account);
     if (wallet?.account) {
       getAssets({
         limit: 50,
