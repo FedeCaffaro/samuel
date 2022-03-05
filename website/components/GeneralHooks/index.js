@@ -56,6 +56,7 @@ function GeneralHooks() {
         stakeOf(wallet.account).then((stake) =>
           depositsOf(wallet.account).then((deposits) => {
             const owning = data.assets.length + stake.length + deposits.length;
+            // eslint-disable-next-line no-console
             console.info('User owns', owning);
 
             if (owning === 0) {
