@@ -1,27 +1,32 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import i18next from 'i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { useGetAssetsData } from '../../hooks/UseLoadAssets';
 import { claimRewards } from '../../utils/staking';
-import actions from '../../redux/Settings/actions';
 import { SAMOT_DROPS } from '../../constants/drops';
 import Stats from '../Stats';
 import { ARROW_IMG } from '../../constants/images-paths';
+import useGetOwnerData from '../../hooks/useGetOwnerData';
 
 import styles from './styles.module.scss';
 import { claimErrorRender, claimSuccessRender } from './utils';
 import StakingTabs from './components/StakingTabs';
 
 function Dashboard() {
-  const { currentOwner, wallet } = useSelector((state) => state.settings);
+  const { wallet } = useSelector((state) => state.settings);
   const [tabsLoading, setTabsLoading] = useState(false);
-  const dispatch = useDispatch();
 
   const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, getAllData } = useGetAssetsData(wallet);
+
+  const [currentOwner] = useGetOwnerData({
+    asset_contract_address: SAMOT_DROPS.contract,
+    owner: wallet?.account
+  });
+
   const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
 
   const renderAndGetData =
@@ -41,16 +46,16 @@ function Dashboard() {
       error: { render: claimErrorRender }
     });
 
-  useEffect(() => {
-    if (wallet?.account) {
-      dispatch(
-        actions.getOwnerData({
-          asset_contract_address: SAMOT_DROPS.contract,
-          owner: wallet?.account
-        })
-      );
-    }
-  }, [wallet, stakedIdsV1, stakedIdsV2]);
+  // useEffect(() => {
+  //   if (wallet?.account) {
+  //     dispatch(
+  //       actions.getOwnerData({
+  //         asset_contract_address: SAMOT_DROPS.contract,
+  //         owner: wallet?.account
+  //       })
+  //     );
+  //   }
+  // }, [wallet, stakedIdsV1, stakedIdsV2]);
 
   return (
     <div className={styles['center-content']}>

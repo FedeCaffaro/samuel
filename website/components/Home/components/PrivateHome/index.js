@@ -9,16 +9,22 @@ import { ROUTES } from '../../../../constants/routes';
 import { useGetAssetsData } from '../../../../hooks/UseLoadAssets';
 import { SAMOT_DROPS } from '../../../../constants/drops';
 import actions from '../../../../redux/Settings/actions';
+import useGetOwnerData from '../../../../hooks/useGetOwnerData';
 
 import styles from './styles.module.scss';
 
 function PrivateHome() {
   const dispatch = useDispatch();
-  const { wallet, currentOwner } = useSelector((state) => state.settings);
+  const { wallet } = useSelector((state) => state.settings);
 
-  const name = currentOwner?.name;
   const { stakedIdsV1, stakedIdsV2, balanceTokens } = useGetAssetsData(wallet);
 
+  const [currentOwner] = useGetOwnerData({
+    asset_contract_address: SAMOT_DROPS.contract,
+    owner: wallet?.account
+  });
+
+  const name = currentOwner?.name;
   const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
 
   useEffect(() => {
