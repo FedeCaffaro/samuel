@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import i18next from 'i18next';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
 
@@ -15,8 +15,8 @@ import {
 import { stakeNFTs, unstakeNFTs, unstakeNFTsV1 } from '../../../../utils/staking';
 import Asset from '../../../Assets';
 import LoadingWrapper from '../../../LoadingWrapper';
-import actions from '../../../../redux/Settings/actions';
 import { SAMOT_DROPS } from '../../../../constants/drops';
+import useGetAssets from '../../../../hooks/useGetAssets';
 
 import styles from './styles.module.scss';
 
@@ -29,10 +29,17 @@ function StakingTabs({
   startTabsLoading,
   stopTabsLoading
 }) {
-  const dispatch = useDispatch();
-  const { currentAssets, currentAssetsLoading, wallet } = useSelector((state) => state.settings);
+  const { wallet } = useSelector((state) => state.settings);
+
   const [selecteds, setSelecteds] = useState([]);
   const [tabSelected, setTabSelected] = useState(TABS.STAKED);
+
+  const [currentAssetsPayload, setCurrentAssetsPayload] = useState({
+    asset_contract_address: SAMOT_DROPS.contract,
+    ...tabSelected.getQueryParams(wallet?.account, [...stakedIdsV1, ...stakedIdsV2])
+  });
+
+  const [currentAssets, currentAssetsLoading] = useGetAssets(currentAssetsPayload);
 
   // TODO: Add max 20 limit
   const onSelectAsset = (asset) => () =>
@@ -96,14 +103,10 @@ function StakingTabs({
 
   useEffect(() => {
     if (wallet?.account) {
-      dispatch(
-        actions.getAssets({
-          asset_contract_address: SAMOT_DROPS.contract,
-          limit: 50,
-          offset: 0,
-          ...tabSelected.getQueryParams(wallet?.account, [...stakedIdsV1, ...stakedIdsV2])
-        })
-      );
+      setCurrentAssetsPayload({
+        asset_contract_address: SAMOT_DROPS.contract,
+        ...tabSelected.getQueryParams(wallet?.account, [...stakedIdsV1, ...stakedIdsV2])
+      });
     }
   }, [wallet, tabSelected, stakedIdsV1, stakedIdsV2]);
 

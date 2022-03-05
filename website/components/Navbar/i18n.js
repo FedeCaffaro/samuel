@@ -21,7 +21,6 @@ i18n.addResources('es', 'Navbar', {
   roadmap: 'Roadmap',
   community: 'Comunidad',
   connectWallet: 'Conectar Wallet',
-  ownersDashboard: 'Dashboard Propietarios',
   ownersDashboard: 'Dashboard de Propietarios'
 });
 

@@ -8,8 +8,13 @@
   margin-top: 40px;
 
   transition: all 200ms ease-in-out;
+  text-align: center;
 
   background-image: url('../../../../public/assets/home/circle-button.png');
+
+  @include lg {
+    margin-bottom: 30px;
+  }
 
   &:hover {
     transform: scale(1.06);
@@ -34,4 +39,8 @@
 
 .logo {
   height: 165px;
+
+  @include lg {
+    display: none;
+  }
 }

@@ -22,6 +22,22 @@
 
   &.big {
     font-size: 25px;
+
+    @include xxl {
+      font-size: 20px;
+    }
+    @include xl {
+      font-size: 14px;
+      line-height: 60.9%;
+    }
+    @include lg {
+      font-size: 20px;
+      line-height: 75.9%;
+    }
+    @include md {
+      font-size: 12px;
+      line-height: 60%;
+    }
   }
 }
 
@@ -35,6 +51,25 @@
 
   &.big {
     font-size: 63px;
+
+    @include xxl {
+      font-size: 58px;
+    }
+    @include xl {
+      font-size: 34px;
+    }
+    @include lg {
+      font-size: 45px;
+    }
+    @include md {
+      font-size: 30px;
+    }
+    @include sm {
+      font-size: 26px;
+    }
+    @include xs {
+      font-size: 18px;
+    }
   }
 }
 
@@ -48,5 +83,28 @@
   &.big {
     height: 75px;
     margin: 0 90px;
+
+    @include xxl {
+      height: 70px;
+    }
+    @include xl {
+      height: 58px;
+      margin: 0 50px;
+    }
+    @include lg {
+      height: 70px;
+    }
+    @include md {
+      height: 55px;
+      margin: 0 35px;
+    }
+    @include sm {
+      height: 40px;
+      margin: 0 25px;
+    }
+    @include xs {
+      height: 30px;
+      margin: 0 7px;
+    }
   }
 }

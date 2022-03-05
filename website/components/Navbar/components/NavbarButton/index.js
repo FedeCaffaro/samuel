@@ -5,20 +5,36 @@ import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
-function NavbarButton({ text, icon, link, onClick = () => {}, iconClassName, isOwner }) {
+function NavbarButton({ text, icon, link, onClick = () => {}, iconClassName, isOwner, big, newTab = false }) {
   const router = useRouter();
   const handleClick = link ? () => router.push(link) : onClick;
+  const Component = newTab ? 'a' : 'div';
 
   return (
-    <div
+    <Component
       className={cn(styles['menu-container'], {
         [styles.owner]: isOwner
       })}
-      onClick={handleClick}
+      {...(newTab ? { href: link, target: '_blank', rel: 'noopener noreferrer' } : { onClick: handleClick })}
     >
-      <span className={styles['menu-text']}>{text}</span>
-      {icon && <img src={icon} className={cn(styles['menu-icon'], iconClassName)} />}
-    </div>
+      {text && (
+        <span
+          className={cn(styles['menu-text'], {
+            [styles.big]: big
+          })}
+        >
+          {text}
+        </span>
+      )}
+      {icon && (
+        <img
+          src={icon}
+          className={cn(styles['menu-icon'], iconClassName, {
+            [styles.big]: big
+          })}
+        />
+      )}
+    </Component>
   );
 }
 

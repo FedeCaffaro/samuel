@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import { ROUTES } from '../../constants/routes';
 import { useClickedOutside } from '../../hooks/useClickedOutside';
@@ -10,9 +11,10 @@ import { LOGO } from '../../constants/images-paths';
 import LanguageMenu from './components/LanguageMenu';
 import NavbarButton from './components/NavbarButton';
 import CommunityMenu from './components/CommunityMenu';
-import { LINK_ICON } from './constants';
+import { BURGUER_ICON, LINK_ICON } from './constants';
 import styles from './styles.module.scss';
 import { getNavbarItems } from './utils';
+import BurgerMenu from './components/BurguerMenu';
 
 function Navbar({ showLogo = true }) {
   const { onConnectWallet } = useConnectWallet();
@@ -21,6 +23,7 @@ function Navbar({ showLogo = true }) {
 
   const [isOpenLanguageModal, setIsOpenLanguageModal] = useState(false);
   const [isOpenCommunityModal, setIsOpenCommunityModal] = useState(false);
+  const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
 
   const toggleLanguageModal = () => setIsOpenLanguageModal(!isOpenLanguageModal);
   const toggleCommunityModal = () => setIsOpenCommunityModal(!isOpenCommunityModal);
@@ -55,22 +58,38 @@ function Navbar({ showLogo = true }) {
         isOwner={isConnected}
         showingLogo={showLogo}
       />
+      <BurgerMenu
+        isOpen={isOpenBurgerMenu}
+        isOwner={isConnected}
+        handleClose={() => setIsOpenBurgerMenu(false)}
+        onConnectWallet={onConnectWallet}
+      />
       <div className={styles.container}>
         <div className={styles['row-navbar']}>
           <div className={styles['left-container']}>
-            {showLogo && <img src={LOGO} className={styles.logo} />}
-            {navbarItems.map(({ label, ...props }) => (
-              <NavbarButton key={label} text={label} isOwner={isConnected} {...props} />
-            ))}
+            <img
+              src={LOGO}
+              className={cn(styles.logo, {
+                [styles.hide]: !showLogo
+              })}
+            />
+            <div className={styles['only-desktop']}>
+              {navbarItems.map(({ label, ...props }) => (
+                <NavbarButton key={label} text={label} isOwner={isConnected} {...props} />
+              ))}
+            </div>
           </div>
-          <NavbarButton
-            text={i18next.t(`Navbar:${isConnected ? 'ownersDashboard' : 'connectWallet'}`)}
-            icon={LINK_ICON}
-            onClick={isConnected ? null : onConnectWallet}
-            link={isConnected ? ROUTES.DASHBOARD.pagePath : null}
-            iconClassName={styles['link-icon']}
-            isOwner={isConnected}
-          />
+          <div className={styles['only-desktop']}>
+            <NavbarButton
+              text={i18next.t(`Navbar:${isConnected ? 'ownersDashboard' : 'connectWallet'}`)}
+              icon={LINK_ICON}
+              onClick={isConnected ? null : onConnectWallet}
+              link={isConnected ? ROUTES.DASHBOARD.pagePath : null}
+              iconClassName={styles['link-icon']}
+              isOwner={isConnected}
+            />
+          </div>
+          <img src={BURGUER_ICON} className={styles['menu-icon']} onClick={() => setIsOpenBurgerMenu(true)} />
         </div>
       </div>
     </>

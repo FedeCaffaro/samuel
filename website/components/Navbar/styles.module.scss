@@ -28,16 +28,49 @@
   .middle;
 
   pointer-events: all;
+}
+
+.logo {
+  height: 30px;
+  margin-right: 50px;
+
+  filter: drop-shadow(0px -1px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 4px 11px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 21px #000);
+
+  &.hide {
+    display: none;
+
+    @include lg {
+      display: block;
+    }
+  }
+}
+
+.only-desktop {
+  @extend .row,
+  .start,
+  .middle;
+
+  @include lg {
+    display: none;
+  }
 
   & > * {
     margin-right: 50px;
   }
 }
 
-.logo {
-  height: 30px;
-}
-
 .link-icon {
   height: 11px;
+}
+
+.menu-icon {
+  display: none;
+
+  height: 20px;
+
+  @include lg {
+    display: block;
+  }
+
+  filter: drop-shadow(0px -1px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 4px 11px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 21px #000);
 }

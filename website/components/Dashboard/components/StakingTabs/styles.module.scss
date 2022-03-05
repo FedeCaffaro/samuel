@@ -28,6 +28,12 @@
 
   color: rgba($white, 0.6);
 
+@include sm {
+    font-size: 26px;
+
+    margin-right: 8px;
+  }
+
   &.selected,
   &:hover {
     color: $white;
@@ -50,6 +56,17 @@
   border-radius: 1px;
   background-color: $samot-blue;
 
+@include md {
+    font-size: 20px;
+
+    position: fixed;
+    right: 5%;
+    bottom: 10px;
+
+    width: 90%;
+    height: 40px;
+  }
+
   &:hover {
     background-color: rgba($samot-blue, 0.8);
   }
@@ -62,6 +79,7 @@
 
   flex-wrap: wrap;
 
+  width: 100%;
   max-width: 950px;
   margin: 10px -1.7%;
 }
