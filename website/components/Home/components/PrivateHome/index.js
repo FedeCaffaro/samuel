@@ -10,6 +10,7 @@ import { useGetAssetsData } from '../../../../hooks/UseLoadAssets';
 import { SAMOT_DROPS } from '../../../../constants/drops';
 import actions from '../../../../redux/Settings/actions';
 import { useGetOwnerData } from '../../../../hooks/useGetOwnerData';
+import WalletBottom from '../../../WalletBottom';
 
 import styles from './styles.module.scss';
 
@@ -36,26 +37,29 @@ function PrivateHome() {
   }, [wallet, stakedIdsV1, stakedIdsV2]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles['first-line']}>
-        <span className={styles['text-full']}>{i18next.t('Home:hi', { name })}</span>
-        <div className={styles['graff-container']}>
-          <span className={styles.graff}>{name}</span>
+    <>
+      <div className={styles.container}>
+        <div className={styles['first-line']}>
+          <span className={styles['text-full']}>{i18next.t('Home:hi', { name })}</span>
+          <div className={styles['graff-container']}>
+            <span className={styles.graff}>{name}</span>
+          </div>
         </div>
+        <span className={styles['text-full']}>{i18next.t('Home:welcomeBack')}</span>
+        <Stats
+          owned={owned}
+          staked={[...stakedIdsV1, ...stakedIdsV2].length}
+          balance={balanceTokens}
+          className={styles.stats}
+        />
+        <Link href={ROUTES.DASHBOARD.pagePath}>
+          <button className={styles['button-dashboard']} type="button">
+            {i18next.t('Home:goToDashboard')}
+          </button>
+        </Link>
       </div>
-      <span className={styles['text-full']}>{i18next.t('Home:welcomeBack')}</span>
-      <Stats
-        owned={owned}
-        staked={[...stakedIdsV1, ...stakedIdsV2].length}
-        balance={balanceTokens}
-        className={styles.stats}
-      />
-      <Link href={ROUTES.DASHBOARD.pagePath}>
-        <button className={styles['button-dashboard']} type="button">
-          {i18next.t('Home:goToDashboard')}
-        </button>
-      </Link>
-    </div>
+      <WalletBottom />
+    </>
   );
 }
 

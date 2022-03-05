@@ -11,6 +11,7 @@ import { SAMOT_DROPS } from '../../constants/drops';
 import Stats from '../Stats';
 import { ARROW_IMG } from '../../constants/images-paths';
 import { useGetOwnerData } from '../../hooks/useGetOwnerData';
+import WalletBottom from '../WalletBottom';
 
 import styles from './styles.module.scss';
 import { claimErrorRender, claimSuccessRender } from './utils';
@@ -44,49 +45,52 @@ function Dashboard() {
     });
 
   return (
-    <div className={styles['center-content']}>
-      <div className={styles['title-line']}>
-        <span className={styles['title-blue']}>{i18next.t('Dashboard:title')}</span>
-        <div className={styles['graff-container-start']}>
-          <span className={styles['graff-top']}>{i18next.t('Dashboard:owners')}</span>
+    <>
+      <div className={styles['center-content']}>
+        <div className={styles['title-line']}>
+          <span className={styles['title-blue']}>{i18next.t('Dashboard:title')}</span>
+          <div className={styles['graff-container-start']}>
+            <span className={styles['graff-top']}>{i18next.t('Dashboard:owners')}</span>
+          </div>
+          <div className={styles['graff-container-end']}>
+            <span className={styles['graff-bottom']}>{i18next.t('Dashboard:dashboard')}</span>
+          </div>
         </div>
-        <div className={styles['graff-container-end']}>
-          <span className={styles['graff-bottom']}>{i18next.t('Dashboard:dashboard')}</span>
-        </div>
-      </div>
 
-      <div className={styles['stats-container']}>
-        <Stats
-          owned={owned}
-          staked={[...stakedIdsV1, ...stakedIdsV2].length}
-          balance={balanceTokens}
-          className={styles.stats}
-          big
+        <div className={styles['stats-container']}>
+          <Stats
+            owned={owned}
+            staked={[...stakedIdsV1, ...stakedIdsV2].length}
+            balance={balanceTokens}
+            className={styles.stats}
+            big
+          />
+        </div>
+
+        <div className={styles.divider} />
+
+        <div className={styles['button-container']}>
+          <img src={ARROW_IMG} className={styles['arrows-left']} />
+          <button type="button" className={styles.claim} onClick={claimTotalRewards}>
+            {i18next.t('Dashboard:claimRewards', { rewards: stakingRewards })}
+          </button>
+          <img src={ARROW_IMG} className={styles['arrows-right']} />
+        </div>
+
+        <div className={styles.divider2} />
+
+        <StakingTabs
+          tabsLoading={tabsLoading}
+          startTabsLoading={() => setTabsLoading(true)}
+          stopTabsLoading={() => setTabsLoading(false)}
+          renderAndGetData={renderAndGetData}
+          stakedIdsV1={stakedIdsV1}
+          stakedIdsV2={stakedIdsV2}
+          unstakedCount={currentOwner?.countAssets}
         />
       </div>
-
-      <div className={styles.divider} />
-
-      <div className={styles['button-container']}>
-        <img src={ARROW_IMG} className={styles['arrows-left']} />
-        <button type="button" className={styles.claim} onClick={claimTotalRewards}>
-          {i18next.t('Dashboard:claimRewards', { rewards: stakingRewards })}
-        </button>
-        <img src={ARROW_IMG} className={styles['arrows-right']} />
-      </div>
-
-      <div className={styles.divider2} />
-
-      <StakingTabs
-        tabsLoading={tabsLoading}
-        startTabsLoading={() => setTabsLoading(true)}
-        stopTabsLoading={() => setTabsLoading(false)}
-        renderAndGetData={renderAndGetData}
-        stakedIdsV1={stakedIdsV1}
-        stakedIdsV2={stakedIdsV2}
-        unstakedCount={currentOwner?.countAssets}
-      />
-    </div>
+      <WalletBottom />
+    </>
   );
 }
 

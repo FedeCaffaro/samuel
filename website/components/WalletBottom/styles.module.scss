@@ -1,0 +1,59 @@
+@import '../../scss/imports';
+
+.container {
+  @extend .row,
+  .center,
+  .middle;
+
+  position: fixed;
+  right: 20px;
+  bottom: 0;
+
+  height: 36px;
+  padding: 0 20px;
+
+  border-radius: 4px 4px 0 0;
+  background-color: $samot-blue;
+
+  @include lg {
+    display: none;
+
+    &.mobile {
+      z-index: 9999;
+      right: unset;
+      left: 30vw;
+
+      display: flex;
+
+      width: 40vw;
+      margin: 0 auto;
+
+      @include md {
+        left: 25vw;
+
+        width: 50vw;
+      }
+      @include sm {
+        left: 10vw;
+
+        width: 80vw;
+        height: unset;
+        padding: 10px 20px;
+      }
+    }
+  }
+}
+
+.wallet {
+  font-size: 20px;
+  font-weight: 500;
+
+  text-transform: uppercase;
+}
+
+.close {
+  height: 16px;
+  margin-left: 20px;
+
+  cursor: pointer;
+}
