@@ -46,17 +46,6 @@ function Dashboard() {
       error: { render: claimErrorRender }
     });
 
-  // useEffect(() => {
-  //   if (wallet?.account) {
-  //     dispatch(
-  //       actions.getOwnerData({
-  //         asset_contract_address: SAMOT_DROPS.contract,
-  //         owner: wallet?.account
-  //       })
-  //     );
-  //   }
-  // }, [wallet, stakedIdsV1, stakedIdsV2]);
-
   return (
     <div className={styles['center-content']}>
       <div className={styles['title-line']}>
