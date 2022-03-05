@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+/* eslint-disable camelcase */
+import { useEffect } from 'react';
 import { useWallet } from 'use-wallet';
 
-import { getWallet, setWallet } from '../services/LocalStorageService';
+import { setWallet } from '../services/LocalStorageService';
 import { mapWallet } from '../utils/wallet';
 
 export const useConnectWallet = () => {
@@ -19,6 +18,5 @@ export const useConnectWallet = () => {
       location.reload();
     }
   }, [wallet]);
-
   return { onConnectWallet };
 };

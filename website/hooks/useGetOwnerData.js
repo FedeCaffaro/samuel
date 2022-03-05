@@ -10,7 +10,6 @@ export const useGetOwnerData = (account) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useGetOwnerData', account);
     setLoading(true);
     getAssets({
       limit: 50,
