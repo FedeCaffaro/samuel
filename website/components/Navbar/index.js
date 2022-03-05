@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 
 import { ROUTES } from '../../constants/routes';
 import { useClickedOutside } from '../../hooks/useClickedOutside';
@@ -17,6 +18,7 @@ import { getNavbarItems } from './utils';
 import BurgerMenu from './components/BurguerMenu';
 
 function Navbar({ showLogo = true }) {
+  const router = useRouter();
   const { onConnectWallet } = useConnectWallet();
   const wallet = useSelector((state) => state.settings.wallet);
   const isConnected = !!wallet?.account;
@@ -72,6 +74,7 @@ function Navbar({ showLogo = true }) {
               className={cn(styles.logo, {
                 [styles.hide]: !showLogo
               })}
+              onClick={() => router.push(ROUTES.HOME.pagePath)}
             />
             <div className={styles['only-desktop']}>
               {navbarItems.map(({ label, ...props }) => (
