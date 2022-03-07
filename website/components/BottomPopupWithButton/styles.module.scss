@@ -1,0 +1,55 @@
+@import '../../scss/imports';
+
+.fixed {
+  @extend .center-child;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100vw;
+}
+
+.container {
+  @extend .row,
+  .center,
+  .middle;
+
+  align-self: center;
+
+  padding: 20px 35px;
+
+  border-radius: 10px 10px 0 0;
+  background-color: rgba($black, 0.8);
+}
+
+.message {
+  font-size: 20px;
+  font-weight: 500;
+
+  text-transform: uppercase;
+}
+
+.button {
+  @extend .center-child;
+
+  font-size: 20px;
+  font-weight: 500;
+
+  height: 39px;
+  margin-left: 44px;
+  padding: 0 30px;
+
+  text-transform: uppercase;
+
+  color: $white;
+  border-radius: 2px;
+}
+
+.close {
+  position: relative;
+  top: -20px;
+  right: -20px;
+
+  height: 15px;
+}

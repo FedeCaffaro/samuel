@@ -3,7 +3,9 @@ import React from 'react';
 
 import { LOGO } from '../../../../constants/images-paths';
 import { MINT_FORM_WEB } from '../../../../constants/links';
+import BottomPopupWithButton from '../../../BottomPopupWithButton';
 
+import { DISCORD_LINK } from './constants';
 import styles from './styles.module.scss';
 
 function PublicHome() {
@@ -21,6 +23,12 @@ function PublicHome() {
           {i18next.t('Home:mint')}
         </a>
       </div>
+      <BottomPopupWithButton
+        text={i18next.t('Home:discordPopup')}
+        href={DISCORD_LINK}
+        buttonClassname={styles.discord}
+        buttonLabel={i18next.t('Home:discord')}
+      />
     </>
   );
 }

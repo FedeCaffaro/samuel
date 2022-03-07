@@ -4,19 +4,25 @@ i18n.addResources('en', 'Home', {
   mint: 'Mint a Samot',
   hi: 'Hi, {{name}}',
   welcomeBack: 'Welcome back',
-  goToDashboard: 'Open  Dashboard'
+  goToDashboard: 'Open  Dashboard',
+  discordPopup: 'join the community and find out all the news',
+  discord: 'Discord'
 });
 
 i18n.addResources('es', 'Home', {
   mint: 'Mintear un Samot',
   hi: 'Hola, {{name}}',
   welcomeBack: 'Bienvenido de nuevo',
-  goToDashboard: 'Abrir el Dashboard'
+  goToDashboard: 'Abrir el Dashboard',
+  discordPopup: 'Únete a la comunidad y descubre todas las noticias',
+  discord: 'Discord'
 });
 
 i18n.addResources('pr', 'Home', {
   mint: 'Mintear um Samot',
   hi: 'Olá, {{name}}',
   welcomeBack: 'Bem-vindo de novo',
-  goToDashboard: 'Abrir o Dashboard'
+  goToDashboard: 'Abrir o Dashboard',
+  discordPopup: 'Junte-se à comunidade e descubra todas as notícias',
+  discord: 'Discord'
 });
