@@ -18,6 +18,7 @@ function WalletBottom({ mobile }) {
     setWallet(null);
     reset();
     dispatch(actions.setWallet(null));
+    location.reload();
   };
 
   return account ? (
@@ -26,7 +27,7 @@ function WalletBottom({ mobile }) {
         [styles.mobile]: mobile
       })}
     >
-      <span className={styles.wallet}>Wallet: ...{account?.substr(-8)} </span>
+      <span className={styles.wallet}>Wallet: ...{account?.substr(-4)} </span>
       <img className={styles.close} src={CLOSE_ICON} onClick={onClose} />
     </div>
   ) : null;
