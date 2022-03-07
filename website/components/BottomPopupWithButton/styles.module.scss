@@ -19,8 +19,42 @@
 
   padding: 20px 35px;
 
+  animation: translateFromBottom 1s ease-in-out;
+
   border-radius: 10px 10px 0 0;
   background-color: rgba($black, 0.8);
+
+  &.closing {
+    animation: translateToBottom 1s ease-in-out;
+  }
+}
+
+@keyframes translateFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  50% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes translateToBottom {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 .message {

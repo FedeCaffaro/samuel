@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 
 import { CLOSE_ICON } from '../Navbar/components/BurguerMenu/constants';
@@ -11,11 +11,24 @@ function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassna
     ? { href, target: '_blank', rel: 'noopener noreferrer' }
     : { onClick, type: 'button' };
 
-  const handleClose = () => console.log('CLOSE');
+  const [isOpen, setIsOpen] = useState(true);
+  const [isClosing, setIsClosing] = useState(false);
 
-  return (
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 600);
+  };
+
+  return isOpen ? (
     <div className={styles.fixed}>
-      <div className={styles.container}>
+      <div
+        className={cn(styles.container, {
+          [styles.closing]: isClosing
+        })}
+      >
         <span className={styles.message}>{text}</span>
         <Component className={cn(styles.button, buttonClassname)} {...componentProps}>
           {buttonLabel}
@@ -23,7 +36,7 @@ function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassna
         <img src={CLOSE_ICON} className={styles.close} onClick={handleClose} />
       </div>
     </div>
-  );
+  ) : null;
 }
 
 export default BottomPopupWithButton;
