@@ -48,10 +48,16 @@ function StakingTabs({
 
   const checkApprove = () => {
     setLoadingApprove(true);
-    return isApprovedForAll(SAMOT_DROPS.contract, wallet?.account).then((result) => {
-      setIsApproved(result);
-      setLoadingApprove(false);
-    });
+    return isApprovedForAll(SAMOT_DROPS.contract, wallet?.account)
+      .then((result) => {
+        setIsApproved(result);
+        setLoadingApprove(false);
+        stopTabsLoading();
+      })
+      .catch(() => {
+        setLoadingApprove(false);
+        stopTabsLoading();
+      });
   };
 
   useEffect(() => {
@@ -177,11 +183,7 @@ function StakingTabs({
           )}
         </div>
 
-        <LoadingWrapper
-          loading={currentAssetsLoading || tabsLoading}
-          className={styles.loading}
-          withInitialLoading
-        >
+        <LoadingWrapper loading={currentAssetsLoading || tabsLoading} className={styles.loading}>
           <div className={styles.assets}>
             {currentAssets?.map((asset) => (
               <Asset
