@@ -5,7 +5,17 @@ import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
-function NavbarButton({ text, icon, link, onClick = () => {}, iconClassName, isOwner, big, newTab = false }) {
+function NavbarButton({
+  text,
+  icon,
+  link,
+  onClick = () => {},
+  iconClassName,
+  isOwner,
+  big,
+  newTab = false,
+  download = false
+}) {
   const router = useRouter();
   const handleClick = link ? () => router.push(link) : onClick;
   const Component = newTab ? 'a' : 'div';
@@ -15,7 +25,9 @@ function NavbarButton({ text, icon, link, onClick = () => {}, iconClassName, isO
       className={cn(styles['menu-container'], {
         [styles.owner]: isOwner
       })}
-      {...(newTab ? { href: link, target: '_blank', rel: 'noopener noreferrer' } : { onClick: handleClick })}
+      {...(newTab
+        ? { href: link, target: '_blank', rel: 'noopener noreferrer', download }
+        : { onClick: handleClick })}
     >
       {text && (
         <span

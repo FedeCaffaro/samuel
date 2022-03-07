@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 import { getNavbarItems } from './utils';
 import BurgerMenu from './components/BurguerMenu';
 
-function Navbar({ showLogo = true }) {
+function Navbar({ showLogo = true, filter }) {
   const router = useRouter();
   const { onConnectWallet } = useConnectWallet();
   const wallet = useSelector((state) => state.settings.wallet);
@@ -30,7 +30,7 @@ function Navbar({ showLogo = true }) {
   const toggleLanguageModal = () => setIsOpenLanguageModal(!isOpenLanguageModal);
   const toggleCommunityModal = () => setIsOpenCommunityModal(!isOpenCommunityModal);
 
-  const navbarItems = getNavbarItems(toggleLanguageModal, toggleCommunityModal);
+  const navbarItems = getNavbarItems(toggleLanguageModal, toggleCommunityModal, filter);
 
   const languagesRef = useRef(null);
   const clickedOutsideLanguages = useClickedOutside(languagesRef);
