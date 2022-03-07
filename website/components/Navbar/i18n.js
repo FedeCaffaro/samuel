@@ -10,7 +10,8 @@ i18n.addResources('en', 'Navbar', {
   community: 'Community',
   connectWallet: 'Connect Wallet',
   ownersDashboard: 'Owners Dashboard',
-  notOwner: 'You are not the owner of any NFT'
+  notOwner: 'You are not the owner of any NFT',
+  mint: 'Mint'
 });
 
 i18n.addResources('es', 'Navbar', {
@@ -23,7 +24,8 @@ i18n.addResources('es', 'Navbar', {
   community: 'Comunidad',
   connectWallet: 'Conectar Wallet',
   ownersDashboard: 'Dashboard de Propietarios',
-  notOwner: 'No eres el propietario de ningún NFT'
+  notOwner: 'No eres el propietario de ningún NFT',
+  mint: 'Mintear'
 });
 
 i18n.addResources('pr', 'Navbar', {
@@ -36,5 +38,6 @@ i18n.addResources('pr', 'Navbar', {
   community: 'Comunidade',
   connectWallet: 'Conectar Carteira',
   ownersDashboard: 'Dashboard de Proprietários',
-  notOwner: 'Você não é o proprietário de nenhum NFT'
+  notOwner: 'Você não é o proprietário de nenhum NFT',
+  mint: 'Mintear'
 });

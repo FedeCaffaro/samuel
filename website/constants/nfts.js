@@ -1,4 +1,4 @@
-export const NFT2_ABI = [
+export const NFT_ABI = [
   {
     inputs: [
       {

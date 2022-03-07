@@ -1,7 +1,8 @@
 /* eslint-disable prefer-const */
 import Web3 from 'web3';
 
-import { NFT2_ABI } from '../constants/nfts';
+import { NFT_ABI } from '../constants/nfts';
+import { NFT2_ABI } from '../constants/nfts2';
 import { STAKING_ABI } from '../constants/staking';
 import { TOKEN_ABI } from '../constants/token';
 import { TOKEN_V2_ABI } from '../constants/tokenV2';
@@ -107,5 +108,27 @@ export const unstakeNFTsV1 = async (address, tokenIds) => {
   const nftContract = new web3Instance.eth.Contract(TOKEN_ABI, TOKEN_CONTRACT_ADDRESS);
   return nftContract.methods.unstakeNFTs(tokenIds).send({
     from: address
+  });
+};
+
+export const isApprovedForAll = async (contract, address) => {
+  const web3Instance = await getWeb3Instance();
+  const nftContract = new web3Instance.eth.Contract(NFT_ABI, contract);
+
+  return nftContract.methods.isApprovedForAll(address, STAKING_CONTRACT_ADDRESS).call();
+};
+
+export const setApproveForAll = async (contract, address) => {
+  const web3Instance = await getWeb3Instance();
+
+  return isApprovedForAll(contract, address).then((isApproved) => {
+    if (!isApproved) {
+      const nftContract = new web3Instance.eth.Contract(NFT_ABI, contract);
+      return nftContract.methods.setApprovalForAll(STAKING_CONTRACT_ADDRESS, true).send({
+        from: address
+      });
+    }
+
+    return Promise.reject(new Error('Error: The contract is already approved.'));
   });
 };

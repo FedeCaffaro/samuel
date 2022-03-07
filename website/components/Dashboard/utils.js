@@ -44,3 +44,13 @@ export const unstakingErrorRender = (error) => {
     reason: reason?.length ? reason[1] : 'Mint error.'
   });
 };
+
+export const approveSuccessRender = ({ transactionHash }) =>
+  successMessageWithLink(i18next.t('Dashboard:approveSuccess'), transactionHash);
+
+export const approveErrorRender = (error) => {
+  const reason = error?.message?.split(':');
+  return i18next.t('Dashboard:approveError', {
+    reason: reason?.length ? reason[1] : 'Try again later.'
+  });
+};

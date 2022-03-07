@@ -1,29 +1,45 @@
 import i18next from 'i18next';
 
+import { MINT_FORM_WEB } from '../../constants/links';
 import { ROUTES } from '../../constants/routes';
 
 import { DROPDOWN_ICON, LINK_ICON } from './constants';
 
-export const getNavbarItems = (onClickLenguage, onClickCommunity) => [
-  {
-    label: i18next.t('Navbar:whitepaper'),
-    link: '/whitepaper'
-  },
-  {
-    label: i18next.t('Navbar:roadmap'),
-    link: '/roadmap'
-  },
-  {
-    label: i18next.t('Navbar:community'),
-    onClick: onClickCommunity,
-    icon: DROPDOWN_ICON
-  },
-  {
-    label: i18next.t('Navbar:actualLanguage'),
-    onClick: onClickLenguage,
-    icon: DROPDOWN_ICON
-  }
-];
+export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () => true) =>
+  [
+    {
+      key: 'mint',
+      label: i18next.t('Navbar:mint'),
+      link: MINT_FORM_WEB,
+      newTab: true
+    },
+    {
+      key: 'whitepaper',
+      label: i18next.t('Navbar:whitepaper'),
+      link: '/whitepaper.pdf',
+      newTab: true,
+      download: true
+    },
+    {
+      key: 'roadmap',
+      label: i18next.t('Navbar:roadmap'),
+      link: '/roadmap.pdf',
+      newTab: true,
+      download: true
+    },
+    {
+      key: 'community',
+      label: i18next.t('Navbar:community'),
+      onClick: onClickCommunity,
+      icon: DROPDOWN_ICON
+    },
+    {
+      key: 'languages',
+      label: i18next.t('Navbar:actualLanguage'),
+      onClick: onClickLenguage,
+      icon: DROPDOWN_ICON
+    }
+  ].filter(filter);
 
 export const getBurguerMenuItems = (onConnectWallet, isConnected) => [
   {

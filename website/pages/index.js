@@ -10,7 +10,10 @@ const HomePage = () => {
   return (
     <>
       <Home />
-      <Navbar showLogo={!!wallet?.account} />
+      <Navbar
+        showLogo={!!wallet?.account}
+        filter={wallet?.account ? () => true : (item) => item.key !== 'mint'}
+      />
     </>
   );
 };
