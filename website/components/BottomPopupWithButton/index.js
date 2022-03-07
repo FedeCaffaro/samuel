@@ -5,7 +5,7 @@ import { CLOSE_ICON } from '../Navbar/components/BurguerMenu/constants';
 
 import styles from './styles.module.scss';
 
-function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassname, show, notClose }) {
+function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassname, show = true, notClose }) {
   const Component = href ? 'a' : 'button';
   const componentProps = href
     ? { href, target: '_blank', rel: 'noopener noreferrer' }
