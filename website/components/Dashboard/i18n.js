@@ -27,7 +27,8 @@ i18n.addResources('en', 'Dashboard', {
   unstaked: 'Unstaked ({{count}})',
   seeTransaction: 'Click to see transaction.',
   approveNeeded: 'To stake you need to approve the contract.',
-  approve: 'Approve'
+  approve: 'Approve',
+  notAproved: 'You need to approve the contract to stake.'
 });
 
 i18n.addResources('es', 'Dashboard', {
@@ -57,7 +58,8 @@ i18n.addResources('es', 'Dashboard', {
   unstaked: 'Desestakeado ({{count}})',
   seeTransaction: 'Haga clic para ver la transacción.',
   approveNeeded: 'Para stakear necesita aprobar el contrato.',
-  approve: 'Aprobar'
+  approve: 'Aprobar',
+  notAproved: 'Necesita aprobar el contrato para stakear.'
 });
 
 i18n.addResources('pr', 'Dashboard', {
@@ -87,5 +89,6 @@ i18n.addResources('pr', 'Dashboard', {
   unstaked: 'Desestakeado ({{count}})',
   seeTransaction: 'Clique para ver a transação.',
   approveNeeded: 'Para stakear você precisa aprovar o contrato.',
-  approve: 'Aprovar'
+  approve: 'Aprovar',
+  notAproved: 'Você precisa aprovar o contrato para stakear.'
 });

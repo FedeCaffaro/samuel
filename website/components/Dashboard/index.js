@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 import { useGetAssetsData } from '../../hooks/UseLoadAssets';
 import { claimRewards } from '../../utils/staking';
-import { SAMOT_DROPS } from '../../constants/drops';
 import Stats from '../Stats';
 import { ARROW_IMG } from '../../constants/images-paths';
 import { useGetOwnerData } from '../../hooks/useGetOwnerData';

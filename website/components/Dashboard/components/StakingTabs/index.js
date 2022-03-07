@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable camelcase */
 import i18next from 'i18next';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -41,7 +42,7 @@ function StakingTabs({
   const { wallet } = useSelector((state) => state.settings);
 
   const [selecteds, setSelecteds] = useState([]);
-  const [tabSelected, setTabSelected] = useState(TABS.STAKED);
+  const [tabSelected, setTabSelected] = useState(TABS.UNSTAKED);
   const [isApproved, setIsApproved] = useState(false);
   const [loadingApprove, setLoadingApprove] = useState(false);
 
@@ -68,9 +69,11 @@ function StakingTabs({
 
   // TODO: Add max 20 limit
   const onSelectAsset = (asset) => () =>
-    selecteds.includes(asset.tokenId)
-      ? setSelecteds(selecteds.filter((id) => id !== asset.tokenId))
-      : setSelecteds([...selecteds, asset.tokenId]);
+    isApproved
+      ? selecteds.includes(asset.tokenId)
+        ? setSelecteds(selecteds.filter((id) => id !== asset.tokenId))
+        : setSelecteds([...selecteds, asset.tokenId])
+      : toast.error(i18next.t('Dashboard:notAproved'));
   const isSelected = (asset) => selecteds.includes(asset.tokenId);
 
   const stake = () => {
@@ -108,7 +111,7 @@ function StakingTabs({
 
   const approve = () => {
     toast.promise(setApproveForAll(SAMOT_DROPS.contract, wallet.account), {
-      pending: i18next.t('Dashboard:approvingNfts'),
+      pending: i18next.t('Dashboard:aproving'),
       success: { render: renderAndGetData(approveSuccessRender, checkApprove) },
       error: { render: renderAndGetData(approveErrorRender, checkApprove) }
     });
