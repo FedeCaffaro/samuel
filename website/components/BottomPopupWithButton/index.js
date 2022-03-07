@@ -5,7 +5,7 @@ import { CLOSE_ICON } from '../Navbar/components/BurguerMenu/constants';
 
 import styles from './styles.module.scss';
 
-function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassname }) {
+function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassname, show, notClose }) {
   const Component = href ? 'a' : 'button';
   const componentProps = href
     ? { href, target: '_blank', rel: 'noopener noreferrer' }
@@ -22,7 +22,7 @@ function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassna
     }, 600);
   };
 
-  return isOpen ? (
+  return show && isOpen ? (
     <div className={styles.fixed}>
       <div
         className={cn(styles.container, {
@@ -33,7 +33,7 @@ function BottomPopupWithButton({ text, onClick, href, buttonLabel, buttonClassna
         <Component className={cn(styles.button, buttonClassname)} {...componentProps}>
           {buttonLabel}
         </Component>
-        <img src={CLOSE_ICON} className={styles.close} onClick={handleClose} />
+        {!notClose && <img src={CLOSE_ICON} className={styles.close} onClick={handleClose} />}
       </div>
     </div>
   ) : null;

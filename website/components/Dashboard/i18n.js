@@ -20,9 +20,14 @@ i18n.addResources('en', 'Dashboard', {
   unstakingNfts: 'Unstaking...',
   unstakingSuccess: 'Unstaked successfully!',
   unstakingError: 'Unstaking failed. Reason: {{reason}}',
+  aproving: 'Approving...',
+  approveSuccess: 'Approved successfully!',
+  approveError: 'Approving failed. Reason: {{reason}}',
   staked: 'Staked ({{count}})',
   unstaked: 'Unstaked ({{count}})',
-  seeTransaction: 'Click to see transaction.'
+  seeTransaction: 'Click to see transaction.',
+  approveNeeded: 'To stake you need to approve the contract.',
+  approve: 'Approve'
 });
 
 i18n.addResources('es', 'Dashboard', {
@@ -45,9 +50,14 @@ i18n.addResources('es', 'Dashboard', {
   unstakingNfts: 'Desestakeando...',
   unstakingSuccess: 'Desestakeado con éxito!',
   unstakingError: 'Fallo al desestakear. Razón: {{reason}}',
+  aproving: 'Aprobando...',
+  approveSuccess: 'Aprobado con éxito!',
+  approveError: 'Fallo al aprobar. Razón: {{reason}}',
   staked: 'Stakeado ({{count}})',
   unstaked: 'Desestakeado ({{count}})',
-  seeTransaction: 'Haga clic para ver la transacción.'
+  seeTransaction: 'Haga clic para ver la transacción.',
+  approveNeeded: 'Para stakear necesita aprobar el contrato.',
+  approve: 'Aprobar'
 });
 
 i18n.addResources('pr', 'Dashboard', {
@@ -70,7 +80,12 @@ i18n.addResources('pr', 'Dashboard', {
   unstakingNfts: 'Desestakeando...',
   unstakingSuccess: 'Desestakeado com sucesso!',
   unstakingError: 'Falha ao desestakear. Razão: {{reason}}',
+  aproving: 'Aprobando...',
+  approveSuccess: 'Aprovado com sucesso!',
+  approveError: 'Falha ao aprovar. Razão: {{reason}}',
   staked: 'Stakeado ({{count}})',
   unstaked: 'Desestakeado ({{count}})',
-  seeTransaction: 'Clique para ver a transação.'
+  seeTransaction: 'Clique para ver a transação.',
+  approveNeeded: 'Para stakear você precisa aprovar o contrato.',
+  approve: 'Aprovar'
 });

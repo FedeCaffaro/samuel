@@ -87,3 +87,11 @@
 .loading {
   height: 300px;
 }
+
+.approve-button {
+  background-color: $samot-blue;
+
+  &:hover {
+    background-color: rgba($samot-blue, 0.8);
+  }
+}

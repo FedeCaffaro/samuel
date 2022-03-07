@@ -7,16 +7,25 @@ import { toast } from 'react-toastify';
 
 import { TABS } from '../../constants';
 import {
+  approveErrorRender,
+  approveSuccessRender,
   stakingErrorRender,
   stakingSuccessRender,
   unstakingErrorRender,
   unstakingSuccessRender
 } from '../../utils';
-import { stakeNFTs, unstakeNFTs, unstakeNFTsV1 } from '../../../../utils/staking';
+import {
+  isApprovedForAll,
+  setApproveForAll,
+  stakeNFTs,
+  unstakeNFTs,
+  unstakeNFTsV1
+} from '../../../../utils/staking';
 import Asset from '../../../Assets';
 import LoadingWrapper from '../../../LoadingWrapper';
 import { SAMOT_DROPS } from '../../../../constants/drops';
 import useGetAssets from '../../../../hooks/useGetAssets';
+import BottomPopupWithButton from '../../../BottomPopupWithButton';
 
 import styles from './styles.module.scss';
 
@@ -33,6 +42,22 @@ function StakingTabs({
 
   const [selecteds, setSelecteds] = useState([]);
   const [tabSelected, setTabSelected] = useState(TABS.STAKED);
+  const [isApproved, setIsApproved] = useState(false);
+  const [loadingApprove, setLoadingApprove] = useState(false);
+
+  const checkApprove = () => {
+    setLoadingApprove(true);
+    return isApprovedForAll(SAMOT_DROPS.contract, wallet?.account).then((result) => {
+      setIsApproved(result);
+      setLoadingApprove(false);
+    });
+  };
+
+  useEffect(() => {
+    if (wallet?.account) {
+      checkApprove();
+    }
+  }, [wallet]);
 
   const [currentAssetsPayload, setCurrentAssetsPayload] = useState({
     asset_contract_address: SAMOT_DROPS.contract,
@@ -81,6 +106,14 @@ function StakingTabs({
     }
   };
 
+  const approve = () => {
+    toast.promise(setApproveForAll(SAMOT_DROPS.contract, wallet.account), {
+      pending: i18next.t('Dashboard:approvingNfts'),
+      success: { render: renderAndGetData(approveSuccessRender, checkApprove) },
+      error: { render: renderAndGetData(approveErrorRender, checkApprove) }
+    });
+  };
+
   const buttonProps = {
     [TABS.STAKED.key]: {
       onClick: unstake,
@@ -112,49 +145,59 @@ function StakingTabs({
 
   return (
     <>
-      <div className={styles['top-row']}>
-        <div className={styles.tabs}>
-          {Object.values(TABS).map(({ label, key }) => (
+      <LoadingWrapper loading={loadingApprove}>
+        <div className={styles['top-row']}>
+          <div className={styles.tabs}>
+            {Object.values(TABS).map(({ label, key }) => (
+              <button
+                type="button"
+                key={key}
+                className={cn(styles.tab, {
+                  [styles.selected]: tabSelected.key === key
+                })}
+                onClick={() => setTabSelected(TABS[key])}
+              >
+                {label(key === TABS.STAKED.key ? [...stakedIdsV1, ...stakedIdsV2].length : unstakedCount)}
+              </button>
+            ))}
+          </div>
+
+          {isApproved && !!selecteds.length && (
             <button
               type="button"
-              key={key}
-              className={cn(styles.tab, {
-                [styles.selected]: tabSelected.key === key
-              })}
-              onClick={() => setTabSelected(TABS[key])}
+              className={styles['tab-button']}
+              onClick={buttonOnClick}
+              disabled={currentAssetsLoading}
             >
-              {label(key === TABS.STAKED.key ? [...stakedIdsV1, ...stakedIdsV2].length : unstakedCount)}
+              {buttonLabel}
             </button>
-          ))}
+          )}
         </div>
 
-        {!!selecteds.length && (
-          <button
-            type="button"
-            className={styles['tab-button']}
-            onClick={buttonOnClick}
-            disabled={currentAssetsLoading}
-          >
-            {buttonLabel}
-          </button>
-        )}
-      </div>
-
-      <LoadingWrapper
-        loading={currentAssetsLoading || tabsLoading}
-        className={styles.loading}
-        withInitialLoading
-      >
-        <div className={styles.assets}>
-          {currentAssets?.map((asset) => (
-            <Asset
-              {...asset}
-              key={asset?.tokenId}
-              selected={isSelected(asset)}
-              onClick={onSelectAsset(asset)}
-            />
-          ))}
-        </div>
+        <LoadingWrapper
+          loading={currentAssetsLoading || tabsLoading}
+          className={styles.loading}
+          withInitialLoading
+        >
+          <div className={styles.assets}>
+            {currentAssets?.map((asset) => (
+              <Asset
+                {...asset}
+                key={asset?.tokenId}
+                selected={isSelected(asset)}
+                onClick={onSelectAsset(asset)}
+              />
+            ))}
+          </div>
+        </LoadingWrapper>
+        <BottomPopupWithButton
+          text={i18next.t('Dashboard:approveNeeded')}
+          buttonLabel={i18next.t('Dashboard:approve')}
+          onClick={approve}
+          buttonClassname={styles['approve-button']}
+          show={!isApproved}
+          notClose
+        />
       </LoadingWrapper>
     </>
   );
