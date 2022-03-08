@@ -8,7 +8,7 @@ function Stats({ owned, staked, balance, className, big }) {
   const elements = [
     {
       title: i18next.t('Stats:owned'),
-      value: i18next.t('Stats:ownedValue', { owned: owned > 50 ? '50+' : owned })
+      value: i18next.t('Stats:ownedValue', { owned: owned ? (owned > 50 ? '50+' : owned) : 0 })
     },
     {
       title: i18next.t('Stats:staked'),

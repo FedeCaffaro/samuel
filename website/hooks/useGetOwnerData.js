@@ -9,7 +9,7 @@ export const useGetOwnerData = (account) => {
   const [ownerData, setOwnerData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const refresh = () => () => {
     setLoading(true);
     getAssets({
       limit: 50,
@@ -24,7 +24,9 @@ export const useGetOwnerData = (account) => {
       .catch(() => {
         setLoading(false);
       });
-  }, [account]);
+  };
 
-  return [ownerData, loading];
+  useEffect(refresh(), [account]);
+
+  return [ownerData, loading, refresh];
 };

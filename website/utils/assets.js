@@ -19,5 +19,6 @@ export const getOwnerAsParams = (address) => ({
 
 export const mapAssetsToOwnerData = (assets) => ({
   countAssets: assets.length,
+  assets: mapAssetsFromService(assets),
   name: assets[0]?.owner?.user?.username || 'holder'
 });
