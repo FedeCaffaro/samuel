@@ -55,7 +55,7 @@ function GeneralHooks() {
           depositsOf(wallet.account).then((deposits) => {
             const owning = data.assets.length + stake.length + deposits.length;
             // eslint-disable-next-line no-console
-            console.info('User owns', owning);
+            console.info('User owns', owning, "NFT's");
 
             if (owning === 0) {
               setWallet(null);
