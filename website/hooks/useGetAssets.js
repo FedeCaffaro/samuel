@@ -18,15 +18,17 @@ export const useGetAssets = (payload) => {
 
   useEffect(() => {
     setLoading(true);
-    getAssets(fullPayload)
-      .then(({ data }) => {
-        setAssets(mapAssetsFromService(data.assets));
-        setLoading(false);
-      })
-      .catch(() => {
-        setAssets([]);
-        setLoading(false);
-      });
+    if (!!fullPayload.owner || !!fullPayload.token_ids) {
+      getAssets(fullPayload)
+        .then(({ data }) => {
+          setAssets(mapAssetsFromService(data.assets));
+          setLoading(false);
+        })
+        .catch(() => {
+          setAssets([]);
+          setLoading(false);
+        });
+    }
   }, [fullPayload]);
 
   return [assets, loading];
