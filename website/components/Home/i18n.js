@@ -12,7 +12,7 @@ i18n.addResources('en', 'Home', {
 i18n.addResources('es', 'Home', {
   mint: 'Mintear un Samot',
   hi: 'Hola, {{name}}',
-  welcomeBack: 'Bienvenido de nuevo',
+  welcomeBack: 'Bienvenido',
   goToDashboard: 'Abrir el Dashboard',
   discordPopup: 'Únete a la comunidad y descubre todas las noticias',
   discord: 'Discord'
@@ -21,7 +21,7 @@ i18n.addResources('es', 'Home', {
 i18n.addResources('pr', 'Home', {
   mint: 'Mintear um Samot',
   hi: 'Olá, {{name}}',
-  welcomeBack: 'Bem-vindo de novo',
+  welcomeBack: 'Bem-vindo',
   goToDashboard: 'Abrir o Dashboard',
   discordPopup: 'Junte-se à comunidade e descubra todas as notícias',
   discord: 'Discord'
