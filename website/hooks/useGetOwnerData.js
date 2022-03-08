@@ -11,19 +11,21 @@ export const useGetOwnerData = (account) => {
 
   const refresh = () => () => {
     setLoading(true);
-    getAssets({
-      limit: 50,
-      offset: 0,
-      asset_contract_address: SAMOT_DROPS.contract,
-      owner: account
-    })
-      .then(({ data }) => {
-        setOwnerData(mapAssetsToOwnerData(data.assets));
-        setLoading(false);
+    if (account) {
+      getAssets({
+        limit: 50,
+        offset: 0,
+        asset_contract_address: SAMOT_DROPS.contract,
+        owner: account
       })
-      .catch(() => {
-        setLoading(false);
-      });
+        .then(({ data }) => {
+          setOwnerData(mapAssetsToOwnerData(data.assets));
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
   };
 
   useEffect(refresh(), [account]);
