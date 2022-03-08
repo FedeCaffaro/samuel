@@ -1,7 +1,7 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable camelcase */
 import i18next from 'i18next';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
@@ -37,7 +37,9 @@ function StakingTabs({
   unstakedCount,
   tabsLoading,
   startTabsLoading,
-  stopTabsLoading
+  stopTabsLoading,
+  getAllData,
+  refreshCurrentOwner
 }) {
   const { wallet } = useSelector((state) => state.settings);
 
@@ -45,6 +47,15 @@ function StakingTabs({
   const [tabSelected, setTabSelected] = useState(TABS.UNSTAKED);
   const [isApproved, setIsApproved] = useState(false);
   const [loadingApprove, setLoadingApprove] = useState(false);
+
+  const getDataInSomeSeconds = () => {
+    startTabsLoading();
+    setTimeout(() => {
+      getAllData();
+      refreshCurrentOwner();
+      stopTabsLoading();
+    }, 2000);
+  };
 
   const checkApprove = () => {
     setLoadingApprove(true);
@@ -88,8 +99,12 @@ function StakingTabs({
     setSelecteds([]);
     toast.promise(stakeNFTs(wallet.account, selectedsToUse), {
       pending: i18next.t('Dashboard:stakingNfts'),
-      success: { render: renderAndGetData(stakingSuccessRender, stopTabsLoading) },
-      error: { render: renderAndGetData(stakingErrorRender, stopTabsLoading) }
+      success: {
+        render: renderAndGetData(stakingSuccessRender, getDataInSomeSeconds)
+      },
+      error: {
+        render: renderAndGetData(stakingErrorRender, getDataInSomeSeconds)
+      }
     });
   };
 
@@ -102,15 +117,19 @@ function StakingTabs({
     if (selectedsV1 && selectedsV1.length) {
       toast.promise(unstakeNFTsV1(wallet.account, selectedsV1), {
         pending: i18next.t('Dashboard:unstakingNfts'),
-        success: { render: renderAndGetData(unstakingSuccessRender, stopTabsLoading) },
-        error: { render: renderAndGetData(unstakingErrorRender, stopTabsLoading) }
+        success: {
+          render: renderAndGetData(unstakingSuccessRender, getDataInSomeSeconds)
+        },
+        error: {
+          render: renderAndGetData(unstakingErrorRender, getDataInSomeSeconds)
+        }
       });
     }
     if (selectedsV2 && selectedsV2.length) {
       toast.promise(unstakeNFTs(wallet.account, selectedsV2), {
         pending: i18next.t('Dashboard:unstakingNfts'),
-        success: { render: renderAndGetData(unstakingSuccessRender, stopTabsLoading) },
-        error: { render: renderAndGetData(unstakingErrorRender, stopTabsLoading) }
+        success: { render: renderAndGetData(unstakingSuccessRender, getDataInSomeSeconds) },
+        error: { render: renderAndGetData(unstakingErrorRender, getDataInSomeSeconds) }
       });
     }
   };
@@ -152,6 +171,16 @@ function StakingTabs({
     }
   }, [wallet, tabSelected, stakedIdsV1, stakedIdsV2]);
 
+  const filter = useCallback(
+    (asset) => {
+      const selectedsIds = [...stakedIdsV1, ...stakedIdsV2];
+      return tabSelected.key === TABS.STAKED.key
+        ? selectedsIds.includes(asset.tokenId)
+        : !selectedsIds.includes(asset.tokenId);
+    },
+    [tabSelected, stakedIdsV1, stakedIdsV2]
+  );
+
   return (
     <>
       <LoadingWrapper loading={loadingApprove}>
@@ -166,7 +195,15 @@ function StakingTabs({
                 })}
                 onClick={() => setTabSelected(TABS[key])}
               >
-                {label(key === TABS.STAKED.key ? [...stakedIdsV1, ...stakedIdsV2].length : unstakedCount)}
+                {label(
+                  key === TABS.STAKED.key
+                    ? [...stakedIdsV1, ...stakedIdsV2].length
+                    : unstakedCount
+                    ? unstakedCount > 50
+                      ? '50+'
+                      : unstakedCount
+                    : 0
+                )}
               </button>
             ))}
           </div>
@@ -185,7 +222,7 @@ function StakingTabs({
 
         <LoadingWrapper loading={currentAssetsLoading || tabsLoading} className={styles.loading}>
           <div className={styles.assets}>
-            {currentAssets?.map((asset) => (
+            {currentAssets?.filter(filter).map((asset) => (
               <Asset
                 {...asset}
                 key={asset?.tokenId}

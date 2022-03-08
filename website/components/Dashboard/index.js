@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-empty-function */
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import i18next from 'i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -22,9 +23,18 @@ function Dashboard() {
 
   const { stakingRewards, stakedIdsV1, stakedIdsV2, balanceTokens, getAllData } = useGetAssetsData(wallet);
 
-  const [currentOwner] = useGetOwnerData(wallet?.account);
+  const [currentOwner, _, refreshCurrentOwner] = useGetOwnerData(wallet?.account);
 
-  const owned = currentOwner?.countAssets + [...stakedIdsV1, ...stakedIdsV2]?.length;
+  const unstakedCount = useMemo(() => {
+    const stakedIds = [...stakedIdsV1, ...stakedIdsV2];
+    const isNotAlreadyStaked = (asset) => !stakedIds.includes(asset.tokenId);
+    return currentOwner?.assets?.filter(isNotAlreadyStaked).length;
+  }, [currentOwner, stakedIdsV1, stakedIdsV2]);
+
+  const owned = useMemo(
+    () => unstakedCount + [...stakedIdsV1, ...stakedIdsV2]?.length,
+    [currentOwner, stakedIdsV1, stakedIdsV2]
+  );
 
   const renderAndGetData =
     (aFunction, callBefore = () => {}) =>
@@ -85,7 +95,9 @@ function Dashboard() {
           renderAndGetData={renderAndGetData}
           stakedIdsV1={stakedIdsV1}
           stakedIdsV2={stakedIdsV2}
-          unstakedCount={currentOwner?.countAssets}
+          unstakedCount={unstakedCount}
+          getAllData={getAllData}
+          refreshCurrentOwner={refreshCurrentOwner}
         />
       </div>
       <WalletBottom />
