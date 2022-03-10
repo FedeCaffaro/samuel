@@ -34,7 +34,9 @@ export const actionCreators = {
   getOwnerData: (payload) => ({
     type: actions.GET_OWNER_DATA,
     target: TARGETS.CURRENT_OWNER,
-    payload: { limit: 50, offset: 0, ...payload },
+    payload: { limit: 50, 
+      // offset: 0, 
+      ...payload },
     // service: CollectionService.getAssets,
     successSelector: ({ data }) => mapAssetsToOwnerData(data.assets)
   })
