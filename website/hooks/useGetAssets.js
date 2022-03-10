@@ -7,7 +7,7 @@ export const useGetAssets = (payload) => {
   const fullPayload = useMemo(
     () => ({
       limit: 50,
-      offset: 0,
+      // offset: 0,
       ...payload
     }),
     [payload]

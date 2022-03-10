@@ -47,7 +47,7 @@ function GeneralHooks() {
     if (wallet?.account) {
       getAssets({
         limit: 50,
-        offset: 0,
+        // offset: 0,
         asset_contract_address: SAMOT_DROPS.contract,
         owner: wallet?.account
       }).then(({ data }) =>

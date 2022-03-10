@@ -14,7 +14,7 @@ export const useGetOwnerData = (account) => {
     if (account) {
       getAssets({
         limit: 50,
-        offset: 0,
+        // offset: 0,
         asset_contract_address: SAMOT_DROPS.contract,
         owner: account
       })
