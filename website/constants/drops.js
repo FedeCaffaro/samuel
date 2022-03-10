@@ -7,7 +7,7 @@ export const DROPS = [
     imageUrl: 'logo.png',
     description:
       'An NFT Club that introduces the amazing Latin American artistic style. From diverse artists, the first collection comes from the creator himself. Welcome to Samot´s World and enjoy the ride.',
-    contract: '0x83C26562cE37959b870240B9c06b3e7fd72Edd8c',
+    contract: process.env.NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS,
     infoUrl: 'https://samot.art',
     datetime: '10/24 @ 6PM UTC',
     type: 'active',
