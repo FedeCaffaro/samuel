@@ -50,7 +50,7 @@ jobs:
         run: cd website && yarn
 
       # # Build the app dev
-      # - name: Build
+      # - name: Build dev
       #   if: endsWith(github.ref, '/development')
       #   run: cd website && yarn build
       #   env:
@@ -67,7 +67,7 @@ jobs:
 
       # Build the app prod
       # TODO: Change if to prod
-      - name: Build
+      - name: Build prod
         if: endsWith(github.ref, '/development')
         run: cd website && yarn build
         env:
