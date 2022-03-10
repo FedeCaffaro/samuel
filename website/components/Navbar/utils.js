@@ -22,7 +22,7 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
     {
       key: 'roadmap',
       label: i18next.t('Navbar:roadmap'),
-      link: '/roadmap.pdf',
+      link: '/roadmap.gif',
       newTab: true
     },
     {
