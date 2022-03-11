@@ -96,7 +96,7 @@ jobs:
       #     NEXT_PUBLIC_OPEN_SEA_API: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_API_PROD}}
       #   run: cd website && yarn build
 
-      Deploy to development
+      # Deploy to development
       - name: Deploy Dev
         if: endsWith(github.ref, '/development')
         run: |
