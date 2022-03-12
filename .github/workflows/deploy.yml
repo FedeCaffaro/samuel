@@ -14,8 +14,6 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      
-      SLS_INTERACTIVE_SETUP_ENABLE: 1
 
       NEXT_PUBLIC_REACT_APP_API_URL: ${{ secrets.NEXT_PUBLIC_REACT_APP_API_URL}}
       NEXT_PUBLIC_NFT_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS}}
@@ -27,6 +25,19 @@ jobs:
       NEXT_PUBLIC_ETHERSCAN_URL: ${{ secrets.NEXT_PUBLIC_ETHERSCAN_URL}}
       NEXT_PUBLIC_OS_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_OS_API_ENDPOINT}}
       NEXT_PUBLIC_OPEN_SEA_API: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_API}}
+
+      NEXT_PUBLIC_REACT_APP_API_URL_PROD: ${{ secrets.NEXT_PUBLIC_REACT_APP_API_URL_PROD}}
+      NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD: ${{ secrets.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD}}
+      NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS_PROD: ${{ secrets.NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS_PROD}}
+      NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS_PROD: ${{ secrets.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS_PROD}}
+      NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS_PROD: ${{ secrets.NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS_PROD}}
+      NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS}}
+      NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS_PROD: ${{ secrets.NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS_PROD}}
+      NEXT_PUBLIC_ETHERSCAN_URL_PROD: ${{ secrets.NEXT_PUBLIC_ETHERSCAN_URL_PROD}}
+      NEXT_PUBLIC_OS_API_ENDPOINT_PROD: ${{ secrets.NEXT_PUBLIC_OS_API_ENDPOINT_PROD}}
+      NEXT_PUBLIC_OPEN_SEA_API_PROD: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_API_PROD}}
+      
+      SLS_INTERACTIVE_SETUP_ENABLE: 1
 
     steps:
       
@@ -48,6 +59,42 @@ jobs:
       - name: Delete .next
         run: rm -rf website/.next
 
+      # Create .env file dev
+      - name: Create .env dev
+        if: endsWith(github.ref, '/development')
+        run: |
+          echo "AWS_ACCESS_KEY_ID"=$AWS_ACCESS_KEY_ID >> .env
+          echo "AWS_SECRET_ACCESS_KEY"=$AWS_SECRET_ACCESS_KEY >> .env
+          echo "AWS_REGION"=$AWS_REGION >> .env
+          echo "NEXT_PUBLIC_REACT_APP_API_URL"=$NEXT_PUBLIC_REACT_APP_API_URL >> .env
+          echo "NEXT_PUBLIC_NFT_CONTRACT_ADDRESS"=$NEXT_PUBLIC_NFT_CONTRACT_ADDRESS >> .env
+          echo "NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS"=$NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS >> .env
+          echo "NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS"=$NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS >> .env
+          echo "NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS"=$NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS >> .env
+          echo "NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS"=$NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS >> .env
+          echo "NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS"=$NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS >> .env
+          echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL >> .env
+          echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT >> .env
+          echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API >> .env
+
+      # Create .env file prod
+      - name: Create .env prod
+        if: endsWith(github.ref, '/main')
+        run: |
+        echo "AWS_ACCESS_KEY_ID"=$AWS_ACCESS_KEY_ID >> .env
+        echo "AWS_SECRET_ACCESS_KEY"=$AWS_SECRET_ACCESS_KEY >> .env
+        echo "AWS_REGION"=$AWS_REGION >> .env
+        echo "NEXT_PUBLIC_REACT_APP_API_URL"=$NEXT_PUBLIC_REACT_APP_API_URL_PROD >> .env
+        echo "NEXT_PUBLIC_NFT_CONTRACT_ADDRESS"=$NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD >> .env
+        echo "NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS"=$NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS_PROD >> .env
+        echo "NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS"=$NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS_PROD >> .env
+        echo "NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS"=$NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS_PROD >> .env
+        echo "NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS"=$NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS >> .env
+        echo "NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS"=$NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS_PROD >> .env
+        echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL_PROD >> .env
+        echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT_PROD >> .env
+        echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API_PROD >> .env
+
       # Install project dependencies
       - name: Install Dependencies
         run: cd nextjs && yarn
@@ -60,41 +107,9 @@ jobs:
       - name: Install Dependencies
         run: cd website && yarn
 
-      # Create env file inside website folder
-      - name: Create .env inside /website folder 
-        if: endsWith(github.ref, '/development')
-        run: |
-          echo "NEXT_PUBLIC_REACT_APP_API_URL=${NEXT_PUBLIC_REACT_APP_API_URL}" >> website/.env
-          echo "NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=${NEXT_PUBLIC_NFT_CONTRACT_ADDRESS}" >> website/.env
-          echo "NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS=${NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS}" >> website/.env
-          echo "NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS=${NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS}" >> website/.env
-          echo "NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS=${NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS}" >> website/.env
-          echo "NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS=${NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS}" >> website/.env
-          echo "NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS=${NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS}" >> website/.env
-          echo "NEXT_PUBLIC_ETHERSCAN_URL=${NEXT_PUBLIC_ETHERSCAN_URL}" >> website/.env
-          echo "NEXT_PUBLIC_OS_API_ENDPOINT=${NEXT_PUBLIC_OS_API_ENDPOINT}" >> website/.env
-          echo "NEXT_PUBLIC_OPEN_SEA_API=${NEXT_PUBLIC_OPEN_SEA_API}" >> website/.env
-
       # Build the app
-      - name: Development environment deploy
-        if: endsWith(github.ref, '/development')
+      - name: Build
         run: cd website && yarn build
-
-      # # Build the app prod
-      # - name: Build prod
-      #   if: endsWith(github.ref, '/main')
-      #   env:
-      #     NEXT_PUBLIC_REACT_APP_API_URL: ${{ secrets.NEXT_PUBLIC_REACT_APP_API_URL_PROD}}
-      #     NEXT_PUBLIC_NFT_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD}}
-      #     NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS_PROD}}
-      #     NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS_PROD}}
-      #     NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS_PROD}}
-      #     NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS_PROD}}
-      #     NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS: ${{ secrets.NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS_PROD}}
-      #     NEXT_PUBLIC_ETHERSCAN_URL: ${{ secrets.NEXT_PUBLIC_ETHERSCAN_URL_PROD}}
-      #     NEXT_PUBLIC_OS_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_OS_API_ENDPOINT_PROD}}
-      #     NEXT_PUBLIC_OPEN_SEA_API: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_API_PROD}}
-      #   run: cd website && yarn build
 
       # Deploy to development
       - name: Deploy Dev
@@ -112,18 +127,19 @@ jobs:
           npm install serverless -g
           cd ../serverless && npm install && serverless deploy --stage dev
 
-      # # Deploy to production
-      # - name: Deploy Prod
-      #   if: endsWith(github.ref, '/main')
-      #   run: |
-      #     npm install -g serverless@2.72.2
-      #     cd nextjs && aws s3 sync s3://samot-nextjs-deployment/prod .serverless --delete
-      #     serverless --env=prod
-      #     aws s3 sync .serverless s3://samot-nextjs-deployment/prod --delete
+      # Deploy to production
+      - name: Deploy Prod
+        if: endsWith(github.ref, '/main')
+        run: |
+          npm install -g serverless@2.72.2
+          cd nextjs && aws s3 sync s3://samot-nextjs-deployment/prod .serverless --delete
+          serverless --env=prod
+          aws s3 sync .serverless s3://samot-nextjs-deployment/prod --delete
 
-      #     cd ../website && aws s3 sync s3://samot-nextjs-deployment/prod/website .serverless --delete
-      #     serverless --env=prod
-      #     aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website --delete
+          cd ../website && aws s3 sync s3://samot-nextjs-deployment/prod/website .serverless --delete
+          serverless --env=prod
+          aws s3 sync .serverless s3://samot-nextjs-deployment/prod/website --delete
           
-      #     npm install serverless -g
-      #     cd ../serverless && npm install && serverless deploy --stage prod
+          npm install serverless -g
+          cd ../serverless && npm install && serverless deploy --stage prod
+
