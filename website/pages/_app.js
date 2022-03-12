@@ -18,7 +18,18 @@ import LoadingWrapper from '../components/LoadingWrapper';
 function App({ Component, pageProps }) {
   const router = useRouter();
 
-  console.log("ENV", process.env);
+  useEffect(() => {
+    console.log('NODE_ENV', process.env.NODE_ENV);
+    console.log('NEXT_PUBLIC_NFT_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS);
+    console.log('NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS);
+    console.log('NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS);
+    console.log('NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_TOKENV2_CONTRACT_ADDRESS);
+    console.log('NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_NFT2_CONTRACT_ADDRESS);
+    console.log('NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_SAMOT_CONTRACT_ADDRESS);
+    console.log('NEXT_PUBLIC_ETHERSCAN_URL', process.env.NEXT_PUBLIC_ETHERSCAN_URL);
+    console.log('NEXT_PUBLIC_OS_API_ENDPOINT', process.env.NEXT_PUBLIC_OS_API_ENDPOINT);
+    console.log('NEXT_PUBLIC_OPEN_SEA_API', process.env.NEXT_PUBLIC_OPEN_SEA_API);
+  }, []);
 
   const [loading, setLoading] = useState(false);
 
