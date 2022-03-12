@@ -18,6 +18,8 @@ import LoadingWrapper from '../components/LoadingWrapper';
 function App({ Component, pageProps }) {
   const router = useRouter();
 
+  console.log("ENV", process.env);
+
   const [loading, setLoading] = useState(false);
 
   const handleStart = () => setLoading(true);
