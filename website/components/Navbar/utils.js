@@ -16,14 +16,12 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
     {
       key: 'whitepaper',
       label: i18next.t('Navbar:whitepaper'),
-      link: '/whitepaper.pdf',
-      newTab: true
+      link: '/whitepaper'
     },
     {
       key: 'roadmap',
       label: i18next.t('Navbar:roadmap'),
-      link: '/roadmap.gif',
-      newTab: true
+      link: '/roadmap'
     },
     {
       key: 'community',
