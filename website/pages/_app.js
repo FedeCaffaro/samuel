@@ -17,9 +17,7 @@ import LoadingWrapper from '../components/LoadingWrapper';
 
 function App({ Component, pageProps }) {
   const router = useRouter();
-
-
-
+  
   const [loading, setLoading] = useState(false);
 
   const handleStart = () => setLoading(true);
