@@ -11,7 +11,7 @@ const Whitepaper = () => {
   return (
     <>
       <div className={styles['center-content']}>
-        <img src="/roadmap.gif" alt="roadmap" className={styles.page} />
+        <img src="/roadmaph.jpeg" alt="roadmap" className={styles.page} />
       </div>
       <Navbar showLogo={!!wallet?.account} />
     </>
