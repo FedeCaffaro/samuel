@@ -1,0 +1,123 @@
+@import '../../../../scss/imports';
+
+.container {
+  width: 500px;
+  max-width: 500px;
+
+  @include sm {
+    width: 100%;
+    max-width: unset;
+  }
+}
+
+.text-full {
+  font-family: 'Founders', 'Poppins', sans-serif !important;
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 74.4%;
+
+  overflow: hidden;
+
+  max-width: 500px;
+
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+
+  color: $samot-blue;
+
+  @include sm {
+    font-size: 70px;
+    line-height: 55px;
+  }
+  @include xs {
+    font-size: 55px;
+    line-height: 40px;
+  }
+}
+
+.first-line {
+  @extend .column,
+  .start;
+
+  width: fit-content;
+}
+
+.graff-container {
+  @extend .row,
+  .end;
+
+  position: relative;
+
+  align-self: end;
+
+  width: 100%;
+  height: 0;
+}
+
+.graff {
+  font-family: 'Samot', 'Poppins', sans-serif !important;
+  font-size: 60px;
+
+  position: absolute;
+
+  max-width: 500px;
+  margin-top: -30px;
+
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+
+  @include sm {
+    font-size: 50px;
+  }
+}
+
+.stats {
+  margin-top: 35px;
+
+  @include sm {
+    display: none;
+  }
+}
+
+.button-dashboard {
+  @extend .center-child;
+
+  font-size: 30px;
+  font-weight: 500;
+
+  left: 214px;
+
+  overflow: hidden;
+
+  width: 327px;
+  height: 53px;
+  margin-top: 66px;
+
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+
+  border-radius: 2px;
+  background-color: $samot-blue;
+
+  @include lg {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  @include xs {
+    margin-top: 15px;
+  }
+  @include xxs {
+    font-size: 25px;
+
+    height: 40px;
+  }
+
+  &:hover {
+    background-color: rgba($samot-blue, 0.8);
+  }
+}

@@ -1,0 +1,178 @@
+@import 'breakpoints';
+
+@import 'colors';
+
+// Font weights
+
+.bold {
+  font-weight: 700;
+}
+
+.semi-bold {
+  font-weight: 600;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.regular {
+  font-weight: 400;
+}
+
+.light {
+  font-weight: 300;
+}
+
+.extra-light {
+  font-weight: 200;
+}
+
+// Format text
+
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.onboarding-subtitle {
+  font-size: 26px;
+  line-height: 39px;
+}
+
+.large-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 33px;
+}
+
+.large-title-no-weight {
+  font-size: 22px;
+  line-height: 33px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.title-2 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.title-2-no-weight {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.small-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 21px;
+}
+
+.subtitle-no-weight {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.subtitle-2 {
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 21px;
+}
+
+.subtitle-2-no-weight {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.large-text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.large-text-no-weight {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.text-no-weight {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.small-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.small-text-no-weight {
+  font-size: 12px;
+  line-height: 21px;
+}
+
+.smaller-text {
+  font-size: 14px;
+  line-height: 18px;
+
+@include md {
+    font-size: 12px;
+  }
+
+@include sm {
+    font-size: 11px;
+  }
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.error {
+  @extend .small-text;
+
+  padding-top: 5px;
+
+  color: $valencia;
+}
+
+.elipsis {
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+

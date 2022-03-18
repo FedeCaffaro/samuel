@@ -1,0 +1,51 @@
+@import '../../../../scss/imports.scss';
+
+.menu-container {
+  @extend .row,
+  .start,
+  .middle;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  filter: drop-shadow(0px -1px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 4px 11px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 21px #000);
+
+  & > * {
+    &:hover {
+      color: $samot-yellow;
+    }
+  }
+
+  &.owner > * {
+    &:hover {
+      color: $samot-blue;
+    }
+  }
+}
+
+.menu-text {
+  @extend .text-uppercase;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  margin-right: 7px;
+
+  transition: all 0.3s ease;
+
+  &.big {
+    font-size: 30px;
+
+    @include xxs {
+      font-size: 24px;
+    }
+  }
+}
+
+.menu-icon {
+  height: 8px;
+
+  &.big {
+    height: 17px;
+  }
+}

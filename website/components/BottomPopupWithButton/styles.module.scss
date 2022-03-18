@@ -1,0 +1,115 @@
+@import '../../scss/imports';
+
+.fixed {
+  @extend .center-child;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  overflow: hidden;
+
+  width: 100vw;
+}
+
+.container {
+  @extend .row,
+  .center,
+  .middle;
+
+  align-self: center;
+
+  padding: 20px 35px;
+
+  animation: translateFromBottom 1s ease-in-out;
+
+  border-radius: 10px 10px 0 0;
+  background-color: rgba($black, 0.8);
+
+  @include lg {
+    padding: 10px 15px;
+  }
+
+  &.closing {
+    animation: translateToBottom 1s ease-in-out;
+  }
+}
+
+.message {
+  font-size: 20px;
+  font-weight: 500;
+
+  text-transform: uppercase;
+
+  @include lg {
+    font-size: 16px;
+  }
+}
+
+.button {
+  @extend .center-child;
+
+  font-size: 20px;
+  font-weight: 500;
+
+  height: 39px;
+  margin-left: 44px;
+  padding: 0 30px;
+
+  text-transform: uppercase;
+
+  color: $white;
+  border-radius: 2px;
+
+  @include lg {
+    font-size: 16px;
+
+    height: unset;
+    padding: 8px 15px;
+  }
+  @include md {
+    margin-left: 20px;
+  }
+}
+
+.close {
+  position: relative;
+  top: -20px;
+  right: -20px;
+
+  height: 15px;
+
+  @include lg {
+    position: unset;
+
+    margin-left: 20px;
+  }
+}
+
+@keyframes translateFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  50% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes translateToBottom {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}

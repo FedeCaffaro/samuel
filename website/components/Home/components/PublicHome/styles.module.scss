@@ -1,0 +1,61 @@
+@import '../../../../scss/imports';
+
+.mint-button {
+  @extend .center-child;
+
+  width: 251px;
+  height: 103px;
+  margin-top: 40px;
+
+  transition: all 200ms ease-in-out;
+  text-align: center;
+
+  background-image: url('../../../../public/assets/home/circle-button.png');
+
+  @include lg {
+    margin-bottom: 30px;
+  }
+
+  &:hover {
+    transform: scale(1.06);
+
+    & > .mint {
+      transform: scale(1.03)  rotate(11deg);
+    }
+  }
+}
+@include md {
+  @media (max-height: 1000px) {
+    .mint-button {
+      margin-bottom: 140px !important;
+    }
+  }
+}
+
+.mint {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 24px;
+
+  transition: all 200ms ease-in-out;
+  transform: rotate(9.61deg);
+  text-transform: uppercase;
+
+  color: $samot-yellow;
+}
+
+.logo {
+  height: 165px;
+
+  @include lg {
+    display: none;
+  }
+}
+
+.discord {
+  background-color: #404EED;
+
+  &:hover {
+    background-color: #2F3FB2;
+  }
+}

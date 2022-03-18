@@ -1,0 +1,272 @@
+@import '../../scss/imports';
+
+.title-line {
+  @extend .column,
+  .start;
+
+  width: fit-content;
+}
+
+.title-blue {
+  font-family: 'Founders', 'Poppins', sans-serif !important;
+  font-size: 156px;
+  font-weight: bold;
+  line-height: 74.4%;
+
+  text-transform: uppercase;
+
+  color: $samot-blue;
+
+  @include xxl {
+    font-size: 130px;
+  }
+  @include xl {
+    font-size: 90px;
+  }
+  @include lg {
+    font-size: 100px;
+  }
+  @include md {
+    font-size: 70px;
+  }
+  @include sm {
+    font-size: 57px;
+  }
+  @include xs {
+    font-size: 36px;
+  }
+}
+
+.graff-container-end {
+  @extend .row,
+  .end;
+
+  position: relative;
+
+  align-self: end;
+
+  width: 100%;
+  height: 0;
+}
+
+.graff-container-start {
+  @extend .row;
+
+  position: relative;
+
+  align-self: end;
+
+  width: 100%;
+  height: 0;
+}
+
+.graff-bottom {
+  font-family: 'Samot', 'Poppins', sans-serif !important;
+  font-size: 100px;
+
+  position: absolute;
+
+  max-width: 500px;
+  margin-top: -50px;
+
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+
+  @include xxl {
+    font-size: 80px;
+
+    margin-top: -40px;
+  }
+  @include xl {
+    font-size: 70px;
+  }
+  @include lg {
+    font-size: 55px;
+
+    margin-top: -30px;
+  }
+  @include md {
+    font-size: 40px;
+
+    margin-top: -22px;
+  }
+  @include sm {
+    font-size: 30px;
+
+    margin-top: -17px;
+  }
+}
+
+.graff-top {
+  @extend .graff-bottom;
+
+  margin-top: -120px;
+
+  @include xxl {
+    margin-top: -90px;
+  }
+  @include xl {
+    margin-top: -70px;
+  }
+  @include lg {
+    margin-top: -55px;
+  }
+  @include md {
+    margin-top: -45px;
+  }
+  @include sm {
+    margin-top: -30px;
+  }
+}
+
+.stats-container {
+  margin-top: 50px;
+
+  @include xl {
+    margin-top: 45px;
+  }
+  @include lg {
+    margin-top: 35px;
+  }
+  @include md {
+    margin-top: 25px;
+  }
+  @include sm {
+    margin-top: 15px;
+  }
+}
+
+.small-text {
+  font-size: 20px;
+
+  color: $white;
+}
+
+.center-content {
+  @extend .column,
+  .center,
+  .middle;
+
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  padding: 200px 180px;
+
+  @include xxl {
+    padding-top: 140px;
+  }
+  @include xl {
+    padding-top: 110px;
+  }
+  @include lg {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+  @include sm {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+.data-container {
+  @extend .column,
+  .start,
+  .middle;
+
+  margin-top: 50px;
+  padding: 15px;
+
+  border-radius: 10px;
+  background-color: rgba($white, 0.15);
+}
+
+.button-container {
+  @extend .row,
+  .center,
+  .middle;
+}
+
+.arrows-left {
+  height: 56.68px;
+  margin-right: 25px;
+
+  @include md {
+    height: 40px;
+  }
+  @include sm {
+    height: 30px;
+  }
+}
+
+.arrows-right {
+  height: 56.68px;
+  margin-left: 25px;
+
+  transform: rotate(180deg);
+
+  @include md {
+    height: 40px;
+  }
+  @include sm {
+    height: 30px;
+  }
+}
+
+.claim {
+  @extend .center-child;
+
+  font-size: 30px;
+  font-weight: 500;
+
+  height: 53px;
+  padding: 0 40px;
+
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+
+  border-radius: 2px;
+  background-color: $samot-blue;
+
+  @include md {
+    font-size: 25px;
+
+    height: 44px;
+    padding: 0 30px;
+  }
+  @include sm {
+    font-size: 16px;
+
+    height: unset;
+    padding: 10px 16px;
+  }
+
+  &:hover {
+    background-color: rgba($samot-blue, 0.8);
+  }
+}
+
+.divider {
+  width: 100%;
+  max-width: 950px;
+  height: 2px;
+  margin: 30px 0;
+
+  background-image: url('../../public/assets/general/divider.png');
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 100% 100%;
+
+  @include md {
+    margin: 20px 0;
+  }
+  @include sm {
+    margin: 10px 0;
+  }
+}
+
+.divider2 {
+  @extend .divider;
+
+  margin-bottom: 10px;
+}
