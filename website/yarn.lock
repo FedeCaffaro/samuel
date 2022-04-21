@@ -370,13 +370,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.17.2":
-  version "7.17.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
-  integrity sha512-hzeyJyMA1YGdJTuWU0e/j4wKXrU4OMFvY2MSlaI9B7VQb0r5cxTE3EAIS2Q7Tn2RIcDkRvTA/v2JsAEhxe99uw==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/template@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.14.5.tgz#a9bc9d8b33354ff6e55a9c60d1109200a68974f4"
@@ -8129,11 +8122,6 @@ psl@^1.1.28:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/psl/-/psl-1.8.0.tgz#9326f8bcfb013adcc005fdff056acce020e51c24"
   integrity sha512-RIdOzyoavK+hA18OGGWDqUTsCLhtA7IcZ/6NCs4fFJaHBDab+pDDmDIByWFRQJq2Cd7r1OoQxBGKOaztq+hjIQ==
-
-pspdfkit@^2022.1.3:
-  version "2022.1.3"
-  resolved "https://registry.yarnpkg.com/pspdfkit/-/pspdfkit-2022.1.3.tgz#2fb87330cb1ea4c1ee946b8424b5a7348ee90640"
-  integrity sha512-nvBpyPC+ktrttIJ7TbHVzRp6+PLVFBZdeWE2M/Ivr/f+72+aftnviDPK6LfXZzZt0C3EKRvyPimpmE+JQbNypg==
 
 public-encrypt@^4.0.0:
   version "4.0.3"

@@ -14,6 +14,12 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
       newTab: true
     },
     {
+      key: 'shop',
+      label: i18next.t('Navbar:shop'),
+      link: 'https://samot.shop',
+      newTab: true
+    },
+    {
       key: 'whitepaper',
       label: i18next.t('Navbar:whitepaper'),
       link: '/whitepaper'
@@ -38,6 +44,11 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
   ].filter(filter);
 
 export const getBurguerMenuItems = (onConnectWallet, isConnected) => [
+  {
+    label: i18next.t('Navbar:shop'),
+    link: 'https://dev.samot.shop',
+    newTab: true
+  },
   {
     label: i18next.t('Navbar:whitepaper'),
     link: '/whitepaper'
