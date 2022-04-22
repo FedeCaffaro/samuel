@@ -46,7 +46,7 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
 export const getBurguerMenuItems = (onConnectWallet, isConnected) => [
   {
     label: i18next.t('Navbar:shop'),
-    link: 'https://dev.samot.shop',
+    link: 'https://samot.shop',
     newTab: true
   },
   {
