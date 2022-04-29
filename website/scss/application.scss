@@ -16,6 +16,8 @@
 
 @import 'toastify';
 
+@import 'ripgang';
+
 @font-face {
   font-family: 'Oskari';
 
@@ -32,6 +34,14 @@
   font-family: 'Samot';
 
   src: url(../public/assets/general/samot.ttf);
+}
+
+@font-face {
+  font-family: "TAN-PEARL";
+  src: url(../public/assets/general/TAN-PEARL.ttf);
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
 }
 
 * {
