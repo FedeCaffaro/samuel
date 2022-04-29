@@ -17,6 +17,10 @@ export const ROUTES = {
   COLLECTION: {
     label: i18next.t('Navbar:collections'),
     pagePath: '/collections/:collection'
+  },
+  RIPGANG: {
+    label: i18next.t('Navbar:ripgang'),
+    pagePath: '/ripcoin'
   }
 };
 
