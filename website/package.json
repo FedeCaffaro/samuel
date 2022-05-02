@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.8.8",
     "@serverless/core": "^1.1.2",
     "@serverless/template": "^1.1.4",
     "all": "^0.0.0",
