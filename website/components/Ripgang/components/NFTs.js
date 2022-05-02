@@ -15,7 +15,7 @@ function NFTs ()  {
           </div>
           <br/>
           <div className="footer-logo">
-            <a href="https://samot.chat">
+            <a href="https://samot.chat" target='_blank'>
               <FontAwesomeIcon icon={faDiscord}/>
             </a>
           </div>
