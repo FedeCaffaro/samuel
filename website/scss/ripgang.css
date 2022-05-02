@@ -77,6 +77,31 @@ canvas {
   width: 2rem;
   height: 2rem;
 }
+.description {
+  font-family: "TAN-PEARL", sans-serif;
+  font-size: 1rem;
+}
+
+.countdown-container {
+  margin: 20px 0px;
+  border-top: 1px solid rgba(255,255,255, 0.5);
+  border-bottom: 1px solid rgba(255,255,255, 0.5);
+}
+
+.description-container {
+  display: flex;
+  width: 80%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.disclaimer {
+  width: 80%;
+  border-top: 1px solid rgba(255,255,255, 0.5);
+  padding: 20px 0px;
+}
 
 .divider,
 .time {
@@ -101,9 +126,27 @@ canvas {
   padding: 1rem 1rem 1.5rem;
 }
 
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  background-color: black;
+}
+
 .footer-logo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 0.5rem;
+}
+
+.footer-logo a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 2.5rem;
-  margin-bottom: 0.5rem;
   width: 2.5rem;
 }
 
@@ -119,8 +162,8 @@ h1 {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: calc(100vh - 6rem);
-  overflow: hidden;
+  height: auto;
+  /* overflow: hidden; */
 }
 
 .navbar-logo {
@@ -139,6 +182,7 @@ p{
 .ripgang-navbar {
   background-color: black;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .ripgang-navbar_logos {
@@ -161,8 +205,15 @@ p{
   max-width: 500px;
   width: 100%;
   height: auto;
-  margin-top: 20px;
   animation: rotation 90s infinite linear;
+}
+
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 71%;
+  height: auto;
 }
 
 .sr-only {
@@ -178,7 +229,7 @@ p{
 }
 
 .timer-inner {
-  margin-top: 20px;
+  margin: 20px 0px;
   color: white;
   display: flex;
 }
@@ -217,8 +268,8 @@ video {
 @media (min-width: 576px) {
   .navbar-logo {
     object-fit: scale-down;
-    height: 5rem;
-    width: 12rem;
+    height: 4rem;
+    width: 10rem;
   }
 }
 
@@ -248,7 +299,9 @@ video {
   }
 
   .countdown-container {
-    margin-top: -400px;
+    border: 0px;
+    margin-top: -280px;
+    margin-bottom: 250px;
   }
 
 }
@@ -262,12 +315,17 @@ video {
     max-width: 800px;
   }
 
+  .time {
+    font-size: 1.75rem;
+  }
+
   .label {
-    font-size: 1.5 rem;
+    font-size: 1.75rem;
   }
 
   .countdown-container {
-    margin-top: -650px;
+    margin-top: -450px;
+    margin-bottom: 400px;
   }
 
   .divider {
