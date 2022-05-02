@@ -1,4 +1,3 @@
-import Card from 'react-bootstrap/Card';
 import Image from "next/image";
 import Mint from './Mint';
 import Countdown from "./Countdown.tsx";

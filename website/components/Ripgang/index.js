@@ -1,7 +1,5 @@
 import Head from "next/head";
-import Mint from "./components/Mint";
-import RipNavbar from "./components/RipNavbar";
-import Link from 'next/link';    
+import RipNavbar from "./components/RipNavbar";  
 import NFTs from "./components/NFTs";
 
 export default function Ripgang() {
