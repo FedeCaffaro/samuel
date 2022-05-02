@@ -9,7 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.17.10",
     "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@headlessui/react": "^1.6.0",
     "@serverless/core": "^1.1.2",
     "@serverless/template": "^1.1.4",
     "all": "^0.0.0",
@@ -19,6 +26,7 @@
     "classnames": "^2.3.1",
     "electron": "^15.2.0",
     "eslint": "7.0.0",
+    "framer-motion": "^6.3.3",
     "i18next": "^19.6.3",
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
