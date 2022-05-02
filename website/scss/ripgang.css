@@ -27,9 +27,11 @@ canvas {
 .button-container_inner {
   display: flex;
   align-items: baseline;
+  justify-content: center;
 }
 
 .button-connect {
+  background-color: black;
   border-color: white;
   border-radius: 0.5rem;
   border-style: solid;
@@ -67,7 +69,7 @@ canvas {
 }
 
 .button-disconnect:hover {
-  background-color: transparent;
+  background-color: black;
 }
 
 .button-dropdown {
@@ -135,11 +137,7 @@ p{
 }
 
 .ripgang-navbar {
-  align-items: center;
   background-color: black;
-  display: flex;
-  height: 4rem;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -149,6 +147,14 @@ p{
   flex-shrink: 0;
   justify-content: center;
   width: 25%;
+}
+
+.ripgang-navbar_outer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 4rem;
 }
 
 .rotate {
@@ -253,15 +259,15 @@ video {
 /* // XX-Large devices (larger desktops, 1400px and up) */
 @media (min-width: 1400px) {
   .rotate {
-    max-width: 900px;
+    max-width: 800px;
   }
 
   .label {
-    display: block;
+    font-size: 1.5 rem;
   }
 
   .countdown-container {
-    margin-top: -700px;
+    margin-top: -650px;
   }
 
   .divider {

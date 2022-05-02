@@ -44,12 +44,15 @@ function RipNavbar() {
 	return (
 		<div>
 			<nav className="ripgang-navbar">
+				<div className="ripgang-navbar_outer">
 					<div className="ripgang-navbar_logos">
-						<img 
-							src="/ripgang/Logo_Bohemian_Blanco.png"
-							alt="Logo BG"
-							className="navbar-logo"
-						/>
+						<a href='https://www.instagram.com/bohemiangroovecorp' target='_blank'>
+							<img 
+								src="/ripgang/Logo_Bohemian_Blanco.png"
+								alt="Logo BG"
+								className="navbar-logo"
+							/>
+						</a>
 					</div>
 					<div className="dropdown-button_container">
 					<button
@@ -105,21 +108,24 @@ function RipNavbar() {
 						</div>
 					</div>
 					<div className="ripgang-navbar_logos">
-						<img
-							src="/ripgang/Logo_Samot_Blanco.png"
-							alt="Logo Samot"
-							className="navbar-logo"
-						/>
+						<a href='https://samot.club' target='_blank'>
+							<img
+								src="/ripgang/Logo_Samot_Blanco.png"
+								alt="Logo Samot"
+								className="navbar-logo"
+							/>
+						</a>
 					</div>
-					{/* <Transition
-					show={isOpen}
-					enter="transition ease-out duration-100 transform"
-					enterFrom="opacity-0 scale-95"
-					enterTo="opacity-100 scale-100"
-					leave="transition ease-in duration-75 transform"
-					leaveFrom="opacity-100 scale-100"
-					leaveTo="opacity-0 scale-95"
-				> */}
+				</div>
+					<Transition
+						show={isOpen}
+						enter="transition ease-out duration-100 transform"
+						enterFrom="opacity-0 scale-95"
+						enterTo="opacity-100 scale-100"
+						leave="transition ease-in duration-75 transform"
+						leaveFrom="opacity-100 scale-100"
+						leaveTo="opacity-0 scale-95"
+					>
 					{(ref) => (
 						<div className="md-hidden" id="mobile-menu">
 							<div
@@ -127,15 +133,15 @@ function RipNavbar() {
 								className="dropdown-container"
 							>
 							<ul>
-								<li className="button-container inner">
+								<li className="button-container_inner">
 								{active ?
 								<button  className="button-disconnect"  onClick={disconnect}>Disconnect ...{account.slice(-5)}</button>
 								: 
 								<button  className="button-connect"  onClick={connect}>Connect Wallet</button>
 								}					
 								</li>
-								{/* <li>
-								<a
+								<li>
+								{/* <a
 									href="https://twitter.com/samotclub"
 									target="_blank" rel="noopener noreferrer"
 									activeClass="services"
@@ -146,13 +152,13 @@ function RipNavbar() {
 									className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-black hover:text-white"
 								>
 									Twitter
-								</a>
-								</li> */}
+								</a> */}
+								</li>
 							</ul>
 							</div>
 						</div>
 					)}
-				{/* </Transition> */}
+					</Transition>
 			</nav>
 		</div>
 	);
