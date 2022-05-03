@@ -16,10 +16,18 @@
 
 @import 'toastify';
 
+@import 'ripgang';
+
 @font-face {
   font-family: 'Oskari';
 
   src: url(../public/assets/general/oskari.OTF);
+}
+
+@font-face {
+  font-family: 'Poppins';
+
+  src: url(../public/assets/general/Poppins-Light.ttf);
 }
 
 @font-face {
@@ -32,6 +40,14 @@
   font-family: 'Samot';
 
   src: url(../public/assets/general/samot.ttf);
+}
+
+@font-face {
+  font-family: "TAN-PEARL";
+  src: url(../public/assets/general/TAN-PEARL.ttf);
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
 }
 
 * {
