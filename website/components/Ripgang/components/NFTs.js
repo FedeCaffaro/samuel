@@ -39,8 +39,8 @@ function NFTs ()  {
                 <FontAwesomeIcon icon={faDiscord}/>
               </a>
             </div>
-            <div className="disclaimer">
-                <p>*La Ripcoin es gratuita pero su creación requiere de una transacción en Ethereum a cargo del adquiriente. Esta transacción es externa a Bohemian Groove Corp. y Samot Club y no representa ganancia alguna para ambos.</p>
+            <div className="disclaimer-container">
+                <p className="disclaimer">*La Ripcoin es gratuita pero su creación requiere de una transacción en Ethereum a cargo del adquiriente. Esta transacción es externa a Bohemian Groove Corp. y Samot Club y no representa ganancia alguna para ambos.</p>
             </div>
           </footer>
     </div>
