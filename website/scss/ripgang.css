@@ -20,6 +20,13 @@ canvas {
   color: white;
 } */
 
+.bold {
+  display:inline-block;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
 .button-container {
   display: none;
   z-index: 10;
