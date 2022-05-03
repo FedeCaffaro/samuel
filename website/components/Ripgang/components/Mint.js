@@ -1,86 +1,187 @@
-import { useState, useEffect } from "react";
-import {ethers} from "ethers";
-import NFTAbi from "../constants/NFTAbi.json";
+import { useEffect, useState } from "react";
+import { BigNumber} from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { Input, Button } from '@chakra-ui/react';
-import {maxPerTransaction } from "../constants/contractConfig"
-
-const contractAddress = NFTAbi.address;
-const contractABI = NFTAbi.abi;
+import { Input, Button } from "@chakra-ui/react";
+import {getMaxSupply,getCurrentSupply,getPrice,getPreSalePrice,isSaleActive,isPreSaleActive,publicSale,preSale,verifyWhitelist, getMaxPerTxnPresale, getMaxPerTxn} from "./ContractFunction";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { buySuccessRender, buyErrorRender } from './ContractFunction';
 
 const Mint = () => {
-  const [mintAmount,setMintAmount] = useState(1);
-  const [id, setId] = useState(0);
-	const [loading, setLoading] = useState(true)
-	const [totalMinted, setTotalMinted] = useState(0)
-	const [saleActive, setSaleActive] = useState(false)
-	const [price, setPrice] = useState(0)
-	const [transactionUrl, setTransactionUrl] = useState("")
-	const [pending, setPending] = useState(false)
-	const [contractUrl, setContractUrl] = useState("")
+  const {
+    active,
+    chainId,
+    account,
+    library:provider,
+  } = useWeb3React();
+  
+  
+  const [mintAmount, setMintAmount] = useState(1);
+  const [whitelistMintAmount, setWhitelistMintAmount] = useState(1);
 
-    const {
-        active,
-        activate,
-        chainId,
-        account,
-        library: provider,
-      } = useWeb3React();
+  const [totalMinted, setTotalMinted] = useState(0);
+  const [maxSupply, setMaxSupply] = useState(0);
 
-    async function handleMint(){
-        if (active) {
-            const signer = provider.getSigner();
-            const contract = new ethers.Contract(contractAddress, contractABI, signer);
-            try {
-              await contract.claimItem(BigNumber.from(id),BigNumber.from(mintAmount));
-            } catch (error) {
-              console.log(error);
-            }
-          } else {
-            console.log("Please install MetaMask");
-          }
-        }
+  const [maxPerTxn,setMaxPerTxn] = useState(1);
+  const [maxPerTxnPreSale, setMaxPerTxnPresale] = useState(1);
+  
+  const [saleActive, setSaleActive] = useState(false);
+  const [presaleIsActive, setPresaleIsActive] = useState(false);
 
-    const handleMintDecrement = () => {
-        if (mintAmount <= 1) return;
-        setMintAmount(mintAmount-1);
-    };
+  const [transactionUrl, setTransactionUrl] = useState("");
+  const [pending, setPending] = useState(false);
+  const [contractUrl, setContractUrl] = useState("");
 
-    const handleMintIncrement = () => {
-        if (mintAmount >= maxPerTransaction) return;
-        setMintAmount(mintAmount + 1);
-    };
+  const [isWhitelisted, setIsWhitelisted] = useState(false);
 
-    return(
-        <div className="flex flex-col items-center justify-center text-center">
-            {active ?
-			
-			
-			(<div>
-				{chainId ==1 ? (
-				<div>
-          <div>
-				  <Button onClick={handleMintDecrement} borderRadius="5px" color="black" cursor="pointer" fontFamily="inherit" padding="10px" marginTop="10px" marginBottom="10px" backgroundColor="#699879" boxShadow="0px 2px 2px 1px #0F0F0F"> - </Button>
-					<Input textAlign="center" readOnly type="number" value={mintAmount} height="40px" width="100px" fontFamily="inherit" paddingLeft="19px" marginTop="10px"/>
-					<Button onClick={handleMintIncrement} borderRadius="5px" color="black" cursor="pointer" fontFamily="inherit" padding="10px" marginTop="10px" marginBottom="10px" backgroundColor="#699879" boxShadow="0px 2px 2px 1px #0F0F0F"> + </Button>
-					</div>
-					<Button onClick={handleMint} borderRadius="5px" color="black" cursor="pointer" fontFamily="inherit" padding="10px" marginTop="10px" marginBottom="10px" backgroundColor="#699879" boxShadow="0px 2px 2px 1px #0F0F0F"> MINT NOW!</Button>
-				</div>
-				) :
-				(<p className="font-bold"> You must be connected to the ethereum mainnet. Check Metamask network. </p>)
-				}
+  async function handleStats(){
+    getCurrentSupply().then(setTotalMinted);
+    getMaxSupply().then(setMaxSupply);
+    getMaxPerTxn().then(setMaxPerTxn);
+    getMaxPerTxnPresale().then(setMaxPerTxnPresale);
+    isPreSaleActive().then(setPresaleIsActive);
+    verifyWhitelist(account).then(setIsWhitelisted);
+    isSaleActive().then(setSaleActive);
+  }
+
+  useEffect(() => {
+    if (active) {
+      handleStats();
+    }
+  }, [active]); 
+  
+  async function handleWhitelistMint() {
+    if (active) {
+      try {
+        toast.promise(preSale(BigNumber.from(whitelistMintAmount),account), {
+          pending: 'Buying...',
+          success: {render: renderAndGetData(buySuccessRender)},
+          error: {render: renderAndGetError(buyErrorRender)},
+          });
+        } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Please install MetaMask");
+    }
+  }
+
+  async function handlePublicMint() {
+    if (active) {
+      try {
+        toast.promise(publicSale(BigNumber.from(mintAmount)), {
+          pending: 'Buying...',
+          success: {render: renderAndGetData(buySuccessRender)},
+          error: {render: renderAndGetError(buyErrorRender)},
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Please install MetaMask");
+    }
+  }
+    
+  const renderAndGetData =
+  (aFunction, callBefore = () => {}) =>
+  (result) => {
+    callBefore();
+
+    return aFunction(result?.data);
+  };
+  
+  const renderAndGetError =
+  (aFunction, callBefore = () => {}) =>
+  (result) => {
+    callBefore();
+    return aFunction(result?.data);
+  };
+
+  return (
+    <div className="flex flex-col justify-center text-center">
+          {active ? (
+            <div>
+              {isPreSaleActive ? (
+                <div>
+                  {4 == chainId ? (
+                    <div>
+                      {isWhitelisted ? (
+                        <div>
+                                    <Button
+                                      onClick={handleWhitelistMint}
+                                      borderRadius="5px"
+                                      color="white"
+                                      cursor="pointer"
+                                      fontFamily="inherit"
+                                      padding="10px"
+                                      marginTop="10px"
+                                      marginBottom="10px"
+                                      backgroundColor="black"
+                                      boxShadow="0px 2px 2px 1px #0F0F0F"
+                                    >
+                                      {" "}
+                                      CLAIM NOW!
+                                    </Button>
+                        </div>
+                        ) : (
+                        <div>
+                          <p> You are not eligible for the whitelist. Come back for public minting. </p>
+                        </div>
+                        )
+                      }
+                    </div>) : (
+                      <div>
+                        <p className="font-bold">
+                          {" "}
+                          You must be connected to the ethereum mainnet. Check Metamask
+                          network.{" "}
+                        </p>
+                      </div>
+                    )}
+                </div>
+              ) : (
+                <div>
+                  {4 == chainId ? (
+                    <div>
+                      <Button
+                        onClick={handlePublicMint}
+                        borderRadius="5px"
+                        color="white"
+                        cursor="pointer"
+                        fontFamily="inherit"
+                        padding="10px"
+                        marginTop="10px"
+                        marginBottom="10px"
+                        backgroundColor="black"
+                        boxShadow="0px 2px 2px 1px #0F0F0F"
+                      >
+                        {" "}
+                        PUBLIC MINT NOW!
+                      </Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="font-bold">
+                        {" "}
+                        You must be connected to the ethereum mainnet. Check Metamask
+                        network.{" "}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-			):
-			
-			(<div>
-			<p className="font-bold"> You must me connected to MetaMask to mint. </p>
-			</div>
-			)
-			}
-			
-			
-        </div>
-    );
+            ) : (
+            <div>
+              <p> You must be connected to MetaMask to mint!</p>
+            </div>
+            )
+            }
+
+            <br/>
+            <p> TOTAL MINTED: { totalMinted } / { maxSupply }</p>
+    </div>
+  );
 };
 
 export default Mint;
