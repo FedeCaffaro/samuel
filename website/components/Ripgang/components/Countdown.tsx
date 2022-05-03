@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import Mint from './Mint';
 // import styles from "../styles/Home.module.css";
 
 const Countdown: NextPage = () => {
   const [partyTime, setPartyTime] = useState(false);
-  const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -41,10 +41,9 @@ const Countdown: NextPage = () => {
       </Head>
       {partyTime ? (
         <>
-          <h1>Happy new year!</h1>
-          <video autoPlay loop muted>
-            <source src="/party.mp4" />
-          </video>
+          <div className="timer-inner">
+            <Mint />
+          </div>
         </>
       ) : (
         <>
@@ -54,7 +53,7 @@ const Countdown: NextPage = () => {
               {hours == 1 ? (
                 <span className="label">Hora</span>
               ) : (
-                <span className="label">Horas</span>
+                  <span className="label">Horas</span>
               )}
             </div>
             <span className="divider">:</span>
