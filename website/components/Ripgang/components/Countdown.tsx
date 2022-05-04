@@ -42,7 +42,7 @@ const Countdown: NextPage = () => {
       </Head>
       {partyTime ? (
         <>
-          <div className="timer-inner">
+          <div className="timer-inner-mint">
             <Mint />
           </div>
         </>

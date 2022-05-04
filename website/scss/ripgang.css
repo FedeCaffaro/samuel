@@ -247,6 +247,12 @@ p{
   display: flex;
 }
 
+.timer-inner-mint {
+  margin: 20px 0px 0px;
+  color: white;
+  display: flex;
+}
+
 .timer-segment {
   display: flex;
   flex-direction: column;
@@ -327,6 +333,12 @@ video {
     margin-bottom: 250px;
   }
 
+  .timer-inner-mint {
+    margin: 0px 0px -50px;
+    color: white;
+    display: flex;
+  }
+
 }
 
 /* // X-Large devices (large desktops, 1200px and up) */
@@ -353,5 +365,11 @@ video {
 
   .divider {
     padding: 0 0.5rem;
+  }
+
+  .timer-inner-mint {
+    margin: 15px 0px -50px;
+    color: white;
+    display: flex;
   }
 }
