@@ -101,7 +101,7 @@ const Mint = () => {
             <div>
               {presaleIsActive ? (
                 <div>
-                  {4 == chainId ? (
+                  {1 == chainId ? (
                     <div>
                       {isWhitelisted ? (
                         <div>
@@ -153,7 +153,7 @@ const Mint = () => {
                   </div>
                   ) : (
                     <div> 
-                      <p>Public sale not active yet! </p>
+                      <p>Mint not active yet! </p>
                     </div>
                   )}
                 </div>
