@@ -153,7 +153,7 @@ const Mint = () => {
                   </div>
                   ) : (
                     <div> 
-                      <p>Public sale not active yet! </p>
+                      <p>Mint not active yet! </p>
                     </div>
                   )}
                 </div>
