@@ -107,18 +107,9 @@ const Mint = () => {
                         <div>
                                     <Button
                                       onClick={handleWhitelistMint}
-                                      borderRadius="5px"
-                                      color="white"
-                                      cursor="pointer"
-                                      fontFamily="inherit"
-                                      padding="10px"
-                                      marginTop="10px"
-                                      marginBottom="10px"
-                                      backgroundColor="black"
-                                      boxShadow="0px 2px 2px 1px #0F0F0F"
+                                      className="button-connect"
                                     >
-                                      {" "}
-                                      CLAIM NOW!
+                                      MINT
                                     </Button>
                         </div>
                         ) : (
@@ -141,22 +132,13 @@ const Mint = () => {
                 <div>
                 {saleActive? (
                   <div>
-                    {4 == chainId ? (
+                    {1 == chainId ? (
                       <div>
                         <Button
                           onClick={handlePublicMint}
-                          borderRadius="5px"
-                          color="white"
-                          cursor="pointer"
-                          fontFamily="inherit"
-                          padding="10px"
-                          marginTop="10px"
-                          marginBottom="10px"
-                          backgroundColor="black"
-                          boxShadow="0px 2px 2px 1px #0F0F0F"
+                          className="button-connect"
                         >
-                          {" "}
-                          PUBLIC MINT NOW!
+                          MINT
                         </Button>
                       </div>
                     ) : (
@@ -179,13 +161,13 @@ const Mint = () => {
             </div>
             ) : (
             <div>
-              <p> You must be connected to MetaMask to mint!</p>
+              <p> You must be connected <br></br> to MetaMask to mint!</p>
             </div>
             )
             }
 
             <br/>
-            <p> TOTAL MINTED: { totalMinted } / { maxSupply }</p>
+            <p> MINTED : { totalMinted } / { maxSupply }</p>
     </div>
   );
 };

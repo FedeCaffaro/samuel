@@ -12,7 +12,7 @@ const Countdown: NextPage = () => {
 
   useEffect(() => {
     // const target = new Date("05/04/2022 20:30:00");
-    const target = new Date(Date.UTC(2021,4,4,23,30,0));
+    const target = new Date(Date.UTC(2022,4,4,19,33,0));
 
     const interval = setInterval(() => {
       const now = new Date();
@@ -42,7 +42,7 @@ const Countdown: NextPage = () => {
       </Head>
       {partyTime ? (
         <>
-          <div className="timer-inner">
+          <div className="timer-inner-mint">
             <Mint />
           </div>
         </>
