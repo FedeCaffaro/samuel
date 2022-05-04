@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BigNumber} from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { Input, Button } from "@chakra-ui/react";
-import {getMaxSupply,getCurrentSupply,getPrice,getPreSalePrice,isSaleActive,isPreSaleActive,publicSale,preSale,verifyWhitelist, getMaxPerTxnPresale, getMaxPerTxn} from "./ContractFunction";
+import { Button } from "@chakra-ui/react";
+import {getMaxSupply,getCurrentSupply,isSaleActive,isPreSaleActive,publicSale,preSale,verifyWhitelist} from "./ContractFunction";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { buySuccessRender, buyErrorRender } from './ContractFunction';
@@ -12,7 +12,6 @@ const Mint = () => {
     active,
     chainId,
     account,
-    library:provider,
   } = useWeb3React();
   
   
@@ -35,14 +34,13 @@ const Mint = () => {
   const [isWhitelisted, setIsWhitelisted] = useState(false);
 
   async function handleStats(){
-    getCurrentSupply().then(setTotalMinted);
-    getMaxSupply().then(setMaxSupply);
-    getMaxPerTxn().then(setMaxPerTxn);
-    getMaxPerTxnPresale().then(setMaxPerTxnPresale);
+    getCurrentSupply(1).then(setTotalMinted);
+    getMaxSupply(1).then(setMaxSupply);
     isPreSaleActive().then(setPresaleIsActive);
     verifyWhitelist(account).then(setIsWhitelisted);
     isSaleActive().then(setSaleActive);
   }
+
 
   useEffect(() => {
     if (active) {
@@ -53,7 +51,7 @@ const Mint = () => {
   async function handleWhitelistMint() {
     if (active) {
       try {
-        toast.promise(preSale(BigNumber.from(whitelistMintAmount),account), {
+        toast.promise(preSale(1,1,account), {
           pending: 'Buying...',
           success: {render: renderAndGetData(buySuccessRender)},
           error: {render: renderAndGetError(buyErrorRender)},
@@ -69,7 +67,7 @@ const Mint = () => {
   async function handlePublicMint() {
     if (active) {
       try {
-        toast.promise(publicSale(BigNumber.from(mintAmount)), {
+        toast.promise(publicSale(1,1), {
           pending: 'Buying...',
           success: {render: renderAndGetData(buySuccessRender)},
           error: {render: renderAndGetError(buyErrorRender)},
@@ -101,26 +99,17 @@ const Mint = () => {
     <div className="flex flex-col justify-center text-center">
           {active ? (
             <div>
-              {isPreSaleActive ? (
+              {presaleIsActive ? (
                 <div>
-                  {4 == chainId ? (
+                  {1 == chainId ? (
                     <div>
                       {isWhitelisted ? (
                         <div>
                                     <Button
                                       onClick={handleWhitelistMint}
-                                      borderRadius="5px"
-                                      color="white"
-                                      cursor="pointer"
-                                      fontFamily="inherit"
-                                      padding="10px"
-                                      marginTop="10px"
-                                      marginBottom="10px"
-                                      backgroundColor="black"
-                                      boxShadow="0px 2px 2px 1px #0F0F0F"
+                                      className="button-connect"
                                     >
-                                      {" "}
-                                      CLAIM NOW!
+                                      MINT
                                     </Button>
                         </div>
                         ) : (
@@ -141,31 +130,30 @@ const Mint = () => {
                 </div>
               ) : (
                 <div>
-                  {4 == chainId ? (
-                    <div>
-                      <Button
-                        onClick={handlePublicMint}
-                        borderRadius="5px"
-                        color="white"
-                        cursor="pointer"
-                        fontFamily="inherit"
-                        padding="10px"
-                        marginTop="10px"
-                        marginBottom="10px"
-                        backgroundColor="black"
-                        boxShadow="0px 2px 2px 1px #0F0F0F"
-                      >
-                        {" "}
-                        PUBLIC MINT NOW!
-                      </Button>
-                    </div>
+                {saleActive? (
+                  <div>
+                    {1 == chainId ? (
+                      <div>
+                        <Button
+                          onClick={handlePublicMint}
+                          className="button-connect"
+                        >
+                          MINT
+                        </Button>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="font-bold">
+                          {" "}
+                          You must be connected to the ethereum mainnet. Check Metamask
+                          network.{" "}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                   ) : (
-                    <div>
-                      <p className="font-bold">
-                        {" "}
-                        You must be connected to the ethereum mainnet. Check Metamask
-                        network.{" "}
-                      </p>
+                    <div> 
+                      <p>Mint not active yet! </p>
                     </div>
                   )}
                 </div>
@@ -173,13 +161,13 @@ const Mint = () => {
             </div>
             ) : (
             <div>
-              <p> You must be connected to MetaMask to mint!</p>
+              <p> You must be connected <br></br> to MetaMask to mint!</p>
             </div>
             )
             }
 
             <br/>
-            <p> TOTAL MINTED: { totalMinted } / { maxSupply }</p>
+            <p> MINTED : { totalMinted } / { maxSupply }</p>
     </div>
   );
 };
