@@ -101,7 +101,7 @@ const Mint = () => {
             <div>
               {presaleIsActive ? (
                 <div>
-                  {4 == chainId ? (
+                  {1 == chainId ? (
                     <div>
                       {isWhitelisted ? (
                         <div>
