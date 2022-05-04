@@ -11,7 +11,8 @@ const Countdown: NextPage = () => {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    const target = new Date("05/04/2022 20:30:00");
+    // const target = new Date("05/04/2022 20:30:00");
+    const target = new Date(Date.UTC(2022,4,4,23,30,0));
 
     const interval = setInterval(() => {
       const now = new Date();
