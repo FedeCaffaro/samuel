@@ -33,6 +33,11 @@ const Mint = () => {
 
   const [isWhitelisted, setIsWhitelisted] = useState(false);
 
+  async function handleInactiveStats() {
+    getCurrentSupply(1).then(setTotalMinted);
+    getMaxSupply(1).then(setMaxSupply);
+  }
+  
   async function handleStats(){
     getCurrentSupply(1).then(setTotalMinted);
     getMaxSupply(1).then(setMaxSupply);
@@ -43,9 +48,12 @@ const Mint = () => {
 
 
   useEffect(() => {
+    handleInactiveStats();
+
     if (active) {
       handleStats();
     }
+    
   }, [active]); 
   
   async function handleWhitelistMint() {
