@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~bootstrap/scss/bootstrap";
+
 html,
 body,
 #root,
@@ -91,7 +93,13 @@ canvas {
 }
 
 .countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 150px;
   margin: 20px 0px;
+  padding-top: 0.5rem;
   border-top: 1px solid rgba(255,255,255, 0.5);
   border-bottom: 1px solid rgba(255,255,255, 0.5);
 }
@@ -177,6 +185,15 @@ h1 {
   width: 100%;
   height: auto;
   /* overflow: hidden; */
+}
+
+.minting-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
 }
 
 .navbar-logo {
