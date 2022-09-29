@@ -33,11 +33,9 @@ const NFTs = ({ setModalShow }) => {
         <img src="/ripgang/Logo.webp" alt="Bohemian GroupLogo" className="rotate" />
       </div>
       <div className="countdown-container">
-        {/* <Mint /> */}
         <Button
           onClick={() => setModalShow(true)}
           className="button-connect"
-          isDisabled={chainId !== 1}
         >
           MINTEAR
         </Button>

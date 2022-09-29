@@ -2,9 +2,16 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Mint from './Mint';
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-
+import { useWeb3React } from "@web3-react/core";
 
 function CenteredModal(props) {
+
+    const {
+        active,
+        chainId,
+        account,
+    } = useWeb3React();
+
     return (
         <Modal
             {...props}
@@ -19,10 +26,14 @@ function CenteredModal(props) {
             </Modal.Header>
             <Modal.Body>
                 <div className="minting-container">
-                    <Mint />
-                    <div className="w-100 m-4 flex align-items-center">
-                        <span>Ó</span>
-                    </div>
+                    {chainId == 1 &&
+                        <div className="minting-container">
+                            <Mint />
+                            <div className="w-100 m-4 flex align-items-center">
+                                <span>Ó</span>
+                            </div>
+                        </div>
+                    }
                     <CrossmintPayButton
                         collectionTitle="RIPCOIN x RIPGANG"
                         collectionDescription="RIPCOIN x RIPGANG"
