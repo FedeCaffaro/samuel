@@ -62,7 +62,7 @@ function RipNavbar() {
 						aria-controls="mobile-menu"
 						aria-expanded="false"
 					>
-						<span className="sr-only">Open main menu</span>
+						<span className="sr-only">Abrir menu</span>
 						{!isOpen ? (
 							<svg
 								className="button-dropdown"
@@ -101,9 +101,9 @@ function RipNavbar() {
 					<div className="button-container">
 						<div className="button-container_inner">
 						{active ?
-						<button  className="button-disconnect"  onClick={disconnect}>Disconnect ...{account.slice(-5)}</button>
+						<button  className="button-disconnect"  onClick={disconnect}>Desconectar ...{account.slice(-5)}</button>
 						: 
-						<button  className="button-connect"  onClick={connect}>Connect Wallet</button>
+						<button  className="button-connect"  onClick={connect}>Conectar Wallet</button>
 						}											
 						</div>
 					</div>
@@ -135,9 +135,9 @@ function RipNavbar() {
 							<ul>
 								<li className="button-container_inner">
 								{active ?
-								<button  className="button-disconnect"  onClick={disconnect}>Disconnect ...{account.slice(-5)}</button>
+								<button  className="button-disconnect"  onClick={disconnect}>Desconectar ...{account.slice(-5)}</button>
 								: 
-								<button  className="button-connect"  onClick={connect}>Connect Wallet</button>
+								<button  className="button-connect"  onClick={connect}>Conectar Wallet</button>
 								}					
 								</li>
 								<li>

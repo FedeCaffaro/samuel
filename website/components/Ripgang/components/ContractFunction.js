@@ -4,7 +4,7 @@ import NFTAbi from "../constants/NFTAbi.json";
 import { MerkleTree } from 'merkletreejs';
 import keccak256 from 'keccak256';
 
-const ETHERSCAN_URL = 'https://etherscan.io';
+const ETHERSCAN_URL = 'https://goerli.etherscan.io';
 const contractAddress = NFTAbi.address;
 const contractABI = NFTAbi.abi;
 
@@ -321,16 +321,16 @@ const successMessageWithLink = (text, hash) => (
     <>
       <span>{text}</span>
       <a style={{ 'text-decoration': 'underline' }} href={getTransactionLink(hash) } target="_blank" rel="noopener noreferrer">
-      See transaction
+      Ver transacción
       </a>
     </>
   );
 
 export const buySuccessRender = ({ hash }) =>
-  successMessageWithLink("Purchase successful: " ,hash);
+  successMessageWithLink("Compra exitosa: " ,hash);
 
 export const buyErrorRender = (error) => {
     console.log(error);
   const reason = error?.error?.message?.split(':');
-  return (reason?.length ? (reason[1]) : 'Try again later.');
+  return (reason?.length ? (reason[1]) : 'Intenta de nuevo mas tarde');
 };
