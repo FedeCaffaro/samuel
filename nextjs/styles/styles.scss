@@ -9,7 +9,7 @@ $desktop-width: 1024px;
 
 // Override default variables before the import
 $theme-colors: (
-  "primary": #ffc107,
+	"primary": #ffc107,
 );
 
 body {
@@ -34,9 +34,24 @@ body {
 	border-radius: 50px !important;
 }
 
+.btn-min-width {
+	margin: 1.5rem 0rem 0.5rem 0rem;
+	min-width: 250px;
+	background-color: #ffc107 !important;
+	color: #000 !important;
+}
+
+.crossmintParagraph-d3-0-2-7 {
+	color: black !important;
+}
+
 .btn-lg {
 	min-width: 200px !important;
 	font-size: 24px !important;
+}
+
+.background-black {
+	background: #000 !important;
 }
 
 .mint-form {
@@ -53,10 +68,12 @@ body {
 	.logo-wrapper {
 		margin-bottom: 20px;
 	}
+
 	.mint-price {
 		font-size: 24px;
 		line-height: 30px;
 		margin: 20px auto;
+
 		svg {
 			color: grey;
 			position: relative;
@@ -67,6 +84,15 @@ body {
 	.btn {
 		margin: 30px auto 20px;
 	}
-}
-@import '~bootstrap/scss/bootstrap.scss';
 
+	.button-container {
+		margin: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		max-width: 70%;
+	}
+}
+
+@import '~bootstrap/scss/bootstrap.scss';
