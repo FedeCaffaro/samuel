@@ -38,8 +38,6 @@ export default function Home() {
 			window.location.hostname.includes('localhost') ? 'test' : 'main'
 	}
 
-	console.log(NFT_CONTRACT_ADDRESS);
-	console.log(mintWithCC);
 
 	useEffect(() => {
 		if (wallet && wallet.networkName && wallet.networkName == 'main' && network == 'test') {
@@ -160,24 +158,40 @@ export default function Home() {
 						)}
 						{mintWithCC && !mintWithEth ? (
 							<div>
-								<div className="mint-price">0.4 <FaEthereum /> + Gas</div>
+								<div className="mint-price">0.4  <FaEthereum /> + Gas</div>
+								{wallet && wallet.account ?(
+								<div className="button-container">
 
+									<CrossmintPayButton
+										clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
+										mintConfig={{ "type": "erc-721", "totalPrice": `${0.4}`, "numberOfTokens": `${1}` }}
+										mintTo={`${wallet.account}`}
+										className="btn-round btn-min-width"
+									/>
+								</div>
+								):(
+								<div>	
 								<RangeSlider
-									value={numberOfTokens}
-									size="lg"
-									min={1}
-									max={8}
-									tooltip="on"
-									variant='warning'
-									onChange={event => setNumberOfTokens(event.target.value)}
-								/>
+								value={numberOfTokens}
+								size="lg"
+								min={1}
+								max={8}
+								tooltip="on"
+								variant='warning'
+								onChange={event => setNumberOfTokens(event.target.value)}
+								/>	
 								<div className="button-container">
 									<CrossmintPayButton
 										clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
-										mintConfig={{ "type": "erc-721", "totalPrice": `${0.4*numberOfTokens}`, "numberOfTokens": {numberOfTokens} }}
-										mintTo="<YOUR_USER_WALLET_ADDRESS>" //Quede acá, hay que poner un "wallet or null, me estoy cagando"
+										mintConfig={{ "type": "erc-721", "totalPrice": `${0.4*numberOfTokens}`, "numberOfTokens": `${numberOfTokens}` }}
 										className="btn-round btn-min-width"
 									/>
+								</div>
+								</div>
+								)}
+								<div>
+								<p> If you want to mint directly to your metamask wallet (limits to 1 NTF per transaction), please connect your wallet. </p>
+								<p> If you don't a have wallet or want to mint more than 1 NFT, crossmint will provide a custodial wallet. Then you can transfer your assets without extra charge to any wallet. If you have already connected it, please disconnect it.</p>
 								</div>
 								{wallet && wallet.account && !showNetworkWarning && (
 									<div>
