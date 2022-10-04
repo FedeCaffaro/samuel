@@ -36,6 +36,7 @@ jobs:
       NEXT_PUBLIC_ETHERSCAN_URL_PROD: ${{ secrets.NEXT_PUBLIC_ETHERSCAN_URL_PROD}}
       NEXT_PUBLIC_OS_API_ENDPOINT_PROD: ${{ secrets.NEXT_PUBLIC_OS_API_ENDPOINT_PROD}}
       NEXT_PUBLIC_OPEN_SEA_API_PROD: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_API_PROD}}
+      INFURA_ID: ${{ secrets.INFURA_ID}}
 
       SLS_INTERACTIVE_SETUP_ENABLE: 1
 
@@ -75,6 +76,7 @@ jobs:
           echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL >> .env
           echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT >> .env
           echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API >> .env
+          echo "INFURA_ID"=$INFURA_ID >> .env
 
       # Create .env file prod
       - name: Create .env prod
@@ -93,6 +95,7 @@ jobs:
           echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL_PROD >> .env
           echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT_PROD >> .env
           echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API_PROD >> .env
+          echo "INFURA_ID"=$INFURA_ID >> .env
 
       # Install project dependencies
       - name: Install Dependencies
