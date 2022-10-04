@@ -64,6 +64,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 60%;
 
 	.logo-wrapper {
 		margin-bottom: 20px;
@@ -92,6 +93,10 @@ body {
 		align-items: center;
 		flex-wrap: wrap;
 		max-width: 70%;
+	}
+	.text{
+		width: 90%;
+		margin: auto;
 	}
 }
 

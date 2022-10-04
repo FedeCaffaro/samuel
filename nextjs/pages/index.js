@@ -8,6 +8,8 @@ import { NFT_CONTRACT_ADDRESS, mint, mintPrice, totalSupply, maxToMint, saleIsAc
 import { useWallet } from 'use-wallet'
 import MintNavbar from './components/MintNavbar';
 import { CrossmintPayButton } from '@crossmint/client-sdk-react-ui';
+import { useContractRead } from 'wagmi'
+import abi from "../constants/ABI.json"
 
 export default function Home() {
 	const wallet = useWallet()
@@ -99,6 +101,24 @@ export default function Home() {
 		}, 3000)
 	}, [])
 
+
+	const numberMinted = useContractRead({
+		addressOrName: "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d",
+		contractInterface: abi.abi,
+		functionName: "totalSupply",
+		onSuccess(data) {
+			console.log('Success', parseInt(data._hex, 16) )
+		}
+	})
+
+	const nftPrice = useContractRead({
+		addressOrName: "0x49fDbfa1126638CE7eF2CA1A0f7759109f12595d",
+		contractInterface: abi.abi,
+		functionName: "getNFTPrice",
+		onSuccess(data) {
+			console.log('Success', parseFloat( parseInt(data._hex, 16) / Math.pow(10, 18)))
+		}
+	})
 	return (
 		<>
 			<MintNavbar mintWithEth={mintWithEth} setMintWithEth={setMintWithEth} />
@@ -127,7 +147,7 @@ export default function Home() {
 								<Button size="lg" variant="primary" className="btn-round" onClick={() => mintNFTs()}>Mint</Button>
 								{wallet && wallet.account && !showNetworkWarning && (
 									<div>
-										<p>{totalMinted} / 8888</p>
+										<p>Mint count: {totalMinted} / 8888</p>
 										<p>
 											<a rel="noreferrer" target="_blank" href={`${etherscanUrl}/address/${NFT_CONTRACT_ADDRESS}`}>View Contract</a><br />
 											{transactionUrl && <a rel="noreferrer" target="_blank" href={transactionUrl}>View Transaction</a>}
@@ -158,44 +178,31 @@ export default function Home() {
 						)}
 						{mintWithCC && !mintWithEth ? (
 							<div>
-								<div className="mint-price">0.4  <FaEthereum /> + Gas</div>
+								<div className="mint-price">{parseFloat( parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}  <FaEthereum /> + Gas</div>
 								{wallet && wallet.account ?(
 								<div className="button-container">
 
 									<CrossmintPayButton
 										clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
-										mintConfig={{ "type": "erc-721", "totalPrice": `${0.4}`, "numberOfTokens": `${1}` }}
+										mintConfig={{ "type": "erc-721", "totalPrice": `${parseFloat( parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}`, "numberOfTokens": `${1}` }}
 										mintTo={`${wallet.account}`}
 										className="btn-round btn-min-width"
 									/>
 								</div>
 								):(
-								<div>	
-								<RangeSlider
-								value={numberOfTokens}
-								size="lg"
-								min={1}
-								max={8}
-								tooltip="on"
-								variant='warning'
-								onChange={event => setNumberOfTokens(event.target.value)}
-								/>	
 								<div className="button-container">
 									<CrossmintPayButton
 										clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
-										mintConfig={{ "type": "erc-721", "totalPrice": `${0.4*numberOfTokens}`, "numberOfTokens": `${numberOfTokens}` }}
+										mintConfig={{ "type": "erc-721", "totalPrice": `${parseFloat( parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}`, "numberOfTokens": `${1}` }}
 										className="btn-round btn-min-width"
 									/>
 								</div>
-								</div>
 								)}
 								<div>
-								<p> If you want to mint directly to your metamask wallet (limits to 1 NTF per transaction), please connect your wallet. </p>
-								<p> If you don't a have wallet or want to mint more than 1 NFT, crossmint will provide a custodial wallet. Then you can transfer your assets without extra charge to any wallet. If you have already connected it, please disconnect it.</p>
+								<p className='text'> *Payment with credit card limited to 1 NFT per transaction. If you want to mint directly to your metamask wallet, please connect your wallet. If you don't a have wallet, crossmint will provide a custodial wallet. Then you can transfer your assets without extra charge to any wallet.</p>
 								</div>
 								{wallet && wallet.account && !showNetworkWarning && (
 									<div>
-										<p>{totalMinted} / 8888</p>
 										<p>
 											<a rel="noreferrer" target="_blank" href={`${etherscanUrl}/address/${NFT_CONTRACT_ADDRESS}`}>View Contract</a><br />
 											{transactionUrl && <a rel="noreferrer" target="_blank" href={transactionUrl}>View Transaction</a>}
@@ -203,6 +210,7 @@ export default function Home() {
 									</div>
 								)}
 								<p>{error}</p>
+								<p>Mint count: {parseInt(numberMinted.data?._hex, 16)} / 8888</p>
 							</div>
 						) : ""}
 					</Card>
