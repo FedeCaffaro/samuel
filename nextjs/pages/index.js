@@ -213,7 +213,7 @@ export default function Home() {
 								<p>{error}</p>
 								<p>Mint count: {parseInt(numberMinted.data?._hex, 16)} / 8888</p>
 								<div>
-									<p className='text'> *Payment with credit card limited to 1 NFT per transaction. If you want to mint directly to your Metamask wallet, please connect your wallet. If you don't a have wallet, the service prodiver (i.e. Crossmint) will provide a custodial wallet, from which you can later transfer your assets without any extra charge.</p>
+									<p className='text'> *Payment with credit card limited to 1 NFT per transaction. If you want to mint directly to your Metamask wallet, please connect your wallet. If you do not a have wallet, the service prodiver ,i.e. Crossmint, will provide a custodial wallet, from which you can later transfer your assets without any extra charge.</p>
 								</div>
 								{wallet && wallet.account && !showNetworkWarning && (
 									<div>
