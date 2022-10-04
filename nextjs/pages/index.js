@@ -107,7 +107,7 @@ export default function Home() {
 		contractInterface: abi.abi,
 		functionName: "totalSupply",
 		onSuccess(data) {
-			console.log('Success', parseInt(data._hex, 16) )
+			console.log('Success', parseInt(data._hex, 16))
 		}
 	})
 
@@ -116,7 +116,7 @@ export default function Home() {
 		contractInterface: abi.abi,
 		functionName: "getNFTPrice",
 		onSuccess(data) {
-			console.log('Success', parseFloat( parseInt(data._hex, 16) / Math.pow(10, 18)))
+			console.log('Success', parseFloat(parseInt(data._hex, 16) / Math.pow(10, 18)))
 		}
 	})
 	return (
@@ -125,6 +125,18 @@ export default function Home() {
 			<div className="body-wrapper">
 				{true ? (
 					<Card className="mint-form">
+						{!mintWithCC && mintWithEth && wallet && wallet.account &&
+							((wallet.networkName == 'rinkeby' && network == 'test') ||
+								(wallet.networkName == 'main' && network == 'main')) ? (
+							<div className="back-container">
+								<Button size="sm" variant="primary" className="btn-round margin-back" onClick={() => setMintWithEth(false)}>Back</Button>
+							</div>
+						) : ""}
+						{mintWithCC && !mintWithEth ? (
+							<div className="back-container">
+								<Button size="sm" variant="primary" className="btn-round margin-back" onClick={() => setMintWithCC(false)}>Back</Button>
+							</div>
+						) : ""}
 						<div className="logo-wrapper">
 							<img src="/samot-logo.jpg" width="150px" />
 						</div>
@@ -178,28 +190,30 @@ export default function Home() {
 						)}
 						{mintWithCC && !mintWithEth ? (
 							<div>
-								<div className="mint-price">{parseFloat( parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}  <FaEthereum /> + Gas</div>
-								{wallet && wallet.account ?(
-								<div className="button-container">
+								<div className="mint-price">{parseFloat(parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}  <FaEthereum /> + Gas</div>
+								{wallet && wallet.account ? (
+									<div className="button-container">
 
-									<CrossmintPayButton
-										clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
-										mintConfig={{ "type": "erc-721", "totalPrice": `${parseFloat( parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}`, "numberOfTokens": `${1}` }}
-										mintTo={`${wallet.account}`}
-										className="btn-round btn-min-width"
-									/>
-								</div>
-								):(
-								<div className="button-container">
-									<CrossmintPayButton
-										clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
-										mintConfig={{ "type": "erc-721", "totalPrice": `${parseFloat( parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}`, "numberOfTokens": `${1}` }}
-										className="btn-round btn-min-width"
-									/>
-								</div>
+										<CrossmintPayButton
+											clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
+											mintConfig={{ "type": "erc-721", "totalPrice": `${parseFloat(parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}`, "numberOfTokens": `${1}` }}
+											mintTo={`${wallet.account}`}
+											className="btn-round btn-min-width"
+										/>
+									</div>
+								) : (
+									<div className="button-container">
+										<CrossmintPayButton
+											clientId="08110dd1-b7e0-4972-a360-090f226ae77b"
+											mintConfig={{ "type": "erc-721", "totalPrice": `${parseFloat(parseInt(nftPrice.data?._hex, 16) / Math.pow(10, 18))}`, "numberOfTokens": `${1}` }}
+											className="btn-round btn-min-width"
+										/>
+									</div>
 								)}
+								<p>{error}</p>
+								<p>Mint count: {parseInt(numberMinted.data?._hex, 16)} / 8888</p>
 								<div>
-								<p className='text'> *Payment with credit card limited to 1 NFT per transaction. If you want to mint directly to your metamask wallet, please connect your wallet. If you don't a have wallet, crossmint will provide a custodial wallet. Then you can transfer your assets without extra charge to any wallet.</p>
+									<p className='text'> *Payment with credit card limited to 1 NFT per transaction. If you want to mint directly to your Metamask wallet, please connect your wallet. If you don't a have wallet, the service prodiver (i.e. Crossmint) will provide a custodial wallet, from which you can later transfer your assets without any extra charge.</p>
 								</div>
 								{wallet && wallet.account && !showNetworkWarning && (
 									<div>
@@ -209,8 +223,6 @@ export default function Home() {
 										</p>
 									</div>
 								)}
-								<p>{error}</p>
-								<p>Mint count: {parseInt(numberMinted.data?._hex, 16)} / 8888</p>
 							</div>
 						) : ""}
 					</Card>

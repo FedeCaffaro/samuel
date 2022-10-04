@@ -20,7 +20,9 @@ const MintNavbar = ({ mintWithEth, setMintWithEth }) => {
     return (
         <Navbar variant="dark" className="background-black">
             <Container>
-                <Navbar.Brand href="/">Samot Club</Navbar.Brand>
+                <Navbar.Brand href="/">
+                    <img src="/logo.png" width="40px" />
+                </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     {wallet.status === 'connected' ?

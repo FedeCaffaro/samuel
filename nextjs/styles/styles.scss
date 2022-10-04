@@ -12,6 +12,12 @@ $theme-colors: (
 	"primary": #ffc107,
 );
 
+.back-container {
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+}
+
 body {
 	font-family: 'Chivo', sans-serif !important;
 }
@@ -52,6 +58,10 @@ body {
 
 .background-black {
 	background: #000 !important;
+}
+
+.margin-back {
+	margin: 1rem !important;
 }
 
 .mint-form {
@@ -97,6 +107,7 @@ body {
 	.text{
 		width: 90%;
 		margin: auto;
+		margin-top: 1rem;
 	}
 }
 
