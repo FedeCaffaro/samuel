@@ -77,7 +77,6 @@ jobs:
           echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL >> .env
           echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT >> .env
           echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API >> .env
-          echo "INFURA_ID"=$INFURA_ID >> .env
 
       # Create .env file prod
       - name: Create .env prod
@@ -86,6 +85,7 @@ jobs:
           echo "AWS_ACCESS_KEY_ID"=$AWS_ACCESS_KEY_ID >> .env
           echo "AWS_SECRET_ACCESS_KEY"=$AWS_SECRET_ACCESS_KEY >> .env
           echo "AWS_REGION"=$AWS_REGION >> .env
+          echo "INFURA_ID"=$INFURA_ID >> .env
           echo "NEXT_PUBLIC_REACT_APP_API_URL"=$NEXT_PUBLIC_REACT_APP_API_URL_PROD >> .env
           echo "NEXT_PUBLIC_NFT_CONTRACT_ADDRESS"=$NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD >> .env
           echo "NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS"=$NEXT_PUBLIC_STAKING_CONTRACT_ADDRESS_PROD >> .env
@@ -96,7 +96,6 @@ jobs:
           echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL_PROD >> .env
           echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT_PROD >> .env
           echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API_PROD >> .env
-          echo "INFURA_ID"=$INFURA_ID >> .env
 
 
       # Install project dependencies
