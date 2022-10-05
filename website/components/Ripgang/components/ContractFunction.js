@@ -185,7 +185,6 @@ const whitelistAddresses = [
   "0x3a6dc87d1F165F3061bBe5E918d8fEf5F35791FE"
 ];
 
-
 export const getMaxSupply = async(id) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
