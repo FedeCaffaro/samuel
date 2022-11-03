@@ -93,24 +93,6 @@ canvas {
   height: 2rem;
 }
 
-.button-mint {
-  background-color: black;
-  border-color: white;
-  border-radius: 0.5rem;
-  border-style: solid;
-  border-width: 2px;
-  padding: 0.5rem 1.5rem;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 2rem;
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: white;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
 .centered-container {
   width: 80%;
   display: flex;
@@ -123,11 +105,16 @@ canvas {
   font-size: 1.1rem;
 }
 
-.connect-button-container {
+.countdown-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  max-width: 150px;
+  margin: 20px 0px;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .description-container {
@@ -175,11 +162,11 @@ canvas {
 
 .flex-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  width: 100%;
+  margin: 2rem 0rem 2rem 0rem;
+  width: 80%;
 }
 
 footer {
@@ -219,10 +206,6 @@ h1 {
   line-height: 85%;
 }
 
-.letter-spacing {
-  letter-spacing: 5px;
-}
-
 .main-container {
   display: flex;
   flex-direction: column;
@@ -247,11 +230,6 @@ h1 {
   margin: 0rem 0.5rem;
   object-fit: scale-down;
   width: 6rem;
-}
-
-.nft-card-image {
-  width: 100%;
-  height: auto;
 }
 
 .oskari-g2 {
@@ -280,7 +258,7 @@ p {
 .ripgang-navbar_logos {
   align-items: center;
   display: flex;
-  flex-shrinfk: 0;
+  flex-shrink: 0;
   justify-content: center;
   width: 25%;
 }
@@ -323,10 +301,6 @@ p {
   list-style: disc !important;
 }
 
-.videoTag {
-  width: 100%;
-}
-
 @keyframes rotation {
   from {
     transform: rotate(0deg);
@@ -350,10 +324,6 @@ p {
   width: 60%;
   height: auto;
   margin-top: 2rem;
-}
-
-.xl-title {
-  font-size: 5rem;
 }
 
 /* Small devices (landscape phones, 576px and up) */
