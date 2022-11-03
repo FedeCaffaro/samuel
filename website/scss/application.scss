@@ -18,9 +18,21 @@
 
 @import 'ripgang';
 
+@import 'ripcoin';
+
 @font-face {
   font-family: 'Oskari';
   src: url(../public/assets/general/oskari.OTF);
+}
+
+@font-face {
+  font-family: 'Oskari-G2';
+  src: url(../public/assets/general/oskari-g2-regular.otf);
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url(../public/assets/general/HelveticaNeueLTProEx.otf);
 }
 
 @font-face {

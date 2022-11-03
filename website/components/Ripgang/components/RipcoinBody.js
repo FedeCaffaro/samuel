@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getMaxSupply, getCurrentSupply } from "./ContractFunction";
 import { useWeb3React } from "@web3-react/core";
 
-const NFTs = ({ setModalShow }) => {
+const RipcoinBody = ({ setModalShow }) => {
 
   const {
     active,
@@ -76,4 +76,4 @@ const NFTs = ({ setModalShow }) => {
   );
 }
 
-export default NFTs;
+export default RipcoinBody;
