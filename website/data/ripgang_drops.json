@@ -1,0 +1,20 @@
+[
+	{
+        "id": 2,
+		"name": "DRIP-O'S",
+		"img_url": "Dripos_teaser.png",
+		"video_url": "Dripos.mp4"
+	},
+	{
+        "id": 3,
+		"name": "DRIP KILLER",
+		"img_url": "Drip_teaser.png",
+		"video_url": ""
+	},
+	{
+        "id": 4,
+		"name": "DILLOM DORADO",
+		"img_url": "Toy_teaser.png",
+		"video_url": ""
+	}
+]
