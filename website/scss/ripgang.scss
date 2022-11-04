@@ -215,6 +215,11 @@ h1 {
   color: #fff;
 }
 
+.item:before {
+  content: "\2022";
+  margin-right: 6px;
+}
+
 .line-height-85 {
   line-height: 85%;
 }

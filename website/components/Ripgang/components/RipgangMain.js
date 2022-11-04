@@ -6,8 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useWeb3React } from "@web3-react/core";
 import { getMaxSupply, getCurrentSupply } from "./ContractFunction";
 import NFTCard from './NFTCard';
+import ripgangJson from '../../../data/ripgang_drops.json';
 
 const RipgangMain = ({ setModalShow }) => {
+
+  console.log(ripgangJson);
 
   const {
     active,
@@ -72,7 +75,7 @@ const RipgangMain = ({ setModalShow }) => {
       <div className="flex-container">
         <Container>
           <Row>
-            <Col xs={12} lg={5} className="d-flex justify-content-center">
+            <Col xs={12} lg={6} className="d-flex justify-content-center">
               <video className='videoTag'
                 autoPlay
                 loop
@@ -84,7 +87,7 @@ const RipgangMain = ({ setModalShow }) => {
                 <source src="/ripgang/ripcoin.mp4" type='video/mp4' />
               </video>
             </Col>
-            <Col xs={12} lg={7} className="d-flex justify-content-center flex-wrap flex-column align-items-center">
+            <Col xs={12} lg={6} className="d-flex justify-content-center flex-wrap flex-column align-items-center">
               <h1 className="bold-h1 oskari-g2 line-height-85">
                 Llevate una RIPCOIN, coleccionarla es gratis.
               </h1>
@@ -93,12 +96,12 @@ const RipgangMain = ({ setModalShow }) => {
                 pero los beneficios de tenerla aplican a todos los artistas de la RIPGANG.
               </span>
               <span className="bold oskari-g2 align-self-start">Más de 200 owners de una RIPCOIN ya ganaron premios.</span>
-              <ul className="list-style-disc align-self-start d-block">
-                <li className="bold oskari-g2">Merchandising de EDICIÓN LIMITADA de toda la RIPGANG</li>
-                <li className="bold oskari-g2">Pre-reserva de entradas para shows de todos los artistas</li>
-                <li className="bold oskari-g2">Acceso a shows agotados de cualquiera de los artistas</li>
-                <li className="bold oskari-g2">Invitaciones a los eventos exclusivos de BOHEMIAN GROOVE</li>
-                <li className="bold oskari-g2">Airdrops de coleccionables digitales</li>
+              <ul className="list-style-disc align-self-start p-0">
+                <li className="bold oskari-g2 item my-1">Merchandising de EDICIÓN LIMITADA de toda la RIPGANG</li>
+                <li className="bold oskari-g2 item my-1">Pre-reserva de entradas para shows de todos los artistas</li>
+                <li className="bold oskari-g2 item my-1">Acceso a shows agotados de cualquiera de los artistas</li>
+                <li className="bold oskari-g2 item my-1">Invitaciones a los eventos exclusivos de BOHEMIAN GROOVE</li>
+                <li className="bold oskari-g2 item my-1">Airdrops de coleccionables digitales</li>
               </ul>
               <div className="connect-button-container">
                 <Button
@@ -108,7 +111,7 @@ const RipgangMain = ({ setModalShow }) => {
                   MINTEAR
                 </Button>
                 {chainId === 1 &&
-                  <p className="w-100 text-center mt-2"> MINTEADOS : {totalMinted} / {maxSupply}</p>
+                  <p className="w-100 text-center mt-2"> {totalMinted} / {maxSupply}</p>
                 }
               </div>
             </Col>
@@ -124,9 +127,15 @@ const RipgangMain = ({ setModalShow }) => {
       </div>
       <Container>
         <Row>
+          {ripgangJson.map(nft => {
+            return (
+              <Col xs={12} md={4} className="d-flex justify-content-center align-items-around">
+                <NFTCard {...nft} />
+              </Col>)
+          })}
+          {/* <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
           <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
-          <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
-          <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
+          <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col> */}
         </Row>
       </Container>
 
