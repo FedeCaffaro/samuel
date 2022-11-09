@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useWeb3React } from "@web3-react/core";
 import { getMaxSupply, getCurrentSupply } from "./ContractFunction";
 import NFTCard from './NFTCard';
+import { NFTModal } from './NFTModal';
 import ripgangJson from '../../../data/ripgang_drops.json';
 
 const RipgangMain = ({ setModalShow }) => {
@@ -20,6 +21,10 @@ const RipgangMain = ({ setModalShow }) => {
 
   const [totalMinted, setTotalMinted] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
+  const [nftModalShow, setNftModalShow] = useState(false);
+  const [modalData, setModalData] = useState({})
+
+  console.log(nftModalShow)
 
   async function handleStats() {
     getCurrentSupply(1).then(setTotalMinted);
@@ -72,7 +77,7 @@ const RipgangMain = ({ setModalShow }) => {
           </a>
         </div>
       </footer>
-      <div className="flex-container">
+      <div className="flex-container border-top pt-2 mb-0">
         <Container>
           <Row>
             <Col xs={12} lg={6} className="d-flex justify-content-center">
@@ -121,24 +126,31 @@ const RipgangMain = ({ setModalShow }) => {
           </div>
         </Container>
       </div>
-      <div className="flex-container">
+      <div className="flex-container border-top pt-5">
         <span className="w-100 text-center letter-spacing">PRIMER DROP</span>
         <span className="xl-title w-100 text-center">DILLOM</span>
       </div>
+      <NFTModal {...modalData} show={nftModalShow} onHide={() => setNftModalShow(false)} />
       <Container>
         <Row>
           {ripgangJson.map(nft => {
             return (
-              <Col xs={12} md={4} className="d-flex justify-content-center align-items-around">
-                <NFTCard {...nft} />
-              </Col>)
+              <>
+                <Col xs={12} md={4} className="d-flex justify-content-center align-items-around">
+                  <NFTCard {...nft} setNftModalShow={setNftModalShow} setModalData={setModalData} />
+                </Col>
+              </>
+            )
           })}
           {/* <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
           <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
           <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col> */}
         </Row>
       </Container>
-
+      <footer className="flex-container border-top pt-4">
+        <span className="text-center w-100">RIPGANG x SAMOT CLUB</span>
+        <span>2022</span>
+      </footer>
     </div>
   );
 }
