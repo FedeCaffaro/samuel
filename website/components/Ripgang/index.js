@@ -5,6 +5,7 @@ import RipcoinBody from "./components/RipcoinBody";
 import RipgangMain from "./components/RipgangMain";
 import CenteredModal from "./components/CenteredModal";
 
+
 export default function Ripcoin() {
 	const [modalShow, setModalShow] = useState(false);
 
@@ -62,12 +63,12 @@ export function Ripgang() {
 				</Head>
 				<div>
 					<RipNavbar />
-					<RipgangMain setModalShow={setModalShow} />
+					<RipgangMain setModalShow={setModalShow} modalShow={modalShow} />
 				</div>
-				<CenteredModal
+				{/* <CenteredModal
 					show={modalShow}
 					onHide={() => setModalShow(false)}
-				/>
+				/> */}
 			</div>
 		</>
 	);
