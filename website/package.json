@@ -24,6 +24,7 @@
     "@serverless/template": "^1.1.4",
     "all": "^0.0.0",
     "apisauce": "^2.0.1",
+    "autoprefixer": "^10.4.13",
     "babel-plugin-module-resolver": "^4.1.0",
     "bootstrap": "^5.2.1",
     "classnames": "^2.3.1",
