@@ -3,7 +3,19 @@ import { Button } from '@chakra-ui/react';
 import { useWeb3React } from "@web3-react/core";
 import { getMaxSupply, getCurrentSupply } from "./ContractFunction";
 
-const NFTCard = ({ id, img_url, video_url, name }) => {
+const NFTCard = ({
+    id,
+    img_url,
+    video_url,
+    name,
+    description,
+    artist,
+    origin,
+    price,
+    quantity,
+    setNftModalShow,
+    setModalData
+}) => {
     const {
         active,
         chainId,
@@ -24,9 +36,24 @@ const NFTCard = ({ id, img_url, video_url, name }) => {
         }
     }, [chainId]);
 
+    const handleClick = () => {
+        setModalData({
+            artist,
+            id,
+            img_url,
+            video_url,
+            name,
+            description,
+            origin,
+            price,
+            quantity
+        });
+        setNftModalShow(true);
+    }
+
     return (
         <div className="flex-container">
-            <div className="flex-container">
+            <div className="flex-container m-0">
                 {video_url ? (
                     <video className='videoTag'
                         autoPlay
@@ -43,7 +70,7 @@ const NFTCard = ({ id, img_url, video_url, name }) => {
                 )}
             </div>
             <Button
-                onClick={() => setModalShow(true)}
+                onClick={handleClick}
                 className="button-mint"
             >
                 {name}

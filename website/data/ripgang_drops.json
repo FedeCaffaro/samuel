@@ -1,20 +1,45 @@
-[
+[	{
+	"id": "1",
+	"name": "Ripcoin",
+	"artist": "Dillom",
+	"origin": "Opa",
+	"img_url": "Dripos_teaser.png",
+	"video_url": "Dripos.mp4",
+	"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
+	"price": "0.00",
+	"quantity": 25
+},
 	{
-        "id": 2,
+		"id": "2",
 		"name": "DRIP-O'S",
+		"artist": "Dillom",
+		"origin": "Opa",
 		"img_url": "Dripos_teaser.png",
-		"video_url": "Dripos.mp4"
+		"video_url": "Dripos.mp4",
+		"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
+		"price": "0.05",
+		"quantity": 25
 	},
 	{
-        "id": 3,
+		"id": 3,
 		"name": "DRIP KILLER",
+		"artist": "Dillom",
+		"origin": "Opa",
 		"img_url": "Drip_teaser.png",
-		"video_url": ""
+		"video_url": "",
+		"description": "",
+		"price": null,
+		"quantity": null
 	},
 	{
-        "id": 4,
+		"id": 4,
 		"name": "DILLOM DORADO",
+		"artist": "Dillom",
+		"origin": "Opa",
 		"img_url": "Toy_teaser.png",
-		"video_url": ""
+		"video_url": "",
+		"description": "",
+		"price": null,
+		"quantity": null
 	}
 ]

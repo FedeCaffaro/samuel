@@ -1,10 +1,10 @@
-import React from 'react';
-import { ethers,utils} from "ethers";
+import React from "react";
+import { ethers, utils } from "ethers";
 import NFTAbi from "../constants/NFTAbi.json";
-import { MerkleTree } from 'merkletreejs';
-import keccak256 from 'keccak256';
+import { MerkleTree } from "merkletreejs";
+import keccak256 from "keccak256";
 
-const ETHERSCAN_URL = 'https://goerli.etherscan.io';
+const ETHERSCAN_URL = "https://goerli.etherscan.io";
 const contractAddress = NFTAbi.address;
 const contractABI = NFTAbi.abi;
 
@@ -182,154 +182,167 @@ const whitelistAddresses = [
   "0xcD4866CB0f02076018c956817eCa772d005F3be7",
   "0x042c1054aa83017BB45bE508154F0F209B297a2a",
   "0xe4d91aeA2677B67d04d6d7623A80aF0f89466DD3",
-  "0x3a6dc87d1F165F3061bBe5E918d8fEf5F35791FE"
+  "0x3a6dc87d1F165F3061bBe5E918d8fEf5F35791FE",
 ];
 
-export const getMaxSupply = async(id) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const struct = await contract.idStats(id);
-    const maxSupply = parseInt(struct[0]);
-    return maxSupply;
-}
+export const getMaxSupply = async (id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const struct = await contract.idStats(id);
+  const maxSupply = parseInt(struct[0]);
+  return maxSupply;
+};
 
-export const getCurrentSupply = async(id) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const currentSupply = await contract.totalSupply(id);
-    return parseInt(currentSupply);
-}
+export const isOgOwner = async (account) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const ownerBalance = await contract.balanceOgRole(account);
+  return ownerBalance >= 1;
+};
 
+export const getCurrentSupply = async (id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const currentSupply = await contract.totalSupply(id);
+  return parseInt(currentSupply);
+};
 
-export const isPreSaleActive = async() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const whitelistActive = await contract.whitelistSaleIsActive();
-    return whitelistActive;
-}
+export const isPreSaleActive = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const whitelistActive = await contract.whitelistSaleIsActive();
+  return whitelistActive;
+};
 
-export const isSaleActive = async() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const saleActive = await contract.publicSaleIsActive();
-    return saleActive;
-}
+export const isOwnerSaleActive = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const ownerSaleActive = await contract.ownerSaleIsActive();
+  return ownerSaleActive;
+};
 
-export const getPrice = async(id) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const struct = await contract.idStats(id)
-    const price = struct[3];
-    return utils.formatEther(parseInt(price).toString());
-}
+export const isSaleActive = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const saleActive = await contract.publicSaleIsActive();
+  return saleActive;
+};
 
-export const publicSale = async(quantity,id) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const price = await getPrice(id);
-    const total = (price * quantity).toString();
-    const parsedTotal = ethers.utils.parseEther(total)
-    const publicMintTxn = await contract.publicSale(quantity,id,{value: parsedTotal});
-    return publicMintTxn;
-}
+export const getPrice = async (id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const struct = await contract.idStats(id);
+  const price = struct[3];
+  return utils.formatEther(parseInt(price).toString());
+};
 
-export const getPreSalePrice = async(id) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const struct = await contract.idStats(id)
-    const preSalePrice = struct[4];
-    return utils.formatEther(parseInt(preSalePrice).toString());
-}
+export const publicSale = async (quantity, id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const price = await getPrice(id);
+  const total = (price * quantity).toString();
+  const parsedTotal = ethers.utils.parseEther(total);
+  const publicMintTxn = await contract.publicSale(quantity, id, {
+    value: parsedTotal,
+  });
+  return publicMintTxn;
+};
 
-export const preSale = async(quantity,id, account) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const preSalePrice = await getPreSalePrice(id);
-    const total = (preSalePrice * quantity).toString();
-    const parsedTotal = ethers.utils.parseEther(total)
-    const merkleProof = getProof(account);
-    const whitelistMintTxn = await contract.whitelistSale(quantity,id,merkleProof,{value: parsedTotal });
-    return whitelistMintTxn;
-}
+export const ownerSale = async (quantity, id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const price = await getOwnerSalePrice(id);
+  const total = (price * quantity).toString();
+  const parsedTotal = ethers.utils.parseEther(total);
+  const ownerMintTxn = await contract.ownerSale(quantity, id, {
+    value: parsedTotal,
+  });
+  return ownerMintTxn;
+};
+
+export const getPreSalePrice = async (id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const struct = await contract.idStats(id);
+  const preSalePrice = struct[4];
+  return utils.formatEther(parseInt(preSalePrice).toString());
+};
+
+export const getOwnerSalePrice = async (id) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const struct = await contract.idStats(id);
+  const preSalePrice = struct[5];
+  return utils.formatEther(parseInt(preSalePrice).toString());
+};
+
+export const preSale = async (quantity, id, account) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const preSalePrice = await getPreSalePrice(id);
+  const total = (preSalePrice * quantity).toString();
+  const parsedTotal = ethers.utils.parseEther(total);
+  const merkleProof = getProof(account);
+  const whitelistMintTxn = await contract.whitelistSale(
+    quantity,
+    id,
+    merkleProof,
+    { value: parsedTotal }
+  );
+  return whitelistMintTxn;
+};
 
 const getProof = (account) => {
-  const leafNodes = whitelistAddresses.map(addr => keccak256(addr));
+  const leafNodes = whitelistAddresses.map((addr) => keccak256(addr));
   const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
   const merkleProof = merkleTree.getHexProof(keccak256(account));
   return merkleProof;
-}
+};
 
-export const verifyWhitelist = async(account)=>{
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    const leafNodes = whitelistAddresses.map(addr => keccak256(addr));
-    const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
-    const merkleProof = merkleTree.getHexProof(keccak256(account));
-    const whitelisted = await contract.verify(merkleProof,account);
-    return whitelisted;
-}
+export const verifyWhitelist = async (account) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const leafNodes = whitelistAddresses.map((addr) => keccak256(addr));
+  const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+  const merkleProof = merkleTree.getHexProof(keccak256(account));
+  const whitelisted = await contract.verify(merkleProof, account);
+  return whitelisted;
+};
 
 const getTransactionLink = (hash) => `${ETHERSCAN_URL}/tx/${hash}`;
 
 const successMessageWithLink = (text, hash) => (
-    <>
-      <span>{text}</span>
-      <a style={{ 'text-decoration': 'underline' }} href={getTransactionLink(hash) } target="_blank" rel="noopener noreferrer">
+  <>
+    <span>{text}</span>
+    <a
+      style={{ "text-decoration": "underline" }}
+      href={getTransactionLink(hash)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       Ver transacción
-      </a>
-    </>
-  );
+    </a>
+  </>
+);
 
 export const buySuccessRender = ({ hash }) =>
-  successMessageWithLink("Compra exitosa: " ,hash);
+  successMessageWithLink("Compra exitosa: ", hash);
 
 export const buyErrorRender = (error) => {
-    console.log(error);
-  const reason = error?.error?.message?.split(':');
-  return (reason?.length ? (reason[1]) : 'Intenta de nuevo mas tarde');
+  console.log(error);
+  const reason = error?.error?.message?.split(":");
+  return reason?.length ? reason[1] : "Intenta de nuevo mas tarde";
 };
