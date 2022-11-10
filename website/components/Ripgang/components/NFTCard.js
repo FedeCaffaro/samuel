@@ -77,8 +77,8 @@ const NFTCard = ({
             </Button>
             {chainId === 1 &&
                 <>
-                    <p className="w-100 text-center mt-2 mb-0">{maxSupply} EDICIONES</p>
-                    <p className="w-100 text-center">xxx ETH</p>
+                    <p className="w-100 text-center mt-2 mb-0">{maxSupply != 0 ? `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
+                    <p className="w-100 text-center">{price? `${price} ETH` : "? ETH"}</p>
                 </>
             }
         </div>

@@ -58,7 +58,9 @@ export const NFTModal = (props) => {
               className="d-flex justify-content-center flex-wrap flex-column align-items-center"
             >
               <h1 className="align-self-start text-white bold-h1 oskari-g2 line-height-85">
-                {props.name} x {props.artist}
+                {props.name != "COMING SOON"
+                  ? `${props.name} x ${props.artist}`
+                  : "?"}
               </h1>
               {props.description ? (
                 <>

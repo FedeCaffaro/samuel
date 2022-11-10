@@ -104,7 +104,7 @@ const Mint = (props) => {
         <div>
           {saleActive ? (
             <div>
-              {5 == chainId ? (
+              {1 == chainId ? (
                 <div>
                   <Button onClick={handlePublicMint} className="button-connect">
                     MINTEO CON ETHEREUM
