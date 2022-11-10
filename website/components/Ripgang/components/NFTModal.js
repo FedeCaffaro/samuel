@@ -25,9 +25,9 @@ export const NFTModal = (props) => {
             <Col
               xs={12}
               md={5}
-              className="d-flex justify-content-center align-items-center"
+              className="d-flex justify-content-center align-items-center p-0"
             >
-              <div className="flex-container m-0">
+
                 {props.video_url ? (
                   <video
                     className="videoTag w-full"
@@ -50,7 +50,7 @@ export const NFTModal = (props) => {
                     className="nft-card-image"
                   />
                 )}
-              </div>
+
             </Col>
             <Col
               xs={12}
@@ -65,31 +65,33 @@ export const NFTModal = (props) => {
               {props.description ? (
                 <>
                   <span className="border-top text-white bold oskari-g2 align-self-start pt-3 w-100">
+                    {props.title}
+                    <br />
                     {props.description}
                   </span>
-                  <Row className="d-flex align-items-center justify-content-between pt-2 w-full">
-                    <Col>
+                  <Row className="d-flex align-items-center justify-content-between pt-2 w-full m-0">
+                    <Col xs={6} md={3}>
                       <Button
                         disabled={true}
-                        className="text-white w-100 button-mint h4"
+                        className="text-white w-100 button-mint h4 pe-none px-4" 
                       >
                         {props.price} ETH
                       </Button>
                     </Col>
-                    <Col>
+                    <Col xs={6} md={3}>
                       <Button
                         disabled={true}
-                        className="text-white w-100 button-mint h4"
+                        className="text-white w-100 button-mint h4 pe-none px-4"
                       >
                         {props.quantity} Un.
                       </Button>
                     </Col>
-                    <Col>
+                    <Col xs={12} md={6}>
                       <Button
                         onClick={() => handleModals()}
                         className="text-white w-100 button-mint h4"
                       >
-                        MINTEAR
+                        11/11 - 19:00hs
                       </Button>
                     </Col>
                   </Row>

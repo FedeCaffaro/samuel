@@ -5,6 +5,7 @@
 	"origin": "Opa",
 	"img_url": "Dripos_teaser.png",
 	"video_url": "Dripos.mp4",
+	"title": "",
 	"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
 	"price": "0.00",
 	"quantity": 25
@@ -16,7 +17,8 @@
 		"origin": "Opa",
 		"img_url": "Dripos_teaser.png",
 		"video_url": "Dripos.mp4",
-		"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL!\n Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
+		"title": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL!",
+		"description": "Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
 		"price": "0.05",
 		"quantity": 25
 	},
@@ -27,6 +29,7 @@
 		"origin": "Opa",
 		"img_url": "Drip_teaser.png",
 		"video_url": "",
+		"title": "",
 		"description": "",
 		"price": null,
 		"quantity": null
@@ -38,6 +41,7 @@
 		"origin": "Opa",
 		"img_url": "Toy_teaser.png",
 		"video_url": "",
+		"title": "",
 		"description": "",
 		"price": null,
 		"quantity": null
