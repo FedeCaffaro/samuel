@@ -89,6 +89,7 @@ export const NFTModal = (props) => {
                     <Col xs={12} md={6}>
                       <Button
                         onClick={() => handleModals()}
+                        disabled={true}
                         className="text-white w-100 button-mint h4"
                       >
                         11/11 - 19:00hs
