@@ -106,7 +106,7 @@ const Mint = (props) => {
             <div>
               {1 == chainId ? (
                 <div>
-                  <Button onClick={handlePublicMint} className="button-connect">
+                  <Button onClick={handlePublicMint} className="button-connect oskari-g2 text-white fs-5">
                     MINTEO CON ETHEREUM
                   </Button>
                 </div>

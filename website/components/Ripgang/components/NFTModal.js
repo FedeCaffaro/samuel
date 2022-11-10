@@ -35,8 +35,8 @@ export const NFTModal = (props) => {
                     loop
                     muted
                     playsInline
-                    // onLoadedData={onVideoLoaded}
-                    // style={{ display: isVideoLoaded ? "block" : "none" }}
+                  // onLoadedData={onVideoLoaded}
+                  // style={{ display: isVideoLoaded ? "block" : "none" }}
                   >
                     <source
                       src={`/ripgang/${props.video_url}`}
@@ -99,10 +99,17 @@ export const NFTModal = (props) => {
                   ???????????????????????????????
                 </span>
               )}
-              <span className="border-top text-white helvetica mb-3 mt-2 small pt-3">
-                Beneficio reclamable por única vez. Para más información
-                dirigirse al discord oficial de la colección.
-              </span>
+              {props.name != "COMING SOON"
+                ? (
+                  <span className="d-inline border-top text-white helvetica mb-3 mt-2 small pt-3">
+                    Beneficio reclamable por única vez. Para más información dirigirse al <a className="d-inline text-decoration-underline helvetica no-hover" href="https://discord.gg/NU2EzTH9vA" target="_blank">discord oficial</a> de la colección.
+                  </span>
+                )
+                : (
+                  <span className="text-break border-top text-white helvetica mb-3 mt-2 small pt-3">
+                    "??????????????????????????????????????????????????????????????"
+                  </span>
+                )}
             </Col>
           </Row>
         </Container>
