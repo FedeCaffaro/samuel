@@ -264,6 +264,15 @@ h1 {
   }
 }
 
+.my-crossmint-button::part(button) { 
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%); 
+}
+
+.my-crossmint-button::part(contentParagraph) { 
+  color: white;
+  font-size: 1.25rem; 
+}
+
 .navbar-logo {
   height: 2.5rem;
   margin: 0rem 0.5rem;
@@ -274,6 +283,10 @@ h1 {
 .nft-card-image {
   width: 100%;
   height: auto;
+}
+
+.no-hover:hover {
+  color: inherit;
 }
 
 .oskari-g2 {

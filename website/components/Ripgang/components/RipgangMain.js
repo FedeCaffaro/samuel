@@ -81,7 +81,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
       </div>
       <footer>
         <div className="footer-logo">
-          <a href="https://discord.gg/NU2EzTH9vA" target="_blank">
+          <a href="https://discord.gg/NU2EzTH9vA" target="_blank" className="no-hover">
             <FontAwesomeIcon icon={faDiscord} />
           </a>
         </div>
