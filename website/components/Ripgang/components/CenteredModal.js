@@ -25,8 +25,6 @@ function CenteredModal(props) {
         }
     }
 
-    console.log(props)
-
     return (
         <Modal
             {...props}

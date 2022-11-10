@@ -86,7 +86,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
           </a>
         </div>
       </footer>
-      <div className="flex-container border-top pt-2 mb-0">
+      <div className="flex-container border-top pt-3 mb-0">
         <Container>
           <Row>
             <Col xs={12} lg={6} className="d-flex justify-content-center">
@@ -96,8 +96,8 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
                 loop
                 muted
                 playsInline
-                // onLoadedData={onVideoLoaded}
-                // style={{ display: isVideoLoaded ? "block" : "none" }}
+              // onLoadedData={onVideoLoaded}
+              // style={{ display: isVideoLoaded ? "block" : "none" }}
               >
                 <source src="/ripgang/ripcoin.mp4" type="video/mp4" />
               </video>
@@ -143,8 +143,13 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
                 >
                   MINTEAR
                 </Button>
-                {chainId === 1 && (
+                {chainId === 1 ? (
                   <p className="w-100 text-center mt-2">
+                    {" "}
+                    {totalMinted} / {maxSupply}
+                  </p>
+                ) : (
+                  <p className="w-100 text-center mt-2 invisible">
                     {" "}
                     {totalMinted} / {maxSupply}
                   </p>
@@ -168,7 +173,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
       <CenteredModal {...modalData} show={modalShow} onHide={() => setModalShow(false)} />
       <Container>
         <Row>
-          {ripgangJson.slice(1,4).map((nft) => {
+          {ripgangJson.slice(1, 4).map((nft) => {
             return (
               <>
                 <Col
