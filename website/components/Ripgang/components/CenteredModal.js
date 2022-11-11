@@ -54,6 +54,7 @@ function CenteredModal(props) {
                     <div className="w-100 m-4 flex align-items-center">
                         <span>Ó</span>
                     </div>
+
                     <CrossmintPayButton
                         collectionTitle="RIPCOIN x RIPGANG"
                         collectionDescription="RIPCOIN x RIPGANG"

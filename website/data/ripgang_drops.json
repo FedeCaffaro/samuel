@@ -20,6 +20,7 @@
 		"title": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL!",
 		"description": "Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
 		"price": "0.05",
+		"owner_price" : "0.04",
 		"quantity": 25
 	},
 	{

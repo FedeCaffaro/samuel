@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@chakra-ui/react';
 import { useWeb3React } from "@web3-react/core";
-import { getMaxSupply, getCurrentSupply } from "./ContractFunction";
+import { getMaxSupply, getCurrentSupply,isOgOwner } from "./ContractFunction";
 
 const NFTCard = ({
     id,
@@ -13,6 +13,7 @@ const NFTCard = ({
     artist,
     origin,
     price,
+    owner_price,
     quantity,
     setNftModalShow,
     setModalData
@@ -29,7 +30,10 @@ const NFTCard = ({
     async function handleStats(id) {
         getCurrentSupply(id).then(setTotalMinted);
         getMaxSupply(id).then(setMaxSupply);
+        isOgOwner(account).then(setIsOgOwnerState);
+
     }
+    const [isOgOwnerState, setIsOgOwnerState] = useState(false);
 
     useEffect(() => {
         if (chainId == 1) {
@@ -48,6 +52,7 @@ const NFTCard = ({
             description,
             origin,
             price,
+            owner_price,
             quantity
         });
         setNftModalShow(true);
@@ -79,8 +84,9 @@ const NFTCard = ({
             </Button>
             {chainId === 1 ? (
                 <>
-                    <p className="w-100 text-center mt-2 mb-0">{maxSupply != 0 ? `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
-                    <p className="w-100 text-center">{price ? `${price} ETH` : "? ETH"}</p>
+                    <p className="w-100 text-center mt-2 mb-0">MINTEADAS : {maxSupply != 0 ?  `${totalMinted}`+" de "+ `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
+                    {/* <p className="w-100 text-center">{price ? `${price} ETH` : "? ETH"}</p> */}
+                    
                 </>) : (
                 <>
                     <p className="w-100 text-center mt-2 mb-0 invisible">{maxSupply != 0 ? `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
