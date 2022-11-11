@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
+import { isOgOwner } from "./ContractFunction";
+import { useWeb3React } from "@web3-react/core";
 
 export const NFTModal = (props) => {
   const handleModals = () => {
     // props.setNftModalShow(false);
     props.setModalShow(true);
   };
+
+  const { active, chainId, account } = useWeb3React();
+
+  const [isOgOwnerState, setIsOgOwnerState] = useState(false);
+  async function handleStats() {
+    isOgOwner(account).then(setIsOgOwnerState);
+  }
+
+
+  useEffect(() => {
+    if (active) {
+      handleStats();
+    }
+  }, [account]);
 
   return (
     <Modal
@@ -27,30 +43,28 @@ export const NFTModal = (props) => {
               md={5}
               className="d-flex justify-content-center align-items-center p-0"
             >
-
-                {props.video_url ? (
-                  <video
-                    className="videoTag w-full"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+              {props.video_url ? (
+                <video
+                  className="videoTag w-full"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                   // onLoadedData={onVideoLoaded}
                   // style={{ display: isVideoLoaded ? "block" : "none" }}
-                  >
-                    <source
-                      src={`/ripgang/${props.video_url}`}
-                      type="video/mp4"
-                    />
-                  </video>
-                ) : (
-                  <img
-                    src={`/ripgang/${props.img_url}`}
-                    alt="NFT Card"
-                    className="nft-card-image"
+                >
+                  <source
+                    src={`/ripgang/${props.video_url}`}
+                    type="video/mp4"
                   />
-                )}
-
+                </video>
+              ) : (
+                <img
+                  src={`/ripgang/${props.img_url}`}
+                  alt="NFT Card"
+                  className="nft-card-image"
+                />
+              )}
             </Col>
             <Col
               xs={12}
@@ -73,9 +87,9 @@ export const NFTModal = (props) => {
                     <Col xs={6} md={3}>
                       <Button
                         disabled={true}
-                        className="text-white w-100 button-mint h4 pe-none px-4" 
+                        className="text-white w-100 button-mint h4 pe-none px-4"
                       >
-                        {props.price} ETH
+                        {isOgOwnerState? props.owner_price:props.price} ETH
                       </Button>
                     </Col>
                     <Col xs={6} md={3}>
@@ -89,10 +103,10 @@ export const NFTModal = (props) => {
                     <Col xs={12} md={6}>
                       <Button
                         onClick={() => handleModals()}
-                        disabled={true}
+                        disabled={false}
                         className="text-white w-100 button-mint h4"
                       >
-                        11/11 - 19:00hs
+                        MINTEAR
                       </Button>
                     </Col>
                   </Row>
@@ -102,17 +116,24 @@ export const NFTModal = (props) => {
                   ???????????????????????????????
                 </span>
               )}
-              {props.name != "COMING SOON"
-                ? (
-                  <span className="d-inline border-top text-white helvetica mb-3 mt-2 small pt-3">
-                    Beneficio reclamable por única vez. Para más información dirigirse al <a className="d-inline text-decoration-underline helvetica no-hover" href="https://discord.gg/NU2EzTH9vA" target="_blank">discord oficial</a> de la colección.
-                  </span>
-                )
-                : (
-                  <span className="text-break border-top text-white helvetica mb-3 mt-2 small pt-3">
-                    "??????????????????????????????????????????????????????????????"
-                  </span>
-                )}
+              {props.name != "COMING SOON" ? (
+                <span className="d-inline border-top text-white helvetica mb-3 mt-2 small pt-3">
+                  Beneficio reclamable por única vez. Para más información
+                  dirigirse al{" "}
+                  <a
+                    className="d-inline text-decoration-underline helvetica no-hover"
+                    href="https://discord.gg/NU2EzTH9vA"
+                    target="_blank"
+                  >
+                    discord oficial
+                  </a>{" "}
+                  de la colección.
+                </span>
+              ) : (
+                <span className="text-break border-top text-white helvetica mb-3 mt-2 small pt-3">
+                  "??????????????????????????????????????????????????????????????"
+                </span>
+              )}
             </Col>
           </Row>
         </Container>
