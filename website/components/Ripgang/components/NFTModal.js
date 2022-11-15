@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
-import { isOgOwner ,getMaxSupply, getCurrentSupply} from "./ContractFunction";
+import { isOgOwner, getMaxSupply, getCurrentSupply } from "./ContractFunction";
 import { useWeb3React } from "@web3-react/core";
 
 export const NFTModal = (props) => {
@@ -17,27 +17,30 @@ export const NFTModal = (props) => {
 
   const [isOgOwnerState, setIsOgOwnerState] = useState(false);
   const [totalMinted, setTotalMinted] = useState(0);
-  const [maxSupply, setMaxSupply] = useState(0);
   const [isSoldout, setIsSoldout] = useState(false);
 
   async function handleStats(id) {
-      getCurrentSupply(id).then(setTotalMinted);
-      getMaxSupply(id).then(setMaxSupply);
-      isOgOwner(account).then(setIsOgOwnerState);
+    getCurrentSupply(id).then(setTotalMinted);
+    isOgOwner(account).then(setIsOgOwnerState);
   }
 
 
   useEffect(() => {
-    if (active) {
+    if (chainId == 1) {
       handleStats(props.id);
     }
-  }, [account]);
+  }, [chainId]);
 
   useEffect(() => {
+    handleStats(props.id)
     if (totalMinted == props.quantity) {
-        setIsSoldout(true);
+      setIsSoldout(true);
     }
-}, [totalMinted]);
+  }, []);
+
+  console.log(totalMinted);
+  console.log(props.id)
+  console.log(props.quantity)
 
   return (
     <Modal
@@ -62,8 +65,8 @@ export const NFTModal = (props) => {
                   loop
                   muted
                   playsInline
-                  // onLoadedData={onVideoLoaded}
-                  // style={{ display: isVideoLoaded ? "block" : "none" }}
+                // onLoadedData={onVideoLoaded}
+                // style={{ display: isVideoLoaded ? "block" : "none" }}
                 >
                   <source
                     src={`/ripgang/${props.video_url}`}
@@ -101,7 +104,7 @@ export const NFTModal = (props) => {
                         disabled={true}
                         className="text-white w-100 button-mint h4 pe-none px-4"
                       >
-                        {isOgOwnerState? props.owner_price:props.price} ETH
+                        {isOgOwnerState ? props.owner_price : props.price} ETH
                       </Button>
                     </Col>
                     <Col xs={6} md={3}>
@@ -113,7 +116,6 @@ export const NFTModal = (props) => {
                       </Button>
                     </Col>
                     <Col xs={12} md={6}>
-                      
                       <Button
                         onClick={() => handleModals()}
                         disabled={isSoldout}
