@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
-import { isOgOwner } from "./ContractFunction";
+import { isOgOwner ,getMaxSupply, getCurrentSupply} from "./ContractFunction";
 import { useWeb3React } from "@web3-react/core";
 
 export const NFTModal = (props) => {
@@ -16,16 +16,28 @@ export const NFTModal = (props) => {
   const { active, chainId, account } = useWeb3React();
 
   const [isOgOwnerState, setIsOgOwnerState] = useState(false);
-  async function handleStats() {
-    isOgOwner(account).then(setIsOgOwnerState);
+  const [totalMinted, setTotalMinted] = useState(0);
+  const [maxSupply, setMaxSupply] = useState(0);
+  const [isSoldout, setIsSoldout] = useState(false);
+
+  async function handleStats(id) {
+      getCurrentSupply(id).then(setTotalMinted);
+      getMaxSupply(id).then(setMaxSupply);
+      isOgOwner(account).then(setIsOgOwnerState);
   }
 
 
   useEffect(() => {
     if (active) {
-      handleStats();
+      handleStats(props.id);
     }
   }, [account]);
+
+  useEffect(() => {
+    if (totalMinted == props.quantity) {
+        setIsSoldout(true);
+    }
+}, [totalMinted]);
 
   return (
     <Modal
@@ -101,12 +113,13 @@ export const NFTModal = (props) => {
                       </Button>
                     </Col>
                     <Col xs={12} md={6}>
+                      
                       <Button
                         onClick={() => handleModals()}
-                        disabled={false}
-                        className="text-white w-100 button-mint h4"
+                        disabled={isSoldout}
+                        className={isSoldout ? `${"text-black background-red w-100 button-mint h4"}` : `${"text-white w-100 button-mint h4"}`}
                       >
-                        MINTEAR
+                        {isSoldout ? "SOLD OUT" : "MINTEAR"}
                       </Button>
                     </Col>
                   </Row>
