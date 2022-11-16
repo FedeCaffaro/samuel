@@ -24,6 +24,7 @@ export const NFTModal = (props) => {
     isOgOwner(account).then(setIsOgOwnerState);
   }
 
+  handleStats(props.id);
 
   useEffect(() => {
     if (chainId == 1) {
@@ -32,11 +33,10 @@ export const NFTModal = (props) => {
   }, [chainId]);
 
   useEffect(() => {
-    handleStats(props.id)
     if (totalMinted == props.quantity) {
       setIsSoldout(true);
     }
-  }, []);
+  }, [totalMinted]);
 
   console.log(totalMinted);
   console.log(props.id)
