@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@chakra-ui/react';
 import { useWeb3React } from "@web3-react/core";
-import { getMaxSupply, getCurrentSupply,isOgOwner } from "./ContractFunction";
+import { getMaxSupply, getCurrentSupply, isOgOwner } from "./ContractFunction";
 
 const NFTCard = ({
     id,
@@ -26,12 +26,12 @@ const NFTCard = ({
 
     const [totalMinted, setTotalMinted] = useState(0);
     const [maxSupply, setMaxSupply] = useState(0);
+    const [isSoldout, setIsSoldout] = useState(false);
 
     async function handleStats(id) {
         getCurrentSupply(id).then(setTotalMinted);
         getMaxSupply(id).then(setMaxSupply);
         isOgOwner(account).then(setIsOgOwnerState);
-
     }
     const [isOgOwnerState, setIsOgOwnerState] = useState(false);
 
@@ -40,6 +40,12 @@ const NFTCard = ({
             handleStats(id);
         }
     }, [chainId]);
+
+    useEffect(() => {
+        if (totalMinted == quantity) {
+            setIsSoldout(true);
+        }
+    }, [totalMinted]);
 
     const handleClick = () => {
         setModalData({
@@ -82,17 +88,24 @@ const NFTCard = ({
             >
                 {name}
             </Button>
-            {chainId === 1 ? (
-                <>
-                    <p className="w-100 text-center mt-2 mb-0">MINTEADAS : {maxSupply != 0 ?  `${totalMinted}`+" de "+ `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
-                    {/* <p className="w-100 text-center">{price ? `${price} ETH` : "? ETH"}</p> */}
-                    
-                </>) : (
-                <>
-                    <p className="w-100 text-center mt-2 mb-0 invisible">{maxSupply != 0 ? `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
-                    <p className="w-100 text-center invisible">{price ? `${price} ETH` : "? ETH"}</p>
+            {chainId === 1 ?
+                (<>
+                    {isSoldout ? (
+                        <p className="w-100 text-center mt-2 mb-0 text-decoration-underline">SOLD OUT</p>
+                    ) : (
+                        <>
+                            <p className="w-100 text-center mt-2 mb-0">MINTEADAS : {maxSupply != 0 ? `${totalMinted}` + " de " + `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
+                            {/* <p className="w-100 text-center">{price ? `${price} ETH` : "? ETH"}</p> */}
+
+                        </>)
+                    }
                 </>
-            )
+                ) : (
+                    <>
+                        <p className="w-100 text-center mt-2 mb-0 invisible">{maxSupply != 0 ? `${maxSupply} EDICIONES` : "? EDICIONES"}</p>
+                        <p className="w-100 text-center invisible">{price ? `${price} ETH` : "? ETH"}</p>
+                    </>
+                )
             }
         </div>
     )

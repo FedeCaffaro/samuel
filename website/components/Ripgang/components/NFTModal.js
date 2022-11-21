@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
-import { isOgOwner } from "./ContractFunction";
+import { isOgOwner, getMaxSupply, getCurrentSupply } from "./ContractFunction";
 import { useWeb3React } from "@web3-react/core";
 
 export const NFTModal = (props) => {
@@ -16,16 +16,33 @@ export const NFTModal = (props) => {
   const { active, chainId, account } = useWeb3React();
 
   const [isOgOwnerState, setIsOgOwnerState] = useState(false);
-  async function handleStats() {
+  const [totalMinted, setTotalMinted] = useState(0);
+  const [isSoldout, setIsSoldout] = useState(false);
+
+  async function handleStats(id) {
+    getCurrentSupply(id).then(setTotalMinted);
     isOgOwner(account).then(setIsOgOwnerState);
   }
 
+  handleStats(props.id);
 
   useEffect(() => {
-    if (active) {
-      handleStats();
+    if (chainId == 1) {
+      handleStats(props.id);
     }
-  }, [account]);
+  }, [chainId]);
+
+  useEffect(() => {
+    if (totalMinted == props.quantity) {
+      setIsSoldout(true);
+    } else {
+      setIsSoldout(false);
+    }
+  }, [totalMinted]);
+
+  // console.log(totalMinted);
+  // console.log(props.id)
+  // console.log(props.quantity)
 
   return (
     <Modal
@@ -50,8 +67,8 @@ export const NFTModal = (props) => {
                   loop
                   muted
                   playsInline
-                  // onLoadedData={onVideoLoaded}
-                  // style={{ display: isVideoLoaded ? "block" : "none" }}
+                // onLoadedData={onVideoLoaded}
+                // style={{ display: isVideoLoaded ? "block" : "none" }}
                 >
                   <source
                     src={`/ripgang/${props.video_url}`}
@@ -89,7 +106,7 @@ export const NFTModal = (props) => {
                         disabled={true}
                         className="text-white w-100 button-mint h4 pe-none px-4"
                       >
-                        {isOgOwnerState? props.owner_price:props.price} ETH
+                        {isOgOwnerState ? props.owner_price : props.price} ETH
                       </Button>
                     </Col>
                     <Col xs={6} md={3}>
@@ -103,10 +120,10 @@ export const NFTModal = (props) => {
                     <Col xs={12} md={6}>
                       <Button
                         onClick={() => handleModals()}
-                        disabled={false}
-                        className="text-white w-100 button-mint h4"
+                        disabled={isSoldout}
+                        className={isSoldout ? `${"text-black background-red w-100 button-mint h4"}` : `${"text-white w-100 button-mint h4"}`}
                       >
-                        MINTEAR
+                        {isSoldout ? "SOLD OUT" : "MINTEAR"}
                       </Button>
                     </Col>
                   </Row>
