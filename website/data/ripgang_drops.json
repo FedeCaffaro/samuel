@@ -1,15 +1,16 @@
-[	{
-	"id": "1",
-	"name": "Ripcoin",
-	"artist": "Dillom",
-	"origin": "Opa",
-	"img_url": "Dripos_teaser.png",
-	"video_url": "Dripos.mp4",
-	"title": "",
-	"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
-	"price": "0.00",
-	"quantity": 25
-},
+[
+	{
+		"id": "1",
+		"name": "Ripcoin",
+		"artist": "Dillom",
+		"origin": "Opa",
+		"img_url": "Dripos_teaser.png",
+		"video_url": "Dripos.mp4",
+		"title": "",
+		"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
+		"price": "0.00",
+		"quantity": 25
+	},
 	{
 		"id": "2",
 		"name": "DRIP-O'S",
@@ -20,20 +21,21 @@
 		"title": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL!",
 		"description": "Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
 		"price": "0.05",
-		"owner_price" : "0.04",
+		"owner_price": "0.04",
 		"quantity": 25
 	},
 	{
-		"id": 3,
-		"name": "COMING SOON",
+		"id": "3",
+		"name": "DAILY DOSE",
 		"artist": "Dillom",
 		"origin": "Opa",
 		"img_url": "Drip_teaser.png",
-		"video_url": "",
-		"title": "",
-		"description": "",
-		"price": null,
-		"quantity": null
+		"video_url": "DripJuice.mp4",
+		"title": "100% FRESH DRIP JUICE.",
+		"description": "Los owners de este token podrán claimear un Resin Toy de edición limitada inspirado en la caja de jugo de “OPA”. La pieza, producida por Bohemian Groove, contará con la colaboración de Tomi Pomo (@tomipomo), artista de la ilustración original del jugo asesino. (solo 10 unidades).",
+		"price": "0.15",
+		"owner_price": "0.12",
+		"quantity": 10
 	},
 	{
 		"id": 4,

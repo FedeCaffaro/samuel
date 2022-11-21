@@ -35,6 +35,8 @@ export const NFTModal = (props) => {
   useEffect(() => {
     if (totalMinted == props.quantity) {
       setIsSoldout(true);
+    } else {
+      setIsSoldout(false);
     }
   }, [totalMinted]);
 
