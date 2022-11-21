@@ -40,9 +40,9 @@ export const NFTModal = (props) => {
     }
   }, [totalMinted]);
 
-  console.log(totalMinted);
-  console.log(props.id)
-  console.log(props.quantity)
+  // console.log(totalMinted);
+  // console.log(props.id)
+  // console.log(props.quantity)
 
   return (
     <Modal
