@@ -173,12 +173,12 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
       <CenteredModal {...modalData} show={modalShow} onHide={() => setModalShow(false)} />
       <Container>
         <Row>
-          {ripgangJson.slice(1, 4).map((nft) => {
+          {ripgangJson.slice(1, 5).map((nft) => {
             return (
               <>
                 <Col
                   xs={12}
-                  md={4}
+                  md={6}
                   className="d-flex justify-content-center align-items-around"
                 >
                   <NFTCard

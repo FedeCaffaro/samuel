@@ -43,6 +43,18 @@
 		"artist": "Dillom",
 		"origin": "Opa",
 		"img_url": "Toy_teaser.png",
+		"video_url": "Brazo_Dillom.mp4",
+		"title": "",
+		"description": "",
+		"price": null,
+		"quantity": null
+	},
+	{
+		"id": 5,
+		"name": "COMING SOON",
+		"artist": "Dillom",
+		"origin": "Opa",
+		"img_url": "Toy_teaser.png",
 		"video_url": "",
 		"title": "",
 		"description": "",
