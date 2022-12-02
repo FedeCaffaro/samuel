@@ -134,18 +134,25 @@ export const NFTModal = (props) => {
                 </span>
               )}
               {props.name != "COMING SOON" ? (
-                <span className="d-inline border-top text-white helvetica mb-3 mt-2 small pt-3">
-                  Beneficio reclamable por única vez. Para más información
-                  dirigirse al{" "}
-                  <a
-                    className="d-inline text-decoration-underline helvetica no-hover"
-                    href="https://discord.gg/NU2EzTH9vA"
-                    target="_blank"
-                  >
-                    discord oficial
-                  </a>{" "}
-                  de la colección.
-                </span>
+                <>
+                  {props.disclaimer &&
+                    <span className="d-inline border-top text-white helvetica mt-2 small pt-3">
+                      {props.disclaimer}
+                    </span>
+                  }
+                  <span className="d-inline text-white helvetica mb-3 small pt-3">
+                    Beneficio reclamable por única vez. Para más información
+                    dirigirse al{" "}
+                    <a
+                      className="d-inline text-decoration-underline helvetica no-hover"
+                      href="https://discord.gg/NU2EzTH9vA"
+                      target="_blank"
+                    >
+                      discord oficial
+                    </a>{" "}
+                    de la colección.
+                  </span>
+                </>
               ) : (
                 <span className="text-break border-top text-white helvetica mb-3 mt-2 small pt-3">
                   "??????????????????????????????????????????????????????????????"
