@@ -8,6 +8,7 @@
 		"video_url": "Dripos.mp4",
 		"title": "",
 		"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
+		"disclaimer": "",
 		"price": "0.00",
 		"quantity": 25
 	},
@@ -20,6 +21,7 @@
 		"video_url": "Dripos.mp4",
 		"title": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL!",
 		"description": "Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
+		"disclaimer": "",
 		"price": "0.05",
 		"owner_price": "0.04",
 		"quantity": 25
@@ -33,12 +35,26 @@
 		"video_url": "DripJuice.mp4",
 		"title": "100% FRESH DRIP JUICE.",
 		"description": "Los owners de este token podrán claimear un Resin Toy de edición limitada inspirado en la caja de jugo de “OPA”. La pieza, producida por Bohemian Groove, contará con la colaboración de Tomi Pomo (@tomipomo), artista de la ilustración original del jugo asesino. (solo 10 unidades).",
+		"disclaimer": "",
 		"price": "0.15",
 		"owner_price": "0.12",
 		"quantity": 10
 	},
 	{
 		"id": 4,
+		"name": "Brazo Derecho",
+		"artist": "Dillom",
+		"origin": "Opa",
+		"img_url": "Toy_teaser.png",
+		"video_url": "Brazo_Dillom.mp4",
+		"title": "",
+		"description": "Hace un año Dillom murió y nos regaló Post Mortem. En el aniversario de su muerte llega la pieza más preciada de toda su colección: el brazo derecho de tu artista favorito.",
+		"disclaimer": "Pieza disponible hasta el 13/12. También será airdropeada a owners de DRIP-O'S y/o DAILY DOSE.",
+		"price": "0.005",
+		"quantity": 666
+	},
+	{
+		"id": 5,
 		"name": "COMING SOON",
 		"artist": "Dillom",
 		"origin": "Opa",
@@ -46,6 +62,7 @@
 		"video_url": "",
 		"title": "",
 		"description": "",
+		"disclaimer": "",
 		"price": null,
 		"quantity": null
 	}
