@@ -61,9 +61,7 @@ canvas {
   border-width: 2px;
   padding: 0.5rem 1.5rem;
   margin: 0.5 rem;
-  font-family: "TAN-PEARL", sans-serif;
   font-weight: bold;
-  font-size: 0.75rem;
   color: white;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -82,9 +80,7 @@ canvas {
   border-width: 2px;
   padding: 0.5rem 1.5rem;
   margin: 0.5 rem;
-  font-family: "TAN-PEARL", sans-serif;
   font-weight: bold;
-  font-size: 0.75rem;
   color: white;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -303,6 +299,10 @@ p {
   color: white;
 }
 
+.poppins {
+    font-family: "Poppins", sans-serif !important;
+}
+
 .ripcoin-container {
   display: flex;
   justify-content: center;
@@ -337,6 +337,14 @@ p {
   width: 100%;
   height: auto;
   animation: rotation 90s infinite linear;
+}
+
+.text-small {
+  font-size: 0.875rem !important;
+}
+
+.text-xs {
+  font-size: 0.75rem !important;
 }
 
 
@@ -395,6 +403,10 @@ p {
   font-size: 5rem;
 }
 
+.lg-title {
+  font-size: 2.5rem;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .navbar-logo {
@@ -428,6 +440,10 @@ p {
 
   .ripcoin-container {
     width: 45%;
+  }
+
+  .lg-title {
+    font-size: 4rem;
   }
 
 }
