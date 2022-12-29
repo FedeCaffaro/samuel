@@ -141,7 +141,7 @@ export const NFTModal = (props) => {
                     </span>
                   }
                   <span className="d-inline text-white helvetica mb-3 small pt-3">
-                    Beneficio reclamable por única vez. Para más información
+                    {props.claimability} Para más información
                     dirigirse al{" "}
                     <a
                       className="d-inline text-decoration-underline helvetica no-hover"
