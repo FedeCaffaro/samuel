@@ -86,6 +86,9 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
           </a>
         </div>
       </footer>
+
+      {/* Ripcoin */}
+
       <div className="flex-container border-top pt-3 mb-0">
         <Container>
           <Row>
@@ -160,6 +163,9 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
           <div className="centered-container"></div>
         </Container>
       </div>
+
+      {/* Piezas Dillom */}
+
       <div className="flex-container border-top pt-5">
         <span className="w-100 text-center letter-spacing">PRIMER DROP</span>
         <span className="xl-title w-100 text-center">DILLOM</span>
@@ -196,7 +202,67 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
           <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col> */}
         </Row>
       </Container>
-      <footer className="flex-container border-top pt-4">
+
+      {/* Pieza Yon Frula */}
+
+      <div className="flex-container border-top pt-3 mb-0">
+        <Container>
+          <Row>
+            <Col sm={12} lg={5} className="d-flex justify-content-center align-items-center">
+              <video
+                className="videoTag w-75 border border-2 my-4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              // onLoadedData={onVideoLoaded}
+              // style={{ display: isVideoLoaded ? "block" : "none" }}
+              >
+                <source src="/ripgang/dillom_x_yon.mp4" type="video/mp4" />
+              </video>
+            </Col>
+            <Col xs={12} lg={7} className="d-flex justify-content-start align-items-between flex-wrap">
+              <span className="w-100 poppins text-small">ARTIST COLLAB</span>
+              <span className="w-100 lg-title">DILLOM X YON</span>
+              <span className="w-100 poppins text-small mb-2">Yon Frula, artista chaqueño, amigo de la casa y creador de <span className="fw-bold poppins text-small d-inline">Peacevoid World</span>:
+                Un universo psicodélico plagado de paisajes surreales, personajes lisérgicos y arte.
+                Con su estilo característico, Yon nos regala una versión groupieficada de DILLOM,
+                siendo esta la primera colaboración de la Ripgang Collection y también la primera
+                pieza única que será subastada a través de Open Sea. </span>
+              <span className="">
+                El ganador de la subasta obtendrá los siguientes beneficios:
+              </span>
+              <ul className="list-style-none p-0">
+                <li className="item my-1">
+                  Vinilo POST MORTEM Edición Especial.
+                </li>
+                <li className="item my-1">
+                  Fine Art Print de la obra, firmada por el artista.
+                </li>
+                <li className="item my-1">
+                  Pre-escucha exclusiva del próximo material de estudio de DILLOM.*
+                </li>
+                <li className="item my-1">
+                  Invitación al evento de lanzamiento del próximo disco del artista.*
+                </li>
+              </ul>
+              <span className="w-100 text-xs poppins">*(La pre-escucha y el evento de lanzamiento no tienen una fecha proyectada)</span>
+              <Row className="d-flex justify-content-start align-items-center w-100 mt-3 mx-auto">
+                <Col className="d-flex justify-content-center align-items-center mb-3">
+                  <Button className="button-mint m-0 pe-none">
+                    30/12/2022
+                  </Button>
+                </Col>
+                <Col className="d-flex justify-content-center align-items-center mb-3">
+                  <img className="rounded-circle me-4" src="ripgang/frula-profile.jpg" height="60" />
+                  <a className="fs-4 no-hover" href="https://twitter.com/botfrula">@botfrula</a>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      <footer className="flex-container border-top pt-4 mt-2">
         <span className="text-center w-100">RIPGANG x SAMOT CLUB</span>
         <span>2022</span>
       </footer>

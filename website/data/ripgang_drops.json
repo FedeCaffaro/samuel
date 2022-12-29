@@ -9,6 +9,7 @@
 		"title": "",
 		"description": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL! Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
 		"disclaimer": "",
+		"claimability": "Beneficio reclamable por única vez.",
 		"price": "0.00",
 		"quantity": 25
 	},
@@ -22,6 +23,7 @@
 		"title": "IT'S TIME FOR DRIP-O'S. OPA! QUÉ CEREAL!",
 		"description": "Los owners de este token podrán claimear una caja original de DRIP-O'S + Remera de edición limitada diseñada para el drop. (solo 25 unidades).",
 		"disclaimer": "",
+		"claimability": "Beneficio reclamable por única vez.",
 		"price": "0.05",
 		"owner_price": "0.04",
 		"quantity": 25
@@ -36,6 +38,7 @@
 		"title": "100% FRESH DRIP JUICE.",
 		"description": "Los owners de este token podrán claimear un Resin Toy de edición limitada inspirado en la caja de jugo de “OPA”. La pieza, producida por Bohemian Groove, contará con la colaboración de Tomi Pomo (@tomipomo), artista de la ilustración original del jugo asesino. (solo 10 unidades).",
 		"disclaimer": "",
+		"claimability": "Beneficio reclamable por única vez.",
 		"price": "0.15",
 		"owner_price": "0.12",
 		"quantity": 10
@@ -50,21 +53,24 @@
 		"title": "",
 		"description": "Hace un año Dillom murió y nos regaló Post Mortem. En el aniversario de su muerte llega la pieza más preciada de toda su colección: el brazo derecho de tu artista favorito.",
 		"disclaimer": "Pieza disponible hasta el 13/12. También será airdropeada a owners de DRIP-O'S y/o DAILY DOSE.",
+		"claimability": "Beneficio reclamable por única vez.",
 		"price": "0.001",
 		"owner_price": "0.001",
 		"quantity": 666
 	},
 	{
 		"id": 5,
-		"name": "COMING SOON",
+		"name": "DILLOM DORADO",
 		"artist": "Dillom",
 		"origin": "Opa",
 		"img_url": "Toy_teaser.png",
-		"video_url": "",
+		"video_url": "DillomDorado.mp4",
 		"title": "",
-		"description": "",
+		"description": "Los owners de este token tendrán acceso de por vida a todos los shows de DILLOM con un +1 (un acompañante) incluido. Este acceso solo corresponde a las fechas producidas por Bohemian Groove Corp. y será transferido en caso de que el token cambie de owner. También podrán claimear una figura original del Dillom dorado y un vinilo de Post Mortem (edición estándar) firmado por el artista.",
 		"disclaimer": "",
-		"price": null,
-		"quantity": null
+		"claimability": "",
+		"price": "0.25",
+		"owner_price": "0.20",
+		"quantity": 3
 	}
 ]
