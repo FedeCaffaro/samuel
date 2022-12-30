@@ -249,9 +249,9 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
               <span className="w-100 text-xs poppins">*(La pre-escucha y el evento de lanzamiento no tienen una fecha proyectada)</span>
               <Row className="d-flex justify-content-start align-items-center w-100 mt-3 mx-auto">
                 <Col className="d-flex justify-content-center align-items-center mb-3">
-                  <Button className="button-mint m-0 pe-none">
-                    30/12/2022
-                  </Button>
+                  <a href="https:///opensea.io/es/assets/ethereum/0x1bbb943c60788b4c6d4257f477e2dc2a6f759738/6" target="_blank" className="button-mint m-0 no-hover">
+                    Ver en OpenSea
+                  </a>
                 </Col>
                 <Col className="d-flex justify-content-center align-items-center mb-3">
                   <img className="rounded-circle me-4" src="ripgang/frula-profile.jpg" height="60" />
