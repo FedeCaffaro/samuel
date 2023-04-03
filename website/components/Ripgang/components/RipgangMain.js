@@ -18,7 +18,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
   const [maxSupply, setMaxSupply] = useState(0);
   const [nftModalShow, setNftModalShow] = useState(false);
   const [modalData, setModalData] = useState({});
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
 
   const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -99,17 +99,18 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
       <footer>
         <div className="footer-logo">
           <a href="https://discord.gg/NU2EzTH9vA" target="_blank" className="no-hover">
-            <FontAwesomeIcon icon={faDiscord} />
+            <FontAwesomeIcon icon={faDiscord} style={{width: "100%"}}/>
           </a>
+          {/* <p>Unite a Discord</p> */}
         </div>
       </footer>
 
       {/* Ripcoin */}
 
-      <div className="flex-container border-top pt-3 mb-0">
+      <div className="flex-container border-top pt-5 mb-0">
         <Container>
           <Row>
-            <Col xs={12} lg={6} className="d-flex justify-content-center">
+            <Col xs={11} lg={6} className="d-flex justify-content-center">
               {/* <video
                 className="videoTag"
                 autoPlay
@@ -137,7 +138,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
               <span className="helvetica mb-3 mt-2">
                 Las RIPCOINS son el token de la RIPGANG. Su diseño va a ser
                 distinto en cada uno de los 7 drops y habrá 1312 copias de cada una. Tenerla te da acceso a sorteos por premios
-                 y beneficios de todo el sello. Coleccioná la que quiera (o todas) y unite al Discord para participar.
+                 y beneficios de todo el sello. Coleccioná la que quieras (o todas) y unite al Discord para participar.
               </span>
               <span className="bold oskari-g2 align-self-start">
                 Más de 300 owners de una RIPCOIN ya ganaron premios.
