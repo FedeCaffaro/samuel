@@ -31,8 +31,8 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
       getCurrentSupply(1).then(setTotalMinted);
       getMaxSupply(1).then(setMaxSupply);
     } else if (index == 1) {
-      getCurrentSupply(6).then(setTotalMinted);
-      getMaxSupply(6).then(setMaxSupply);
+      getCurrentSupply(7).then(setTotalMinted);
+      getMaxSupply(7).then(setMaxSupply);
     }
   }
 
