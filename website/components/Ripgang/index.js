@@ -47,18 +47,6 @@ export function Ripgang() {
 						as="font"
 						crossOrigin=""
 					/>
-					<link
-						rel="preload"
-						href="ripgang/fonts/TanPearl/TAN-PEARL.ttf"
-						as="font"
-						crossOrigin=""
-					/>
-					<link
-						rel="preload"
-						href="ripgang/fonts/TanPearl/TAN-PEARL.ttf"
-						as="font"
-						crossOrigin=""
-					/>
 					<title>RIPGANG COLLECTION X SAMOT CLUB</title>
 				</Head>
 				<div>

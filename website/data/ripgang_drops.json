@@ -72,5 +72,19 @@
 		"price": "0.25",
 		"owner_price": "0.20",
 		"quantity": 3
+	},
+	{
+		"id": "7",
+		"name": "RIPCOIN #001 - BUENOS AIRES MOTEL by BROKE CARREY",
+		"artist": "Broke Carrey",
+		"origin": "Buenos Aires Motel",
+		"img_url": "Dripos_teaser.png",
+		"video_url": "Dripos.mp4",
+		"title": "",
+		"description": "A un mes de la apertura de BUENOS AIRES MOTEL, Carrito presenta la segunda Ripcoin de la Ripgang Collection. Coleccioná la Carrito Coin! el primer NFT del pelotudo de Broke Carrey!",
+		"disclaimer": "Para acceder a todos los beneficios de la coin sumate a Discord siguiendo el link en nuestra web.",
+		"claimability": "Beneficio reclamable por única vez.",
+		"price": "0.00",
+		"quantity": 1312
 	}
 ]

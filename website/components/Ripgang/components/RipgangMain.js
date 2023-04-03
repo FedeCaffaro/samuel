@@ -8,6 +8,7 @@ import { getMaxSupply, getCurrentSupply } from "./ContractFunction";
 import NFTCard from "./NFTCard";
 import CenteredModal from "./CenteredModal";
 import { NFTModal } from "./NFTModal";
+import ControlledCarousel from "./ControlledCarousel";
 import ripgangJson from "../../../data/ripgang_drops.json";
 
 const RipgangMain = ({ setModalShow, modalShow }) => {
@@ -17,23 +18,39 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
   const [maxSupply, setMaxSupply] = useState(0);
   const [nftModalShow, setNftModalShow] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [index, setIndex] = useState(1);
+
+  const handleSelect = (selectedIndex, e) => {
+      setIndex(selectedIndex);
+  };
+
+  console.log(index)
 
   async function handleStats() {
-    getCurrentSupply(1).then(setTotalMinted);
-    getMaxSupply(1).then(setMaxSupply);
+    if (index == 0) {
+      getCurrentSupply(1).then(setTotalMinted);
+      getMaxSupply(1).then(setMaxSupply);
+    } else if (index == 1) {
+      getCurrentSupply(7).then(setTotalMinted);
+      getMaxSupply(7).then(setMaxSupply);
+    }
   }
 
   useEffect(() => {
     if (chainId == 1) {
-      handleStats();
+      handleStats(index);
     }
-  }, [chainId]);
+  }, [chainId, index]);
 
   useEffect(() => {
     if (nftModalShow == false) {
-      setModalData(ripgangJson[0])
+      if (index == 0) {
+        setModalData(ripgangJson[0])
+      } else if (index == 1) {
+        setModalData(ripgangJson[6])
+      }
     }
-  }, [nftModalShow]);
+  }, [nftModalShow, index]);
 
   return (
     <div className="main-container">
@@ -82,18 +99,19 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
       <footer>
         <div className="footer-logo">
           <a href="https://discord.gg/NU2EzTH9vA" target="_blank" className="no-hover">
-            <FontAwesomeIcon icon={faDiscord} />
+            <FontAwesomeIcon icon={faDiscord} style={{width: "100%"}}/>
           </a>
+          {/* <p>Unite a Discord</p> */}
         </div>
       </footer>
 
       {/* Ripcoin */}
 
-      <div className="flex-container border-top pt-3 mb-0">
+      <div className="flex-container border-top pt-5 mb-0">
         <Container>
           <Row>
-            <Col xs={12} lg={6} className="d-flex justify-content-center">
-              <video
+            <Col xs={11} lg={6} className="d-flex justify-content-center">
+              {/* <video
                 className="videoTag"
                 autoPlay
                 loop
@@ -103,7 +121,11 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
               // style={{ display: isVideoLoaded ? "block" : "none" }}
               >
                 <source src="/ripgang/ripcoin.mp4" type="video/mp4" />
-              </video>
+              </video> */}
+              <ControlledCarousel
+                index={index}
+                handleSelect={handleSelect}
+              />
             </Col>
             <Col
               xs={12}
@@ -114,17 +136,16 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
                 Llevate una RIPCOIN, coleccionarla es gratis.
               </h1>
               <span className="helvetica mb-3 mt-2">
-                Las RIPCOINS son el token de la RIPGANG, y su diseño va a ser
-                distinto en cada uno de los 7 drops. La primera está inspirada
-                en DILLOM, pero los beneficios de tenerla aplican a todos los
-                artistas de la RIPGANG.
+                Las RIPCOINS son el token de la RIPGANG. Su diseño va a ser
+                distinto en cada uno de los 7 drops y habrá 1312 copias de cada una. Tenerla te da acceso a sorteos por premios
+                 y beneficios de todo el sello. Coleccioná la que quieras (o todas) y unite al Discord para participar.
               </span>
               <span className="bold oskari-g2 align-self-start">
-                Más de 200 owners de una RIPCOIN ya ganaron premios.
+                Más de 300 owners de una RIPCOIN ya ganaron premios.
               </span>
               <ul className="list-style-disc align-self-start p-0">
                 <li className="bold oskari-g2 item my-1">
-                  Merchandising de EDICIÓN LIMITADA de toda la RIPGANG
+                  Merch de EDICIÓN LIMITADA de toda la RIPGANG
                 </li>
                 <li className="bold oskari-g2 item my-1">
                   Pre-reserva de entradas para shows de todos los artistas
@@ -144,7 +165,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
                   onClick={() => setModalShow(true)}
                   className="button-mint"
                 >
-                  MINTEAR
+                  {index == 0 ? "MINTEA TU RIPCOIN DE DILLOM" : "MINTEA TU RIPCOIN DE CARRITO"}
                 </Button>
                 {chainId === 1 ? (
                   <p className="w-100 text-center mt-2">
