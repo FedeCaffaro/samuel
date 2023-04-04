@@ -13,6 +13,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { buySuccessRender, buyErrorRender } from "./ContractFunction";
+import { ethers, utils } from "ethers";
 
 const Mint = (props) => {
   const { active, chainId, account } = useWeb3React();
