@@ -13,6 +13,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { buySuccessRender, buyErrorRender } from "./ContractFunction";
+import { ethers, utils } from "ethers";
 
 const Mint = (props) => {
   const { active, chainId, account } = useWeb3React();
@@ -63,13 +64,13 @@ const Mint = (props) => {
     if (active) {
       try {
         if (isOgOwnerState) {
-          toast.promise(ownerSale(1, props.id), {
+          toast.promise(ownerSale(1, props.id,{ value: ethers.utils.parseEther("0") }), {
             pending: "Esperando confirmación...",
             success: { render: renderAndGetData(buySuccessRender) },
             error: { render: renderAndGetError(buyErrorRender) },
           });
         } else {
-          toast.promise(publicSale(1, props.id), {
+          toast.promise(publicSale(1, props.id,{ value: ethers.utils.parseEther("0") }), {
             pending: "Esperando confirmación...",
             success: { render: renderAndGetData(buySuccessRender) },
             error: { render: renderAndGetError(buyErrorRender) },
