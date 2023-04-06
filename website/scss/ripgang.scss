@@ -113,6 +113,7 @@ canvas {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+  max-width: 340px;
 }
 
 .centered-container {
@@ -132,6 +133,7 @@ canvas {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .description-container {
@@ -223,6 +225,11 @@ h1 {
 .item:before {
   content: "\2022";
   margin-right: 6px;
+}
+
+.join-discord {
+  min-width: 300px;
+  text-align: center;
 }
 
 .line-height-85 {
@@ -320,7 +327,7 @@ p {
 .ripgang-navbar_logos {
   align-items: center;
   display: flex;
-  flex-shrinfk: 0;
+  flex-shrink: 0;
   justify-content: center;
   width: 25%;
 }
@@ -373,6 +380,7 @@ p {
 
 .videoTag {
   width: 100%;
+  max-width: 340px;
 }
 
 @keyframes rotation {
@@ -445,6 +453,10 @@ p {
 
   .lg-title {
     font-size: 4rem;
+  }
+
+  .videoTag {
+    max-width: 100%;
   }
 
 }

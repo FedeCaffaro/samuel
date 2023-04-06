@@ -22,14 +22,14 @@ const ControlledCarousel = ({ index, handleSelect }) => {
           src="/ripgang/ripcoin_placeholder.jpg"
           style={{ display: isVideoLoaded ? "none" : "block", width: "100%" }}
         /> */}
-        <video 
-        // className='videoTag'
+        <video
+          className='videoTag'
           autoPlay
           loop
           muted
           playsInline
           onLoadedData={onVideoLoaded}
-          style={{ display: isVideoLoaded ? "block" : "none" }}
+        // style={{ display: isVideoLoaded ? "block" : "none" }}
         >
           <source src="/ripgang/ripcoin.mp4" type='video/mp4' />
         </video>
@@ -44,12 +44,13 @@ const ControlledCarousel = ({ index, handleSelect }) => {
           style={{ display: isVideoLoaded ? "none" : "block", width: "100%" }}
         /> */}
         <video
-        //   className='videoTag'
+          className='videoTag'
           autoPlay loop
           muted
           playsInline
           onLoadedData={onVideoLoaded}
-          style={{ display: isVideoLoaded ? "block" : "none" }}>
+        // style={{ display: isVideoLoaded ? "block" : "none" }}
+        >
           <source src="/ripgang/carritocoin.mp4" type='video/mp4' />
         </video>
         <Carousel.Caption>
