@@ -226,7 +226,7 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
 
       {/* Pieza Yon Frula */}
 
-      <div className="flex-container border-top pt-3 mb-0">
+      <div className="flex-container border-top pt-3 mb-0 border-light">
         <Container>
           <Row>
             <Col sm={12} lg={5} className="d-flex justify-content-center align-items-center">
@@ -283,6 +283,39 @@ const RipgangMain = ({ setModalShow, modalShow }) => {
           </Row>
         </Container>
       </div>
+
+      {/* Piezas Carrito */}
+
+      <div className="flex-container border-top pt-5">
+        <span className="w-100 text-center letter-spacing">SEGUNDO DROP</span>
+        <span className="xl-title w-100 text-center">BROKE CARREY</span>
+      </div>
+      <Container>
+        <Row>
+          {ripgangJson.slice(6, 9).map((nft) => {
+            return (
+              <>
+                <Col
+                  xs={12}
+                  md={4}
+                  className="d-flex justify-content-center align-items-around"
+                >
+                  <NFTCard
+                    {...nft}
+                    setNftModalShow={setNftModalShow}
+                    setModalData={setModalData}
+                    setModalShow={setModalShow}
+                  />
+                </Col>
+              </>
+            );
+          })}
+          {/* <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
+          <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col>
+          <Col xs={12} md={4} className="d-flex justify-content-center align-items-around"><NFTCard /></Col> */}
+        </Row>
+      </Container>
+
       <footer className="flex-container border-top pt-4 mt-2">
         <span className="text-center w-100">RIPGANG x SAMOT CLUB</span>
         <span>2022</span>

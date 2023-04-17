@@ -289,8 +289,8 @@ h1 {
 }
 
 .nft-card-image {
-  width: 100%;
-  height: auto;
+  flex-shrink: 0;
+  max-width: 100%;
 }
 
 .no-hover:hover {
