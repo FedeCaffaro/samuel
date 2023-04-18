@@ -86,5 +86,50 @@
 		"claimability": "Beneficio reclamable por única vez.",
 		"price": "0.00",
 		"quantity": 1312
+	},
+	{
+		"id": 8,
+		"name": "PLANETA CULO",
+		"artist": "Broke Carrey",
+		"origin": "Buenos Aires Motel",
+		"img_url": "Planeta.png",
+		"video_url": "PlanetaCulo.mp4",
+		"title": "CULO CON CARA, CARA CON CULO, CULO CON CULO.",
+		"description": "Los owners de este token podrán claimear un kit de “Todo para tu culito ORGANIKO”. Este kit incluye el almohadón original de ORGANIKO para reposar tus posteriores y todos los elementos necesarios para que no te falte la higiene.",
+		"disclaimer": "",
+		"claimability": "",
+		"price": "0.05",
+		"owner_price": "0.04",
+		"quantity": 25
+	},
+	{
+		"id": 9,
+		"name": "COMING SOON",
+		"artist": "Broke Carrey",
+		"origin": "Buenos Aires Motel",
+		"img_url": "PlanetaCulo.png",
+		"video_url": "",
+		"title": "",
+		"description": "",
+		"disclaimer": "",
+		"claimability": "",
+		"price": "",
+		"owner_price": "",
+		"quantity": 3
+	},
+	{
+		"id": 10,
+		"name": "COMING SOON",
+		"artist": "Broke Carrey",
+		"origin": "Buenos Aires Motel",
+		"img_url": "PlanetaCulo.png",
+		"video_url": "",
+		"title": "",
+		"description": "",
+		"disclaimer": "",
+		"claimability": "",
+		"price": "",
+		"owner_price": "",
+		"quantity": 3
 	}
 ]

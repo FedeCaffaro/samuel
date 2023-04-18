@@ -114,7 +114,7 @@ export const NFTModal = (props) => {
                         disabled={true}
                         className="text-white w-100 button-mint h4 pe-none px-4"
                       >
-                        {props.quantity} Un.
+                        {props.quantity ? props.quantity : "?"} Un.
                       </Button>
                     </Col>
                     <Col xs={12} md={6}>
