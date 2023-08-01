@@ -26,8 +26,8 @@ export const headers = {
   AUTHORIZATION: 'Authorization'
 };
 
-export const setAuthHeader = (token) => {
-  api.setHeader(headers.AUTHORIZATION, `Bearer ${token}`);
+export const setAuthHeader = () => {
+  api.setHeader(headers.AUTHORIZATION, `Bearer bb9de7bea34342b5a71b46582d8bfd69`);
 };
 
 export const removeAuthHeader = () => api.deleteHeader(headers.AUTHORIZATION);
