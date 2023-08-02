@@ -24,7 +24,7 @@ export const NFTModal = (props) => {
     isOgOwner(account).then(setIsOgOwnerState);
   }
 
-  handleStats(props.id);
+  // handleStats(props.id);
 
   useEffect(() => {
     if (chainId == 1) {
