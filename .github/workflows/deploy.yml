@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14.17.0
+          node-version: 16
 
       # Delete .next folder
       - name: Delete .next
