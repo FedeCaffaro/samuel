@@ -5,7 +5,7 @@ provider:
   name: aws
   versionFunctions: false
   region: us-east-1
-  runtime: nodejs12.x
+  runtime: nodejs16.x
   environment:
     ENV: ${opt:stage, 'dev'}
     MNEMONIC: ${ssm:mnemonic}
