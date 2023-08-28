@@ -16,6 +16,9 @@ export const createApiWithURL = (baseURL) =>
 
 const api = create({
   baseURL: process.env.NEXT_PUBLIC_OPEN_SEA_API,
+  headers: {
+    'X-API-KEY': `${process.env.NEXT_PUBLIC_OPEN_SEA_KEY}`,
+  },
   timeout: 15000
 });
 
@@ -23,7 +26,7 @@ export const headers = {
   AUTHORIZATION: 'Authorization'
 };
 
-export const setAuthHeader = (token) => {
+export const setAuthHeader = () => {
   api.setHeader(headers.AUTHORIZATION, `Bearer ${token}`);
 };
 

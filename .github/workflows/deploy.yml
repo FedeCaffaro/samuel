@@ -26,6 +26,7 @@ jobs:
       NEXT_PUBLIC_ETHERSCAN_URL: ${{ secrets.NEXT_PUBLIC_ETHERSCAN_URL}}
       NEXT_PUBLIC_OS_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_OS_API_ENDPOINT}}
       NEXT_PUBLIC_OPEN_SEA_API: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_API}}
+      NEXT_PUBLIC_OPEN_SEA_KEY: ${{ secrets.NEXT_PUBLIC_OPEN_SEA_KEY}}
 
       NEXT_PUBLIC_REACT_APP_API_URL_PROD: ${{ secrets.NEXT_PUBLIC_REACT_APP_API_URL_PROD}}
       NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD: ${{ secrets.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS_PROD}}
@@ -47,9 +48,9 @@ jobs:
 
       # Setup Node.js build environment
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.17.0
+          node-version: 16
 
       # Delete .next folder
       - name: Delete .next
@@ -76,6 +77,7 @@ jobs:
           echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL >> .env
           echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT >> .env
           echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API >> .env
+          echo "NEXT_PUBLIC_OPEN_SEA_KEY"=$NEXT_PUBLIC_OPEN_SEA_KEY >> .env
 
       # Create .env file prod
       - name: Create .env prod
@@ -95,6 +97,7 @@ jobs:
           echo "NEXT_PUBLIC_ETHERSCAN_URL"=$NEXT_PUBLIC_ETHERSCAN_URL_PROD >> .env
           echo "NEXT_PUBLIC_OS_API_ENDPOINT"=$NEXT_PUBLIC_OS_API_ENDPOINT_PROD >> .env
           echo "NEXT_PUBLIC_OPEN_SEA_API"=$NEXT_PUBLIC_OPEN_SEA_API_PROD >> .env
+          echo "NEXT_PUBLIC_OPEN_SEA_KEY"=$NEXT_PUBLIC_OPEN_SEA_KEY >> .env
 
 
       # Install project dependencies
