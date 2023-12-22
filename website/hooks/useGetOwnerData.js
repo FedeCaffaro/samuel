@@ -13,10 +13,10 @@ export const useGetOwnerData = (account) => {
     setLoading(true);
     if (account) {
       getAssets({
-        limit: 50,
+        limit: 200,
         // offset: 0,
-        asset_contract_address: SAMOT_DROPS.contract,
-        owner: account
+        collection: 'samot-club',
+        address: account
       })
         .then(({ data }) => {
           setOwnerData(mapAssetsToOwnerData(data.assets));
