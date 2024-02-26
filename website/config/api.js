@@ -17,7 +17,7 @@ export const createApiWithURL = (baseURL) =>
 const api = create({
   baseURL: process.env.NEXT_PUBLIC_OPEN_SEA_API,
   headers: {
-    'X-API-KEY': `${process.env.NEXT_PUBLIC_OPEN_SEA_KEY}`,
+    'X-API-KEY': `d37e7ee828334d34b23637281bc075e4`,
   },
   timeout: 15000
 });
