@@ -64,13 +64,13 @@ const Mint = (props) => {
     if (active) {
       try {
         if (isOgOwnerState) {
-          toast.promise(ownerSale(1, props.id,{ value: ethers.utils.parseEther("0") }), {
+          toast.promise(ownerSale(1, props.id), {
             pending: "Esperando confirmación...",
             success: { render: renderAndGetData(buySuccessRender) },
             error: { render: renderAndGetError(buyErrorRender) },
           });
         } else {
-          toast.promise(publicSale(1, props.id,{ value: ethers.utils.parseEther("0") }), {
+          toast.promise(publicSale(1, props.id), {
             pending: "Esperando confirmación...",
             success: { render: renderAndGetData(buySuccessRender) },
             error: { render: renderAndGetError(buyErrorRender) },
