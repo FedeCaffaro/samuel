@@ -26,7 +26,7 @@ function Collection({ collection }) {
   useEffect(() => {
     dispatch(
       // eslint-disable-next-line camelcase
-      actions.getAssets({ collection: collection?.slug, limit: 50 })
+      actions.getAssets({ collection: collection?.slug })
     );
   }, [collection]);
 

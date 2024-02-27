@@ -6,8 +6,8 @@ import styles from './styles.module.scss';
 import { getRandomDefaultAsset } from './utils';
 import { CHECK } from './constants';
 
-function Asset({ name, tokenId, imageUrl, selected, onClick = () => {} }) {
-  const image = useMemo(() => imageUrl || getRandomDefaultAsset(), [imageUrl]);
+function Asset({ name, identifier, image_url, selected, onClick = () => {} }) {
+  const image = useMemo(() => image_url || getRandomDefaultAsset(), [image_url]);
 
   return (
     <div
@@ -22,7 +22,7 @@ function Asset({ name, tokenId, imageUrl, selected, onClick = () => {} }) {
         </div>
       </div>
       <img src={image} className={styles.asset} />
-      <span className={styles.text}>{name || `#${tokenId}`}</span>
+      <span className={styles.text}>{name || `#${identifier}`}</span>
     </div>
   );
 }
