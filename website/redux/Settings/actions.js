@@ -29,16 +29,16 @@ export const actionCreators = {
     target: TARGETS.CURRENT_ASSETS,
     payload,
     // service: CollectionService.getAssets,
-    successSelector: ({ data }) => mapAssetsFromService(data.assets)
+    successSelector: (data ) => mapAssetsFromService(data),
   }),
   getOwnerData: (payload) => ({
     type: actions.GET_OWNER_DATA,
     target: TARGETS.CURRENT_OWNER,
-    payload: { limit: 50, 
+    payload: { 
       // offset: 0, 
       ...payload },
     // service: CollectionService.getAssets,
-    successSelector: ({ data }) => mapAssetsToOwnerData(data.assets)
+    successSelector: ( data ) => mapAssetsToOwnerData(data),
   })
 };
 

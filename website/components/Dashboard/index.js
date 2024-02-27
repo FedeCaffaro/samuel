@@ -27,7 +27,7 @@ function Dashboard() {
 
   const unstakedCount = useMemo(() => {
     const stakedIds = [...stakedIdsV1, ...stakedIdsV2];
-    const isNotAlreadyStaked = (asset) => !stakedIds.includes(asset.tokenId);
+    const isNotAlreadyStaked = (asset) => !stakedIds.includes(asset.identifier);
     return currentOwner?.assets?.filter(isNotAlreadyStaked).length;
   }, [currentOwner, stakedIdsV1, stakedIdsV2]);
 
