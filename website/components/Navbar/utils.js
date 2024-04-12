@@ -16,7 +16,7 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
     {
       key: 'shop',
       label: i18next.t('Navbar:shop'),
-      link: 'https://samot.shop',
+      link: 'https://darq3kl81062a.cloudfront.net/',
       newTab: true
     },
     {
@@ -46,7 +46,7 @@ export const getNavbarItems = (onClickLenguage, onClickCommunity, filter = () =>
 export const getBurguerMenuItems = (onConnectWallet, isConnected) => [
   {
     label: i18next.t('Navbar:shop'),
-    link: 'https://samot.shop',
+    link: 'https://darq3kl81062a.cloudfront.net/',
     newTab: true
   },
   {
